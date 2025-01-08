@@ -8,7 +8,7 @@ Backend system for MoroccoVVIPGoalTrip platform that helps football fans plan th
 
 ## Tech Stack
 
-- Java 17
+- Java 17.
 - Spring Boot 3.2.0
 - Spring Security with JWT
 - Spring Data JPA
