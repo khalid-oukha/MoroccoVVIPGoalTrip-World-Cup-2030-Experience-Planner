@@ -1,6 +1,58 @@
 databaseChangeLog:
   - changeSet:
-      id: 1736412825148-1
+      id: 1736421426397-1
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_activities
+                  name: id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: VARCHAR(2000)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: location
+                  type: VARCHAR(255)
+              - column:
+                  name: image_url
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: available
+                  type: BOOLEAN
+              - column:
+                  constraints:
+                    nullable: false
+                  name: category_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: city_id
+                  type: BIGINT
+              - column:
+                  name: created_at
+                  type: DATETIME
+              - column:
+                  name: updated_at
+                  type: DATETIME
+            tableName: activities
+  - changeSet:
+      id: 1736421426397-2
       author: Youcode
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -11,7 +63,32 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     primaryKey: true
-                    primaryKeyName: pk_city
+                    primaryKeyName: pk_categories
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+              - column:
+                  name: image_uri
+                  type: VARCHAR(255)
+            tableName: categories
+  - changeSet:
+      id: 1736421426397-3
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_cities
                   name: id
                   type: BIGINT
               - column:
@@ -20,14 +97,262 @@ databaseChangeLog:
               - column:
                   name: region
                   type: VARCHAR(255)
-            tableName: city
+            tableName: cities
   - changeSet:
-      id: 1736412825148-2
+      id: 1736421426397-4
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_planned_activities
+                  name: id
+                  type: UUID
+              - column:
+                  name: priority
+                  type: SMALLINT
+              - column:
+                  name: start_date
+                  type: DATETIME
+              - column:
+                  name: end_date
+                  type: DATETIME
+              - column:
+                  constraints:
+                    nullable: false
+                  name: activity_id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                  name: plan_id
+                  type: UUID
+              - column:
+                  name: created_at
+                  type: DATETIME
+              - column:
+                  name: updated_at
+                  type: DATETIME
+            tableName: planned_activities
+  - changeSet:
+      id: 1736421426397-5
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_plans
+                  name: id
+                  type: UUID
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+              - column:
+                  name: image_url
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: user_id
+                  type: UUID
+              - column:
+                  name: created_at
+                  type: DATETIME
+              - column:
+                  name: updated_at
+                  type: DATETIME
+            tableName: plans
+  - changeSet:
+      id: 1736421426397-6
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_roles
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(255)
+            tableName: roles
+  - changeSet:
+      id: 1736421426397-7
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_users
+                  name: id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                  name: username
+                  type: VARCHAR(255)
+              - column:
+                  name: first_name
+                  type: VARCHAR(255)
+              - column:
+                  name: last_name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: password
+                  type: VARCHAR(255)
+              - column:
+                  name: image_url
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: role_id
+                  type: BIGINT
+              - column:
+                  name: created_at
+                  type: DATETIME
+              - column:
+                  name: updated_at
+                  type: DATETIME
+            tableName: users
+  - changeSet:
+      id: 1736421426397-8
       author: Youcode
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
         - addUniqueConstraint:
             columnNames: name
-            constraintName: uc_city_name
-            tableName: city
+            constraintName: uc_categories_name
+            tableName: categories
+  - changeSet:
+      id: 1736421426397-9
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: name
+            constraintName: uc_cities_name
+            tableName: cities
+  - changeSet:
+      id: 1736421426397-10
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: email
+            constraintName: uc_users_email
+            tableName: users
+  - changeSet:
+      id: 1736421426397-11
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: password
+            constraintName: uc_users_password
+            tableName: users
+  - changeSet:
+      id: 1736421426397-12
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: username
+            constraintName: uc_users_username
+            tableName: users
+  - changeSet:
+      id: 1736421426397-13
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: category_id
+            baseTableName: activities
+            constraintName: FK_ACTIVITIES_ON_CATEGORY
+            referencedColumnNames: id
+            referencedTableName: categories
+  - changeSet:
+      id: 1736421426397-14
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: city_id
+            baseTableName: activities
+            constraintName: FK_ACTIVITIES_ON_CITY
+            referencedColumnNames: id
+            referencedTableName: cities
+  - changeSet:
+      id: 1736421426397-15
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: activity_id
+            baseTableName: planned_activities
+            constraintName: FK_PLANNED_ACTIVITIES_ON_ACTIVITY
+            referencedColumnNames: id
+            referencedTableName: activities
+  - changeSet:
+      id: 1736421426397-16
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: plan_id
+            baseTableName: planned_activities
+            constraintName: FK_PLANNED_ACTIVITIES_ON_PLAN
+            referencedColumnNames: id
+            referencedTableName: plans
+  - changeSet:
+      id: 1736421426397-17
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: plans
+            constraintName: FK_PLANS_ON_USER
+            referencedColumnNames: id
+            referencedTableName: users
+  - changeSet:
+      id: 1736421426397-18
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: role_id
+            baseTableName: users
+            constraintName: FK_USERS_ON_ROLE
+            referencedColumnNames: id
+            referencedTableName: roles
 

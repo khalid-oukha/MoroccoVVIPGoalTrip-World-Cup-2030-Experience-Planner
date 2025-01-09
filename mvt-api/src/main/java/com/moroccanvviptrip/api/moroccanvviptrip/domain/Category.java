@@ -1,6 +1,5 @@
 package com.moroccanvviptrip.api.moroccanvviptrip.domain;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,12 +9,12 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-@Table(name = "cities")
+@Table(name = "categories")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class City {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,8 +23,10 @@ public class City {
     @Column(unique = true)
     private String name;
 
-    private String region;
+    private String description;
 
-    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
+    private String imageUri;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Activity> activities;
 }
