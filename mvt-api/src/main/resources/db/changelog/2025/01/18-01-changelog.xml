@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1737225023428-1" author="Youcode">
+        <createTable tableName="activities">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_activities"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(2000)"/>
+            <column name="location" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image_url" type="VARCHAR(255)"/>
+            <column name="available" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="DATETIME"/>
+            <column name="updated_at" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1737225023428-2" author="Youcode">
+        <createTable tableName="categories">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_categories"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="image_uri" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1737225023428-3" author="Youcode">
+        <createTable tableName="cities">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_cities"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="region" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1737225023428-4" author="Youcode">
+        <createTable tableName="planned_activities">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_planned_activities"/>
+            </column>
+            <column name="priority" type="SMALLINT"/>
+            <column name="start_date" type="DATETIME"/>
+            <column name="end_date" type="DATETIME"/>
+            <column name="activity_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="plan_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="DATETIME"/>
+            <column name="updated_at" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1737225023428-5" author="Youcode">
+        <createTable tableName="plans">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_plans"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="image_url" type="VARCHAR(255)"/>
+            <column name="user_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="DATETIME"/>
+            <column name="updated_at" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1737225023428-6" author="Youcode">
+        <createTable tableName="roles">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_roles"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1737225023428-7" author="Youcode">
+        <createTable tableName="users">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_users"/>
+            </column>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image_url" type="VARCHAR(255)"/>
+            <column name="created_at" type="DATETIME"/>
+            <column name="updated_at" type="DATETIME"/>
+            <column name="verified_at" type="DATETIME"/>
+            <column name="deleted_at" type="DATETIME"/>
+            <column name="enabled" type="BOOLEAN"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1737225023428-8" author="Youcode">
+        <createTable tableName="users_roles">
+            <column name="user_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="roles_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1737225023428-9" author="Youcode">
+        <addUniqueConstraint columnNames="name" constraintName="uc_categories_name" tableName="categories"/>
+    </changeSet>
+    <changeSet id="1737225023428-10" author="Youcode">
+        <addUniqueConstraint columnNames="name" constraintName="uc_cities_name" tableName="cities"/>
+    </changeSet>
+    <changeSet id="1737225023428-11" author="Youcode">
+        <addUniqueConstraint columnNames="email" constraintName="uc_users_email" tableName="users"/>
+    </changeSet>
+    <changeSet id="1737225023428-12" author="Youcode">
+        <addUniqueConstraint columnNames="password" constraintName="uc_users_password" tableName="users"/>
+    </changeSet>
+    <changeSet id="1737225023428-13" author="Youcode">
+        <addUniqueConstraint columnNames="username" constraintName="uc_users_username" tableName="users"/>
+    </changeSet>
+    <changeSet id="1737225023428-14" author="Youcode">
+        <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="activities"
+                                 constraintName="FK_ACTIVITIES_ON_CATEGORY" referencedColumnNames="id"
+                                 referencedTableName="categories"/>
+    </changeSet>
+    <changeSet id="1737225023428-15" author="Youcode">
+        <addForeignKeyConstraint baseColumnNames="city_id" baseTableName="activities"
+                                 constraintName="FK_ACTIVITIES_ON_CITY" referencedColumnNames="id"
+                                 referencedTableName="cities"/>
+    </changeSet>
+    <changeSet id="1737225023428-16" author="Youcode">
+        <addForeignKeyConstraint baseColumnNames="activity_id" baseTableName="planned_activities"
+                                 constraintName="FK_PLANNED_ACTIVITIES_ON_ACTIVITY" referencedColumnNames="id"
+                                 referencedTableName="activities"/>
+    </changeSet>
+    <changeSet id="1737225023428-17" author="Youcode">
+        <addForeignKeyConstraint baseColumnNames="plan_id" baseTableName="planned_activities"
+                                 constraintName="FK_PLANNED_ACTIVITIES_ON_PLAN" referencedColumnNames="id"
+                                 referencedTableName="plans"/>
+    </changeSet>
+    <changeSet id="1737225023428-18" author="Youcode">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="plans" constraintName="FK_PLANS_ON_USER"
+                                 referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet id="1737225023428-19" author="Youcode">
+        <addForeignKeyConstraint baseColumnNames="roles_id" baseTableName="users_roles"
+                                 constraintName="fk_userol_on_role" referencedColumnNames="id"
+                                 referencedTableName="roles"/>
+    </changeSet>
+    <changeSet id="1737225023428-20" author="Youcode">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="users_roles"
+                                 constraintName="fk_userol_on_user" referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+
+</databaseChangeLog>

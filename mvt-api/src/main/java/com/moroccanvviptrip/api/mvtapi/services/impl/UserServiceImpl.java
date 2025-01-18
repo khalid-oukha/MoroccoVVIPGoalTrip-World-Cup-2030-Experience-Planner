@@ -1,8 +1,9 @@
-package com.moroccanvviptrip.api.mvtapi.services;
+package com.moroccanvviptrip.api.mvtapi.services.impl;
 
 
 import com.moroccanvviptrip.api.mvtapi.domain.User;
 import com.moroccanvviptrip.api.mvtapi.repository.UserRepository;
+import com.moroccanvviptrip.api.mvtapi.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
