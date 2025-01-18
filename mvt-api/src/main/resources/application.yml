@@ -17,5 +17,16 @@ spring:
   liquibase:
     change-log: db/changelog/db.changelog-master.yaml
 
+token:
+  signing:
+    key: Q2lyNXNOTENrV1dNRGI2NDlJc1p5bTBxM2p1M2RZeTc1amtmbW1HRnZHST0=
+  validity:
+    access:
+      in:
+        minutes: 1000
+    refresh:
+      in:
+        month: 1
+
 server:
   port: 8080
