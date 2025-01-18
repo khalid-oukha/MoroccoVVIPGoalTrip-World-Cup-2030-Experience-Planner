@@ -1,4 +1,4 @@
-package com.moroccanvviptrip.api.moroccanvviptrip.domain;
+package com.moroccanvviptrip.api.mvtapi.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

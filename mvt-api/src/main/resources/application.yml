@@ -3,7 +3,7 @@ spring:
     name: moroccoVvipTripGoal
 
   datasource:
-   url: jdbc:postgresql://localhost:5432/moroccanviptripgoal_db
+   url: jdbc:postgresql://localhost:5432/MoroccoVvipTripGoal_db
    username: admin
    password: admin
    driver-class-name: org.postgresql.Driver

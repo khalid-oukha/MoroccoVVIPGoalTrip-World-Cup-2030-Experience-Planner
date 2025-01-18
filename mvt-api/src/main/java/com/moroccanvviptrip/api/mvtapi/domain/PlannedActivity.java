@@ -1,6 +1,6 @@
-package com.moroccanvviptrip.api.moroccanvviptrip.domain;
+package com.moroccanvviptrip.api.mvtapi.domain;
 
-import com.moroccanvviptrip.api.moroccanvviptrip.domain.enums.Priority;
+import com.moroccanvviptrip.api.mvtapi.domain.enums.Priority;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
