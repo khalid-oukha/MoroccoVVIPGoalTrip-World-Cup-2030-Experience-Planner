@@ -2,9 +2,9 @@ package com.moroccanvviptrip.api.mvtapi.security.auth;
 
 
 import com.moroccanvviptrip.api.mvtapi.domain.User;
+import com.moroccanvviptrip.api.mvtapi.web.VM.UserResponseDto;
 import com.moroccanvviptrip.api.mvtapi.web.dto.request.SignInRequest;
 import com.moroccanvviptrip.api.mvtapi.web.dto.request.SignUpRequest;
-import com.moroccanvviptrip.api.mvtapi.web.dto.response.UserResponseDto;
 import com.moroccanvviptrip.api.mvtapi.web.exception.UnauthorizedException;
 import com.moroccanvviptrip.api.mvtapi.web.mapper.UserMapper;
 import jakarta.servlet.http.HttpServletRequest;

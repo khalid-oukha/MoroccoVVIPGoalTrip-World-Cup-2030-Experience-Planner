@@ -1,4 +1,4 @@
-package com.moroccanvviptrip.api.mvtapi.web.dto.response;
+package com.moroccanvviptrip.api.mvtapi.web.VM;
 
 
 import lombok.AllArgsConstructor;
