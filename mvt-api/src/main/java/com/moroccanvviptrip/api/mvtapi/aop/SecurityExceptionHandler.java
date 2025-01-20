@@ -18,7 +18,6 @@ public class SecurityExceptionHandler {
                 "Access denied: " + ex.getMessage(),
                 null
         );
-
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 }
