@@ -14,10 +14,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CityRequestDto {
-    @NotBlank
+    @NotBlank(message = "name cannot be blank")
     @Unique(fieldName = "name", entityClass = City.class, message = "this city already exist")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "region cannot be blank")
     private String region;
 }
