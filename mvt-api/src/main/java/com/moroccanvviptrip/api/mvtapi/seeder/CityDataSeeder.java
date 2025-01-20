@@ -26,7 +26,7 @@ public class CityDataSeeder implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         if (cityRepository.count() > 0) {
             log.info("Cities are already loaded into the database.");
             return;
@@ -34,7 +34,8 @@ public class CityDataSeeder implements CommandLineRunner {
 
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            List<City> cities = objectMapper.readValue(citiesJsonResource.getInputStream(), new TypeReference<List<City>>() {});
+            List<City> cities = objectMapper.readValue(citiesJsonResource.getInputStream(), new TypeReference<List<City>>() {
+            });
             log.info("Cities data loaded: {} cities found.", cities.size());
             cityRepository.saveAll(cities);
         } catch (IOException e) {

@@ -23,7 +23,7 @@ public class UserDataSeeder implements CommandLineRunner {
     private final static String PASSWORD = "password";
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         List<Role> roles = createRoles();
         createUsers(roles);
     }
@@ -43,7 +43,7 @@ public class UserDataSeeder implements CommandLineRunner {
 
         roles.forEach(role -> {
 
-            if (role.getName().equals(AuthoritiesConstants.ROLE_ADMIN)){
+            if (role.getName().equals(AuthoritiesConstants.ROLE_ADMIN)) {
                 userRepository.save(User.builder()
                         .email("admin@gmail.com")
                         .password(passwordEncoder.encode(PASSWORD))
@@ -54,8 +54,7 @@ public class UserDataSeeder implements CommandLineRunner {
                         .build());
             }
 
-            if (role.getName().equals(AuthoritiesConstants.ROLE_USER))
-            {
+            if (role.getName().equals(AuthoritiesConstants.ROLE_USER)) {
                 userRepository.save(User.builder()
                         .email("user@gmail.com")
                         .password(passwordEncoder.encode(PASSWORD))

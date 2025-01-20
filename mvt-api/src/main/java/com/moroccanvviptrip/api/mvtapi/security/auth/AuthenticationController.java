@@ -23,17 +23,15 @@ public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
     private final UserMapper userMapper;
+
     @PostMapping("/login")
     public ResponseEntity<JwtAuthenticationResponse> login(@RequestBody @Valid SignInRequest credential) {
         JwtAuthenticationResponse result = authenticationService.signing(credential);
-
         return ResponseEntity.ok(result);
     }
 
     @PostMapping("/register")
     public ResponseEntity<JwtAuthenticationResponse> signup(@RequestBody @Valid SignUpRequest register) throws ValidationException {
-
-        int a = 1;
         JwtAuthenticationResponse result = authenticationService.signup(register);
         return ResponseEntity.ok(result);
     }
@@ -47,7 +45,7 @@ public class AuthenticationController {
     @GetMapping("/token/refresh")
     public ResponseEntity<JwtAuthenticationResponse> refreshToken(HttpServletRequest request) throws ValidationException {
         String authorization = request.getHeader("Authorization");
-        if(authorization == null || !authorization.startsWith("Bearer ")) {
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
             throw new UnauthorizedException("Refresh token is missing");
         }
         String token = authorization.substring(7);

@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getCurrentUser() {
         String currentUserLogin = SecurityUtils.getCurrentUserEmail();
-        if(currentUserLogin == null)
+        if (currentUserLogin == null)
             throw new BadCredentialsException("USER_NOT_FOUND");
         return this.findByUsername(currentUserLogin);
     }
@@ -128,7 +128,7 @@ public class UserServiceImpl implements UserService {
             throw new ResourceNotFoundException("role", "Roles not found: " + String.join(", ", notFoundRoles));
         }
 
-        if (new HashSet<>(user.getRoles()).containsAll(rolesList) && rolesList.containsAll(user.getRoles())) {
+        if (new HashSet<>(user.getRoles()).containsAll(rolesList) && new HashSet<>(rolesList).containsAll(user.getRoles())) {
             throw new ValidationException("User already has the same roles");
         }
 

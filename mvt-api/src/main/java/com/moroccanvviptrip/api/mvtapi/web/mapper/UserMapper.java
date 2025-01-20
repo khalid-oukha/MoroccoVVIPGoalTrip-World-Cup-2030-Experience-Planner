@@ -22,9 +22,6 @@ public interface UserMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     User partialUpdate(SignUpRequestDto signUpRequestDto, @MappingTarget User user);
 
-    /**
-     * Custom mapping method to convert Collection<GrantedAuthority> to List<String>.
-     */
     @Named("mapAuthorities")
     default List<String> mapAuthorities(Collection<? extends GrantedAuthority> authorities) {
         if (authorities == null) {

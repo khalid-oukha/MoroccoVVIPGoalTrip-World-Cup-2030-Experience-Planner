@@ -34,15 +34,14 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> getALlRoles()
-    {
+    public List<Role> getALlRoles() {
         return roleRepository.findAll();
     }
 
     @Override
     public void delete(Long id) {
         Optional<Role> role = roleRepository.findById(id);
-        if(role.isPresent())
+        if (role.isPresent())
             roleRepository.delete(role.get());
         else
             throw new NoSuchElementException("Role not found with id: " + id);
@@ -51,7 +50,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Role findById(Long id) {
         Optional<Role> roleOptional = roleRepository.findById(id);
-        if(roleOptional.isEmpty())
+        if (roleOptional.isEmpty())
             throw new IllegalArgumentException("role doesn't exist with this id: " + id);
         return roleOptional.get();
     }
