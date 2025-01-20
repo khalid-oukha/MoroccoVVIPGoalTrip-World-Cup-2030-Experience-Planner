@@ -1,10 +1,12 @@
 package com.moroccanvviptrip.api.mvtapi.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,7 +21,7 @@ import java.util.UUID;
 public class Activity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false)
@@ -41,12 +43,13 @@ public class Activity {
     private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "city_id", nullable=false)
+    @JoinColumn(name = "city_id")
+    @JsonBackReference
     private City city;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
     private List<PlannedActivity> plannedActivities;
 
+    @CreationTimestamp
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 }

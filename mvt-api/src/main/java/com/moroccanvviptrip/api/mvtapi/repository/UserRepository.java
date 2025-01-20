@@ -17,9 +17,9 @@ public interface UserRepository extends JpaRepository<User, UUID> {
             " OR u.email LIKE %:query%")
     Page<User> searchByQuery(String query, Pageable pageable);
 
-    @Query("SELECT u FROM User u WHERE u.id = ? AND u.deletedAt IS NULL ")
+    @Query("SELECT u FROM User u WHERE u.id = :id AND u.deletedAt IS NULL ")
     void softDelete(UUID id);
 
-    @Query("SELECT u FROM User u WHERE u.id = ? AND u.deletedAt IS NOT NULL ")
+    @Query("SELECT u FROM User u WHERE u.id = :id AND u.deletedAt IS NOT NULL ")
     void  forceDelete(UUID id);
 }

@@ -1,42 +1,63 @@
 package com.moroccanvviptrip.api.mvtapi.services.impl;
 
 import com.moroccanvviptrip.api.mvtapi.domain.Role;
+import com.moroccanvviptrip.api.mvtapi.repository.RoleRepository;
 import com.moroccanvviptrip.api.mvtapi.services.RoleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.ValidationException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
 public class RoleServiceImpl implements RoleService {
+    private final RoleRepository roleRepository;
+
+    @Autowired
+    public RoleServiceImpl(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
+
     @Override
     public Role save(Role role) throws ValidationException {
-        return null;
+        Optional<Role> optionalRole = roleRepository.findByName(role.getName());
+        if (optionalRole.isPresent())
+            throw new ValidationException("name", "Role with this name already exists");
+        return roleRepository.save(role);
     }
 
     @Override
     public Optional<Role> findByName(String name) {
-        return Optional.empty();
+        return roleRepository.findByName(name);
     }
 
     @Override
-    public List<Role> getALlRoles() {
-        return List.of();
+    public List<Role> getALlRoles()
+    {
+        return roleRepository.findAll();
     }
 
     @Override
     public void delete(Long id) {
-
+        Optional<Role> role = roleRepository.findById(id);
+        if(role.isPresent())
+            roleRepository.delete(role.get());
+        else
+            throw new NoSuchElementException("Role not found with id: " + id);
     }
 
     @Override
     public Role findById(Long id) {
-        return null;
+        Optional<Role> roleOptional = roleRepository.findById(id);
+        if(roleOptional.isEmpty())
+            throw new IllegalArgumentException("role doesn't exist with this id: " + id);
+        return roleOptional.get();
     }
 
     @Override
     public List<Role> findAllByNameIn(List<String> roleNames) {
-        return List.of();
+        return roleRepository.findAllByNameIn(roleNames);
     }
 }

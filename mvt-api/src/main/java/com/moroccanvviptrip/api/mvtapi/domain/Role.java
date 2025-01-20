@@ -1,5 +1,7 @@
 package com.moroccanvviptrip.api.mvtapi.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "roles")
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor

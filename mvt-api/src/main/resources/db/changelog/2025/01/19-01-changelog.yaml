@@ -1,6 +1,15 @@
 databaseChangeLog:
   - changeSet:
-      id: 1736421426397-1
+      id: 1737306498271-1
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: cities_seq
+            startValue: 1
+  - changeSet:
+      id: 1737306498271-2
       author: Youcode
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -40,19 +49,14 @@ databaseChangeLog:
                   name: category_id
                   type: BIGINT
               - column:
-                  constraints:
-                    nullable: false
                   name: city_id
                   type: BIGINT
               - column:
                   name: created_at
                   type: DATETIME
-              - column:
-                  name: updated_at
-                  type: DATETIME
             tableName: activities
   - changeSet:
-      id: 1736421426397-2
+      id: 1737306498271-3
       author: Youcode
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -77,14 +81,13 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: categories
   - changeSet:
-      id: 1736421426397-3
+      id: 1737306498271-4
       author: Youcode
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
         - createTable:
             columns:
               - column:
-                  autoIncrement: true
                   constraints:
                     nullable: false
                     primaryKey: true
@@ -99,7 +102,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: cities
   - changeSet:
-      id: 1736421426397-4
+      id: 1737306498271-5
       author: Youcode
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -134,12 +137,9 @@ databaseChangeLog:
               - column:
                   name: created_at
                   type: DATETIME
-              - column:
-                  name: updated_at
-                  type: DATETIME
             tableName: planned_activities
   - changeSet:
-      id: 1736421426397-5
+      id: 1737306498271-6
       author: Youcode
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -169,12 +169,9 @@ databaseChangeLog:
               - column:
                   name: created_at
                   type: DATETIME
-              - column:
-                  name: updated_at
-                  type: DATETIME
             tableName: plans
   - changeSet:
-      id: 1736421426397-6
+      id: 1737306498271-7
       author: Youcode
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -195,7 +192,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: roles
   - changeSet:
-      id: 1736421426397-7
+      id: 1737306498271-8
       author: Youcode
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -208,11 +205,6 @@ databaseChangeLog:
                     primaryKeyName: pk_users
                   name: id
                   type: UUID
-              - column:
-                  constraints:
-                    nullable: false
-                  name: username
-                  type: VARCHAR(255)
               - column:
                   name: first_name
                   type: VARCHAR(255)
@@ -233,19 +225,41 @@ databaseChangeLog:
                   name: image_url
                   type: VARCHAR(255)
               - column:
-                  constraints:
-                    nullable: false
-                  name: role_id
-                  type: BIGINT
-              - column:
                   name: created_at
                   type: DATETIME
               - column:
                   name: updated_at
                   type: DATETIME
+              - column:
+                  name: verified_at
+                  type: DATETIME
+              - column:
+                  name: deleted_at
+                  type: DATETIME
+              - column:
+                  name: enabled
+                  type: BOOLEAN
             tableName: users
   - changeSet:
-      id: 1736421426397-8
+      id: 1737306498271-9
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: user_id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                  name: roles_id
+                  type: BIGINT
+            tableName: users_roles
+  - changeSet:
+      id: 1737306498271-10
       author: Youcode
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -254,7 +268,7 @@ databaseChangeLog:
             constraintName: uc_categories_name
             tableName: categories
   - changeSet:
-      id: 1736421426397-9
+      id: 1737306498271-11
       author: Youcode
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -263,7 +277,7 @@ databaseChangeLog:
             constraintName: uc_cities_name
             tableName: cities
   - changeSet:
-      id: 1736421426397-10
+      id: 1737306498271-12
       author: Youcode
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -272,7 +286,7 @@ databaseChangeLog:
             constraintName: uc_users_email
             tableName: users
   - changeSet:
-      id: 1736421426397-11
+      id: 1737306498271-13
       author: Youcode
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -281,16 +295,7 @@ databaseChangeLog:
             constraintName: uc_users_password
             tableName: users
   - changeSet:
-      id: 1736421426397-12
-      author: Youcode
-      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
-      changes:
-        - addUniqueConstraint:
-            columnNames: username
-            constraintName: uc_users_username
-            tableName: users
-  - changeSet:
-      id: 1736421426397-13
+      id: 1737306498271-14
       author: Youcode
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -301,7 +306,7 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: categories
   - changeSet:
-      id: 1736421426397-14
+      id: 1737306498271-15
       author: Youcode
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -312,7 +317,7 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: cities
   - changeSet:
-      id: 1736421426397-15
+      id: 1737306498271-16
       author: Youcode
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -323,7 +328,7 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: activities
   - changeSet:
-      id: 1736421426397-16
+      id: 1737306498271-17
       author: Youcode
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -334,7 +339,7 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: plans
   - changeSet:
-      id: 1736421426397-17
+      id: 1737306498271-18
       author: Youcode
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -345,14 +350,25 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: users
   - changeSet:
-      id: 1736421426397-18
+      id: 1737306498271-19
       author: Youcode
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
         - addForeignKeyConstraint:
-            baseColumnNames: role_id
-            baseTableName: users
-            constraintName: FK_USERS_ON_ROLE
+            baseColumnNames: roles_id
+            baseTableName: users_roles
+            constraintName: fk_userol_on_role
             referencedColumnNames: id
             referencedTableName: roles
+  - changeSet:
+      id: 1737306498271-20
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: users_roles
+            constraintName: fk_userol_on_user
+            referencedColumnNames: id
+            referencedTableName: users
 
