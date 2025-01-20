@@ -24,8 +24,10 @@ public class CityController {
     private final CityMapper cityMapper;
 
     @GetMapping
-    public ResponseEntity<List<CityResponseVm>> getAll() {
-        List<City> cities = cityService.getAll();
+    public ResponseEntity<List<CityResponseVm>> getAll(
+            @RequestParam(required = false) String region
+    ) {
+        List<City> cities = cityService.getAll(region);
         List<CityResponseVm> responseVmList = cities.stream().map(cityMapper::toResponse).toList();
         return ResponseEntity.ok(responseVmList);
     }
@@ -55,4 +57,5 @@ public class CityController {
         cityService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
 }

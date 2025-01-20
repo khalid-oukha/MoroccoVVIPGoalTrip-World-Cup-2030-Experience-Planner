@@ -15,5 +15,5 @@ public interface CityService {
 
     City getById(Long id);
 
-    List<City> getAll();
+    List<City> getAll(String region);
 }
