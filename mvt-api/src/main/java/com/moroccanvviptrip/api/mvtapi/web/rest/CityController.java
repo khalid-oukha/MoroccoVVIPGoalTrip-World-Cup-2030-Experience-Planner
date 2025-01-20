@@ -8,6 +8,7 @@ import com.moroccanvviptrip.api.mvtapi.web.mapper.CityMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,5 +28,12 @@ public class CityController {
         List<CityResponseVm> responseVmList = cities.stream().map(cityMapper::toResponse).toList();
         return ResponseEntity.ok(responseVmList);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CityResponseVm> getById(@PathVariable Long id) {
+        City city = cityService.getById(id);
+        return ResponseEntity.ok(cityMapper.toResponse(city));
+    }
+
 
 }
