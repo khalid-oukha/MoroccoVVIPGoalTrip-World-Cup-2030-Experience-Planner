@@ -4,14 +4,15 @@ package com.moroccanvviptrip.api.mvtapi.web.rest;
 import com.moroccanvviptrip.api.mvtapi.domain.City;
 import com.moroccanvviptrip.api.mvtapi.services.CityService;
 import com.moroccanvviptrip.api.mvtapi.web.VM.CityResponseVm;
+import com.moroccanvviptrip.api.mvtapi.web.dto.city.CityRequestDto;
+import com.moroccanvviptrip.api.mvtapi.web.dto.city.CityUpdateDto;
 import com.moroccanvviptrip.api.mvtapi.web.mapper.CityMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -35,5 +36,23 @@ public class CityController {
         return ResponseEntity.ok(cityMapper.toResponse(city));
     }
 
+    @PostMapping
+    public ResponseEntity<CityResponseVm> create(@Valid @RequestBody CityRequestDto cityRequestDto) {
+        City createdCity = cityService.create(cityRequestDto);
+        CityResponseVm responseVm = cityMapper.toResponse(createdCity);
+        return ResponseEntity.created(URI.create("/api/v1/city/" + createdCity.getId())).body(responseVm);
+    }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<CityResponseVm> update(@PathVariable Long id, @Valid @RequestBody CityUpdateDto cityUpdateDto) {
+        City updatedCity = cityService.update(id, cityUpdateDto);
+        CityResponseVm responseVm = cityMapper.toResponse(updatedCity);
+        return ResponseEntity.ok(responseVm);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        cityService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
