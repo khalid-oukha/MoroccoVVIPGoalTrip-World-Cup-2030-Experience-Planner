@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -21,6 +22,5 @@ public class CategoryRequestDto {
     @NotBlank(message = "description cannot be blank")
     private String description;
 
-    @NotBlank(message = "imageUri cannot be blank")
-    private String imageUri;
+    private MultipartFile imageUri;
 }
