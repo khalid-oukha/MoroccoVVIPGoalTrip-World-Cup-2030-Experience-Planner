@@ -2,7 +2,7 @@ package com.moroccanvviptrip.api.mvtapi.security.auth;
 
 
 import com.moroccanvviptrip.api.mvtapi.domain.User;
-import com.moroccanvviptrip.api.mvtapi.web.VM.UserResponseDto;
+import com.moroccanvviptrip.api.mvtapi.web.VM.UserResponseVm;
 import com.moroccanvviptrip.api.mvtapi.web.dto.request.SignInRequest;
 import com.moroccanvviptrip.api.mvtapi.web.dto.request.SignUpRequest;
 import com.moroccanvviptrip.api.mvtapi.web.exception.UnauthorizedException;
@@ -37,7 +37,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<UserResponseDto> me() {
+    public ResponseEntity<UserResponseVm> me() {
         User result = authenticationService.me();
         return ResponseEntity.ok(userMapper.toResponse(result));
     }

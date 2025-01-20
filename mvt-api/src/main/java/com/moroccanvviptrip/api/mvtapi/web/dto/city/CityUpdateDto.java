@@ -1,23 +1,18 @@
 package com.moroccanvviptrip.api.mvtapi.web.dto.city;
 
-
 import com.moroccanvviptrip.api.mvtapi.domain.City;
 import com.moroccanvviptrip.api.mvtapi.utils.annotation.Unique;
-import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
-public class CityRequestDto {
-    @NotBlank
+@NoArgsConstructor
+public class CityUpdateDto {
+
     @Unique(fieldName = "name", entityClass = City.class, message = "this city already exist")
     private String name;
 
-    @NotBlank
     private String region;
 }

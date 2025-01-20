@@ -1,7 +1,7 @@
 package com.moroccanvviptrip.api.mvtapi.web.mapper;
 
 import com.moroccanvviptrip.api.mvtapi.domain.User;
-import com.moroccanvviptrip.api.mvtapi.web.VM.UserResponseDto;
+import com.moroccanvviptrip.api.mvtapi.web.VM.UserResponseVm;
 import com.moroccanvviptrip.api.mvtapi.web.dto.request.SignUpRequest;
 import com.moroccanvviptrip.api.mvtapi.web.dto.request.SignUpRequestDto;
 import org.mapstruct.*;
@@ -17,7 +17,7 @@ public interface UserMapper {
     User toEntity(SignUpRequest signUpRequest);
 
     @Mapping(target = "authorities", source = "authorities", qualifiedByName = "mapAuthorities")
-    UserResponseDto toResponse(User user);
+    UserResponseVm toResponse(User user);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     User partialUpdate(SignUpRequestDto signUpRequestDto, @MappingTarget User user);
