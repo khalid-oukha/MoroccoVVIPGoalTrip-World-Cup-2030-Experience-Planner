@@ -1,6 +1,6 @@
 package com.moroccanvviptrip.api.mvtapi.utils;
 
-import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -17,10 +17,10 @@ import java.util.UUID;
 @Service
 public class FileStorageService {
 
-    private final Path rootLocation = Paths.get("uploads");
+    private final Path rootLocation;
 
-    @PostConstruct
-    public void init() {
+    public FileStorageService(@Value("${file.upload-dir}") String uploadDir) {
+        this.rootLocation = Paths.get(uploadDir);
         try {
             Files.createDirectories(rootLocation);
         } catch (IOException e) {
@@ -29,17 +29,25 @@ public class FileStorageService {
     }
 
     public String store(MultipartFile file) {
+        if (file.isEmpty()) {
+            throw new RuntimeException("Failed to store empty file.");
+        }
+
+        String contentType = file.getContentType();
+        if (contentType == null || !contentType.startsWith("image/")) {
+            throw new RuntimeException("Only image files are allowed.");
+        }
+
+        String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+        Path destinationFile = this.rootLocation.resolve(fileName).normalize().toAbsolutePath();
+
         try {
-            if (file.isEmpty()) {
-                throw new RuntimeException("Failed to store empty file.");
-            }
-            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-            Path destinationFile = this.rootLocation.resolve(fileName).normalize().toAbsolutePath();
             Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
-            return fileName;
         } catch (IOException e) {
             throw new RuntimeException("Failed to store file.", e);
         }
+
+        return fileName;
     }
 
     public Resource load(String fileName) {
@@ -59,7 +67,9 @@ public class FileStorageService {
     public void delete(String fileName) {
         try {
             Path file = rootLocation.resolve(fileName).normalize();
-            Files.deleteIfExists(file);
+            if (!Files.deleteIfExists(file)) {
+                throw new RuntimeException("File not found: " + fileName);
+            }
         } catch (IOException e) {
             throw new RuntimeException("Failed to delete file: " + fileName, e);
         }
