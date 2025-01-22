@@ -4,6 +4,7 @@ import com.moroccanvviptrip.api.mvtapi.domain.Category;
 import com.moroccanvviptrip.api.mvtapi.utils.FileStorageService;
 import com.moroccanvviptrip.api.mvtapi.web.VM.CategoryResponseVm;
 import com.moroccanvviptrip.api.mvtapi.web.dto.category.CategoryRequestDto;
+import com.moroccanvviptrip.api.mvtapi.web.dto.category.CategoryUpdateDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -18,6 +19,9 @@ public abstract class CategoryMapper {
 
     @Mapping(source = "imageUri", target = "imageUri", qualifiedByName = "mapImageUri")
     public abstract Category toEntity(CategoryRequestDto categoryRequestDto);
+
+    @Mapping(source = "imageUri", target = "imageUri", qualifiedByName = "mapImageUri")
+    public abstract Category UpdateDtotoEntity(CategoryUpdateDto categoryUpdateDto);
 
     public abstract CategoryResponseVm toResponse(Category category);
 

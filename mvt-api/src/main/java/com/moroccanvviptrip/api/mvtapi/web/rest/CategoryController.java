@@ -4,6 +4,7 @@ import com.moroccanvviptrip.api.mvtapi.domain.Category;
 import com.moroccanvviptrip.api.mvtapi.services.CategoryService;
 import com.moroccanvviptrip.api.mvtapi.web.VM.CategoryResponseVm;
 import com.moroccanvviptrip.api.mvtapi.web.dto.category.CategoryRequestDto;
+import com.moroccanvviptrip.api.mvtapi.web.dto.category.CategoryUpdateDto;
 import com.moroccanvviptrip.api.mvtapi.web.mapper.CategoryMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -48,5 +49,14 @@ public class CategoryController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         categoryService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<CategoryResponseVm> updateCategory(
+            @PathVariable Long id,
+            @Valid @ModelAttribute CategoryUpdateDto categoryUpdateDto) {
+        Category updatedCategory = categoryService.update(id, categoryUpdateDto);
+        CategoryResponseVm responseVm = categoryMapper.toResponse(updatedCategory);
+        return ResponseEntity.ok(responseVm);
     }
 }
