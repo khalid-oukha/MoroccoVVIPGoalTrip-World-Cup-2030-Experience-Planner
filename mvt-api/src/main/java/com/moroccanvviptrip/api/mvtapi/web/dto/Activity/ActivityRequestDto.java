@@ -1,11 +1,13 @@
 package com.moroccanvviptrip.api.mvtapi.web.dto.Activity;
 
+import com.moroccanvviptrip.api.mvtapi.utils.annotation.Trimmed;
+import com.moroccanvviptrip.api.mvtapi.web.dto.ActivItyImage.ActivityImageDto;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,15 +19,22 @@ import java.util.UUID;
 @NoArgsConstructor
 public class ActivityRequestDto {
     @NotBlank
+    @Trimmed
     private String name;
 
     @NotBlank
+    @Trimmed
     private String description;
 
     @NotBlank
+    @Trimmed
     private String location;
-    
+
+    @NotNull
     private UUID categoryId;
+
+    @NotNull
     private UUID cityId;
-    private List<MultipartFile> images;
+
+    private List<ActivityImageDto> images;
 }

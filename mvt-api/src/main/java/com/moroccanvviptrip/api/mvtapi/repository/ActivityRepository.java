@@ -6,6 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 public interface ActivityRepository extends JpaRepository<Activity, UUID> {
-    @Override
-    boolean existsById(UUID uuid);
+    boolean existsById(UUID id);
 }
