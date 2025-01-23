@@ -1,0 +1,97 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1737622903857-1
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_activity_images
+                  name: id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                  name: image_url
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: activity_id
+                  type: UUID
+            tableName: activity_images
+  - changeSet:
+      id: 1737622903857-2
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_articles
+                  name: id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                  name: content
+                  type: VARCHAR(5000)
+              - column:
+                  name: image_url
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: activity_id
+                  type: UUID
+              - column:
+                  name: created_at
+                  type: DATETIME
+            tableName: articles
+  - changeSet:
+      id: 1737622903857-3
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: activity_id
+            constraintName: uc_articles_activity
+            tableName: articles
+  - changeSet:
+      id: 1737622903857-4
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: activity_id
+            baseTableName: activity_images
+            constraintName: FK_ACTIVITY_IMAGES_ON_ACTIVITY
+            referencedColumnNames: id
+            referencedTableName: activities
+  - changeSet:
+      id: 1737622903857-5
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: activity_id
+            baseTableName: articles
+            constraintName: FK_ARTICLES_ON_ACTIVITY
+            referencedColumnNames: id
+            referencedTableName: activities
+  - changeSet:
+      id: 1737622903857-6
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: image_url
+            tableName: activities
+
