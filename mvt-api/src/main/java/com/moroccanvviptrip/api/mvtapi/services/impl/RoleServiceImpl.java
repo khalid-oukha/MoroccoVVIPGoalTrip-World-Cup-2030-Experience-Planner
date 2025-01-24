@@ -3,7 +3,7 @@ package com.moroccanvviptrip.api.mvtapi.services.impl;
 import com.moroccanvviptrip.api.mvtapi.domain.Role;
 import com.moroccanvviptrip.api.mvtapi.repository.RoleRepository;
 import com.moroccanvviptrip.api.mvtapi.services.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.ValidationException;
@@ -11,14 +11,10 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
-
-    @Autowired
-    public RoleServiceImpl(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
 
     @Override
     public Role save(Role role) throws ValidationException {

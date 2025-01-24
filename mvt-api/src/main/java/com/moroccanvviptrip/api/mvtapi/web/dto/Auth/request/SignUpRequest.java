@@ -1,4 +1,4 @@
-package com.moroccanvviptrip.api.mvtapi.web.dto.request;
+package com.moroccanvviptrip.api.mvtapi.web.dto.Auth.request;
 
 import com.moroccanvviptrip.api.mvtapi.utils.annotation.Trimmed;
 import jakarta.validation.constraints.Email;

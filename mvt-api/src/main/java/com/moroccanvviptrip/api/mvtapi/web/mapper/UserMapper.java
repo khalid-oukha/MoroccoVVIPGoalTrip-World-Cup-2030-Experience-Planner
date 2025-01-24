@@ -2,8 +2,8 @@ package com.moroccanvviptrip.api.mvtapi.web.mapper;
 
 import com.moroccanvviptrip.api.mvtapi.domain.User;
 import com.moroccanvviptrip.api.mvtapi.web.VM.UserResponseVm;
-import com.moroccanvviptrip.api.mvtapi.web.dto.request.SignUpRequest;
-import com.moroccanvviptrip.api.mvtapi.web.dto.request.SignUpRequestDto;
+import com.moroccanvviptrip.api.mvtapi.web.dto.Auth.request.SignUpRequest;
+import com.moroccanvviptrip.api.mvtapi.web.dto.Auth.request.SignUpRequestDto;
 import org.mapstruct.*;
 import org.springframework.security.core.GrantedAuthority;
 
