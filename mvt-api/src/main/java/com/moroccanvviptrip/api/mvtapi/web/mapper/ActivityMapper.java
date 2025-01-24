@@ -18,6 +18,5 @@ public interface ActivityMapper {
     @Mapping(target = "description", source = "activityUpdateDto.description")
     @Mapping(target = "location", source = "activityUpdateDto.location")
     @Mapping(target = "available", source = "activityUpdateDto.available")
-    @Mapping(target = "images", source = "activityUpdateDto.images")
     void partialUpdate(ActivityUpdateDto activityUpdateDto, @MappingTarget Activity existingActivity);
 }

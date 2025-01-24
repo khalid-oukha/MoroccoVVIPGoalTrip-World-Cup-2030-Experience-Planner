@@ -46,7 +46,7 @@ public class ActivityServiceImpl implements ActivityService {
 
         activity.setCategory(category);
         activity.setCity(city);
-
+        activity.setAvailable(true);
         return activityRepository.save(activity);
     }
 
@@ -69,7 +69,7 @@ public class ActivityServiceImpl implements ActivityService {
 
         return activityRepository.save(existingActivity);
     }
-    
+
     @Override
     public void delete(UUID id) {
         Activity existingActivity = activityRepository.findById(id)

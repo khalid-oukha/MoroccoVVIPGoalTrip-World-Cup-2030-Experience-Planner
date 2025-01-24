@@ -1,15 +1,12 @@
 package com.moroccanvviptrip.api.mvtapi.web.dto.Activity;
 
 import com.moroccanvviptrip.api.mvtapi.utils.annotation.Trimmed;
-import com.moroccanvviptrip.api.mvtapi.web.dto.ActivItyImage.ActivityImageDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 
 @Getter
@@ -34,6 +31,4 @@ public class ActivityRequestDto {
 
     @NotNull
     private Long cityId;
-
-    private List<ActivityImageDto> images;
 }

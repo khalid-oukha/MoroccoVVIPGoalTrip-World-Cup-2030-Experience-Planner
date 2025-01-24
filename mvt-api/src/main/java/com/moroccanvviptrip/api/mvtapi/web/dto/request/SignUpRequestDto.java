@@ -1,5 +1,6 @@
 package com.moroccanvviptrip.api.mvtapi.web.dto.request;
 
+import com.moroccanvviptrip.api.mvtapi.utils.annotation.Trimmed;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
@@ -8,17 +9,21 @@ import java.io.Serializable;
 
 public record SignUpRequestDto(
 
-        @NotBlank(message = "First name cannot be blank")
+        @NotBlank
+        @Trimmed
         String firstName,
 
-        @NotBlank(message = "Last name cannot be blank")
+        @NotBlank
+        @Trimmed
         String lastName,
 
         @Email
-        @NotBlank(message = "email cannot be blank")
+        @NotBlank
+        @Trimmed
         String email,
 
-        @NotBlank(message = "password cannot be blank")
+        @NotBlank
+        @Trimmed
         String password)
 
         implements Serializable {

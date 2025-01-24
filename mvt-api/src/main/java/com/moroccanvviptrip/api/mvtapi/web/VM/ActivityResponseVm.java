@@ -23,6 +23,7 @@ public class ActivityResponseVm {
     private LocalDateTime createdAt;
 
     private CategoryResponseVm category;
+    private CityResponseVm city;
     private ArticleResponseVm article;
     private List<ActivityImageResponseVm> images;
 }
