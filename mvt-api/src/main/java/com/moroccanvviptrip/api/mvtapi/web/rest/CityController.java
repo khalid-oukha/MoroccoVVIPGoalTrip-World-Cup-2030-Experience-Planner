@@ -27,14 +27,14 @@ public class CityController {
     public ResponseEntity<List<CityResponseVm>> getAll(
             @RequestParam(required = false) String region
     ) {
-        List<City> cities = cityService.getAll(region);
+        List<City> cities = cityService.findAll(region);
         List<CityResponseVm> responseVmList = cities.stream().map(cityMapper::toResponse).toList();
         return ResponseEntity.ok(responseVmList);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CityResponseVm> getById(@PathVariable Long id) {
-        City city = cityService.getById(id);
+    public ResponseEntity<CityResponseVm> findById(@PathVariable Long id) {
+        City city = cityService.findById(id);
         return ResponseEntity.ok(cityMapper.toResponse(city));
     }
 

@@ -13,7 +13,7 @@ public interface CityService {
 
     void delete(Long id);
 
-    City getById(Long id);
+    City findById(Long id);
 
-    List<City> getAll(String region);
+    List<City> findAll(String region);
 }

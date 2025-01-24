@@ -1,18 +1,21 @@
 package com.moroccanvviptrip.api.mvtapi.services;
 
 import com.moroccanvviptrip.api.mvtapi.domain.Activity;
+import com.moroccanvviptrip.api.mvtapi.web.dto.Activity.ActivityRequestDto;
+import com.moroccanvviptrip.api.mvtapi.web.dto.Activity.ActivityUpdateDto;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ActivityService {
-    Activity findById(Long id);
+    Activity findById(UUID id);
 
     List<Activity> findAll();
 
-    Activity create(Activity activity);
+    Activity create(ActivityRequestDto activityRequestDto);
 
-    Activity update(Activity activity);
+    Activity update(UUID id, ActivityUpdateDto activityUpdateDto);
 
-    Activity delete(Long id);
+    void delete(UUID id);
 
 }

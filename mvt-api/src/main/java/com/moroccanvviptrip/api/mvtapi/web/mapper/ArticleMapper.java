@@ -17,5 +17,4 @@ public interface ArticleMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Article partialUpdate(ArticleUpdateDto articleUpdateDto, Article article);
-
 }

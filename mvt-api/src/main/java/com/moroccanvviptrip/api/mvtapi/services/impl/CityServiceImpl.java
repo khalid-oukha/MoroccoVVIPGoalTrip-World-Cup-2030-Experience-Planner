@@ -45,18 +45,18 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public City getById(Long id) {
+    public City findById(Long id) {
         return cityRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("City not found !"));
     }
 
     @Override
-    public List<City> getAll(String region) {
+    public List<City> findAll(String region) {
         if (region != null && !region.isEmpty()) {
             return cityRepository.findByRegion(region);
         } else {
             return cityRepository.findAll();
         }
     }
-    
+
 }

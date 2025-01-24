@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.UUID;
 
 
 @Getter
@@ -31,10 +30,10 @@ public class ActivityRequestDto {
     private String location;
 
     @NotNull
-    private UUID categoryId;
+    private Long categoryId;
 
     @NotNull
-    private UUID cityId;
+    private Long cityId;
 
     private List<ActivityImageDto> images;
 }

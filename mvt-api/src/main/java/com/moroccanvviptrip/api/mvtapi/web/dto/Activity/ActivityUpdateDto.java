@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -18,7 +17,7 @@ public class ActivityUpdateDto {
     private String description;
     private String location;
     private Boolean available;
-    private UUID categoryId;
-    private UUID cityId;
+    private Long categoryId;
+    private Long cityId;
     private List<ActivityImageDto> images;
 }
