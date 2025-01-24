@@ -52,4 +52,10 @@ public class ActivityController {
         ActivityResponseVm response = activityMapper.toResponseVm(activity);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        activityService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
