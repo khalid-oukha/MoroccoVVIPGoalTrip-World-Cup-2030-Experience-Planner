@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.UUID;
 
-public interface ActivityRepository extends JpaRepository<Activity, UUID>, JpaSpecificationExecutor<Activity> {
+public interface ActivityRepository extends JpaRepository<Activity, UUID>,
+        JpaSpecificationExecutor<Activity> {
     boolean existsById(UUID id);
 }
