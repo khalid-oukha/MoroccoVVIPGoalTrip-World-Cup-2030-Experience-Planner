@@ -7,14 +7,17 @@ import com.moroccanvviptrip.api.mvtapi.repository.ActivityRepository;
 import com.moroccanvviptrip.api.mvtapi.services.ActivityService;
 import com.moroccanvviptrip.api.mvtapi.services.CategoryService;
 import com.moroccanvviptrip.api.mvtapi.services.CityService;
+import com.moroccanvviptrip.api.mvtapi.utils.specifications.ActivitySpecifications;
 import com.moroccanvviptrip.api.mvtapi.web.dto.Activity.ActivityRequestDto;
 import com.moroccanvviptrip.api.mvtapi.web.dto.Activity.ActivityUpdateDto;
 import com.moroccanvviptrip.api.mvtapi.web.mapper.ActivityMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -25,6 +28,7 @@ public class ActivityServiceImpl implements ActivityService {
     private final CategoryService categoryService;
     private final CityService cityService;
     private final ActivityMapper activityMapper;
+    private final ActivitySpecifications activitySpecifications;
 
     @Override
     public Activity findById(UUID id) {
@@ -33,8 +37,14 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public List<Activity> findAll() {
-        return activityRepository.findAll();
+    public Page<Activity> findAll(Long cityId, Long categoryId, Boolean available, String search, Pageable pageable) {
+        Specification<Activity> spec = Specification
+                .where(activitySpecifications.hasCity(cityId))
+                .and(activitySpecifications.hasCategory(categoryId))
+                .and(activitySpecifications.isAvailable(available))
+                .and(activitySpecifications.containsKeyword(search));
+
+        return activityRepository.findAll(spec, pageable);
     }
 
     @Override

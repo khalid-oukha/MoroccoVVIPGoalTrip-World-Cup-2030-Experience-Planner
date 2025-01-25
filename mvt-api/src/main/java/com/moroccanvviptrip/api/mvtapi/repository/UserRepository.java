@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User, UUID> {
+
     Optional<User> findByEmail(String email);
 
     @Query("SELECT u FROM User u WHERE u.firstName LIKE %:query%" +
@@ -21,5 +22,5 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     void softDelete(UUID id);
 
     @Query("SELECT u FROM User u WHERE u.id = :id AND u.deletedAt IS NOT NULL ")
-    void  forceDelete(UUID id);
+    void forceDelete(UUID id);
 }

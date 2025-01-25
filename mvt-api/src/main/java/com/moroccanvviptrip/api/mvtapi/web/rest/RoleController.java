@@ -23,20 +23,20 @@ public class RoleController {
         return ResponseEntity.status(HttpStatus.OK).body(roles);
     }
 
-    @GetMapping
-    public ResponseEntity<Role> findById(Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Role> findById(@PathVariable Long id) {
         Role role = roleService.findById(id);
         return ResponseEntity.status(HttpStatus.OK).body(role);
     }
 
     @PostMapping
-    public ResponseEntity<Role> save(Role role) throws ValidationException {
+    public ResponseEntity<Role> save(@RequestBody Role role) throws ValidationException {
         Role savedRole = roleService.save(role);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedRole);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Role> update(Long id, Role role) throws ValidationException {
+    public ResponseEntity<Role> update(@PathVariable Long id, @RequestBody Role role) throws ValidationException {
         Role updatedRole = roleService.save(role);
         return ResponseEntity.status(HttpStatus.OK).body(updatedRole);
     }
