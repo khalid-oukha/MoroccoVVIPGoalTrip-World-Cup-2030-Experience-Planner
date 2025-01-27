@@ -1,6 +1,7 @@
 package com.moroccanvviptrip.api.mvtapi.utils.validator;
 
 import com.moroccanvviptrip.api.mvtapi.utils.annotation.Unique;
+import com.moroccanvviptrip.api.mvtapi.web.exception.UniqueConstraintViolationException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -29,11 +30,22 @@ public class UniqueFieldValidator implements ConstraintValidator<Unique, Object>
             return true;
         }
 
-        String queryString = String.format("SELECT COUNT(e) FROM %s e WHERE e.%s = :value", entityClass.getSimpleName(), fieldName);
+        String queryString = String.format(
+                "SELECT COUNT(e) FROM %s e WHERE e.%s = :value",
+                entityClass.getSimpleName(),
+                fieldName
+        );
         Query query = entityManager.createQuery(queryString);
         query.setParameter("value", value);
 
         Long count = (Long) query.getSingleResult();
-        return count == 0;
+        if (count > 0) {
+            throw new UniqueConstraintViolationException(
+                    String.format("The value for '%s' must be unique, but '%s' already exists.", fieldName, value)
+            );
+        }
+
+        return true;
     }
+
 }

@@ -2,6 +2,7 @@ package com.moroccanvviptrip.api.mvtapi.web.dto.article;
 
 import com.moroccanvviptrip.api.mvtapi.utils.annotation.Trimmed;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,10 +19,11 @@ import java.util.UUID;
 public class ArticleRequestDto {
     @NotBlank
     @Trimmed
+    @Size(min = 50, max = 5000)
     private String content;
 
     private MultipartFile image;
 
-    @NotBlank
     private UUID activityId;
+
 }

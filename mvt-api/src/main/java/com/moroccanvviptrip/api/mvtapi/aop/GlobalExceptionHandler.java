@@ -2,6 +2,7 @@ package com.moroccanvviptrip.api.mvtapi.aop;
 
 
 import com.moroccanvviptrip.api.mvtapi.web.exception.EmailAlreadyExistException;
+import com.moroccanvviptrip.api.mvtapi.web.exception.UniqueConstraintViolationException;
 import com.moroccanvviptrip.api.mvtapi.web.response.ApiErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,4 +56,16 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
+
+    @ExceptionHandler(UniqueConstraintViolationException.class)
+    public ResponseEntity<ApiErrorResponse> handleUniqueConstraintViolation(UniqueConstraintViolationException ex) {
+        ApiErrorResponse response = ApiErrorResponse.create(
+                HttpStatus.CONFLICT.value(),
+                "Unique constraint violation",
+                ex.getMessage()
+        );
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
+
 }

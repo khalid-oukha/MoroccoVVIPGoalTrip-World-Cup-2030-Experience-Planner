@@ -1,5 +1,6 @@
 package com.moroccanvviptrip.api.mvtapi.utils;
 
+import com.moroccanvviptrip.api.mvtapi.web.exception.FileStorageException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -24,18 +25,18 @@ public class FileStorageService {
         try {
             Files.createDirectories(rootLocation);
         } catch (IOException e) {
-            throw new RuntimeException("Could not initialize storage directory!", e);
+            throw new FileStorageException("Could not initialize storage directory!", e);
         }
     }
 
     public String store(MultipartFile file) {
         if (file.isEmpty()) {
-            throw new RuntimeException("Failed to store empty file.");
+            throw new FileStorageException("Failed to store empty file.");
         }
 
         String contentType = file.getContentType();
         if (contentType == null || !contentType.startsWith("image/")) {
-            throw new RuntimeException("Only image files are allowed.");
+            throw new FileStorageException("Only image files are allowed.");
         }
 
         String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
@@ -44,7 +45,7 @@ public class FileStorageService {
         try {
             Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to store file.", e);
+            throw new FileStorageException("Failed to store file.", e);
         }
 
         return fileName;
@@ -57,10 +58,10 @@ public class FileStorageService {
             if (resource.exists() || resource.isReadable()) {
                 return resource;
             } else {
-                throw new RuntimeException("Could not read file: " + fileName);
+                throw new FileStorageException("Could not read file: " + fileName);
             }
         } catch (MalformedURLException e) {
-            throw new RuntimeException("Could not read file: " + fileName, e);
+            throw new FileStorageException("Could not read file: " + fileName, e);
         }
     }
 
@@ -68,10 +69,10 @@ public class FileStorageService {
         try {
             Path file = rootLocation.resolve(fileName).normalize();
             if (!Files.deleteIfExists(file)) {
-                throw new RuntimeException("File not found: " + fileName);
+                throw new FileStorageException("File not found: " + fileName);
             }
         } catch (IOException e) {
-            throw new RuntimeException("Failed to delete file: " + fileName, e);
+            throw new FileStorageException("Failed to delete file: " + fileName, e);
         }
     }
 }

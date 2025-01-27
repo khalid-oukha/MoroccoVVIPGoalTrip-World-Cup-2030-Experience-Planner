@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -13,6 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class ArticleResponseVm {
     private UUID id;
-    private String title;
     private String content;
+    private String imageUrl;
+    private LocalDateTime createdAt;
 }

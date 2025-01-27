@@ -6,6 +6,7 @@ import com.moroccanvviptrip.api.mvtapi.web.VM.ActivityResponseVm;
 import com.moroccanvviptrip.api.mvtapi.web.dto.Activity.ActivityRequestDto;
 import com.moroccanvviptrip.api.mvtapi.web.dto.Activity.ActivityUpdateDto;
 import com.moroccanvviptrip.api.mvtapi.web.mapper.ActivityMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -51,14 +52,14 @@ public class ActivityController {
     }
 
     @PostMapping
-    public ResponseEntity<ActivityResponseVm> create(@RequestBody ActivityRequestDto activityRequestDto) {
+    public ResponseEntity<ActivityResponseVm> create(@Valid @RequestBody ActivityRequestDto activityRequestDto) {
         Activity activity = activityService.create(activityRequestDto);
         ActivityResponseVm response = activityMapper.toResponseVm(activity);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ActivityResponseVm> update(@PathVariable UUID id, @RequestBody ActivityUpdateDto activityUpdateDto) {
+    public ResponseEntity<ActivityResponseVm> update(@Valid @PathVariable UUID id, @RequestBody ActivityUpdateDto activityUpdateDto) {
         Activity activity = activityService.update(id, activityUpdateDto);
         ActivityResponseVm response = activityMapper.toResponseVm(activity);
         return ResponseEntity.status(HttpStatus.OK).body(response);

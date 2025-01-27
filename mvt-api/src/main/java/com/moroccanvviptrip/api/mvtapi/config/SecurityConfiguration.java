@@ -44,7 +44,8 @@ public class SecurityConfiguration {
                                 "/v3/api-docs/**",
                                 "/swagger-resources",
                                 "/swagger-resources/**",
-                                "/webjars/**"
+                                "/webjars/**",
+                                "/api/v1/files/**"
                         ).permitAll()
 
                         .requestMatchers("/api/v1/auth/**").permitAll()
