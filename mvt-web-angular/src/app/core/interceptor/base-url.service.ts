@@ -7,7 +7,7 @@ import {environment} from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class BaseUrlService implements HttpInterceptor{
+export class BaseUrlInterceptor implements HttpInterceptor{
 
   constructor() { }
 
