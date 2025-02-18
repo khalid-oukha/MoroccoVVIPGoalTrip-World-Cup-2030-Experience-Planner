@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import * as url from 'node:url';
 import {environment} from '../../../environments/environment';
 
 @Injectable({
@@ -9,14 +8,20 @@ import {environment} from '../../../environments/environment';
 })
 export class BaseUrlInterceptor implements HttpInterceptor{
 
-  constructor() { }
+  constructor() {
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const isRelativeUrl = !req.url.startsWith('http');
 
-    const clonedRequest = isRelativeUrl
-      ? req.clone({ url: `${environment.apiUrl}${req.url}` })
+    if (req.url.includes('assets')) {
+      return next.handle(req);
+    }
+    const apiReq = isRelativeUrl
+      ? req.clone({url: `${environment.apiUrl}${req.url}`})
       : req;
-    return next.handle(clonedRequest);
+    console.log('Modified request URL:', apiReq.url); // Add this line
+
+    return next.handle(apiReq);
   }
 }

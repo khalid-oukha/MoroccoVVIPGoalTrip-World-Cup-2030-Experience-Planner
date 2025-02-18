@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import {AuthService} from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -14,16 +15,19 @@ export class SignInComponent implements OnInit {
   submitted = false;
   passwordTextType!: boolean;
 
-  constructor(private readonly _formBuilder: FormBuilder, private readonly _router: Router) {}
+  constructor(private authService:AuthService,
+              private fb:FormBuilder,
+              private router:Router) {
 
+  }
   onClick() {
     console.log('Button clicked');
   }
 
   ngOnInit(): void {
-    this.form = this._formBuilder.group({
+    this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
@@ -37,13 +41,20 @@ export class SignInComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    if (this.form.invalid) return;
+
     const { email, password } = this.form.value;
-
-    // stop here if form is invalid
-    if (this.form.invalid) {
-      return;
-    }
-
-    this._router.navigate(['/']);
+console.log('email:', email);
+console.log('password:', password);
+    this.authService.login({ email, password }).subscribe({
+      next: () => {
+        // Navigate only on successful login
+        this.router.navigate(['/']);
+      },
+      error: (error) => {
+        console.error('Login failed:', error);
+        // Add error message handling here
+      }
+    });
   }
 }

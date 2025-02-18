@@ -7,7 +7,7 @@
 
   <div routerLink="/dashboard">
     <app-button full impact="bold" tone="light" shape="rounded" size="medium">
-      <svg-icon src="assets/icons/google-logo.svg" [svgClass]="'h-6 w-6 mr-2'"> </svg-icon>
+      <svg-icon src="./assets/icons/google-logo.svg" [svgClass]="'h-6 w-6 mr-2'"> </svg-icon>
       Log in with Google
     </app-button>
   </div>
@@ -33,9 +33,9 @@
           Email address
         </label>
       </div>
-      <div *ngIf="submitted && f['email'].errors" class="is__invalid-error">
+      <div *ngIf="submitted && f['email'].errors" class="text-error-300 mt-1 text-sm">
         <div *ngIf="f['email'].errors?.['required']">Required field</div>
-        <div *ngIf="f['email'].errors?.['email']">Email must be an email address valid</div>
+        <div *ngIf="f['email'].errors?.['email']">Email must be a valid email address</div>
       </div>
     </div>
 
@@ -64,8 +64,9 @@
           </svg-icon>
         </span>
       </div>
-      <div *ngIf="submitted && f['password'].errors" class="is__invalid-error">
-        <div *ngIf="f['password'].errors['required']">Required field</div>
+      <div *ngIf="submitted && f['password'].errors" class="text-error-300 mt-1 text-sm">
+        <div *ngIf="f['password'].errors?.['required']">Required field</div>
+        <div *ngIf="f['password'].errors?.['minlength']">Must be at least 6 characters</div>
       </div>
     </div>
   </div>

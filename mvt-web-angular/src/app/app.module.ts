@@ -5,9 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {SharedModule} from './shared/shared.module';
 import {NgxSonnerToaster} from 'ngx-sonner';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {BaseUrlInterceptor} from './core/interceptor/base-url.service';
-import {AuthorizationHeaderInterceptor} from './core/interceptor/authorization-header.service';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {BaseUrlInterceptor} from './core/interceptor/base-url.interceptor';
+import {AuthorizationHeaderInterceptor} from './core/interceptor/authorization-header.interceptor';
 
 
 @NgModule({
@@ -18,6 +18,7 @@ import {AuthorizationHeaderInterceptor} from './core/interceptor/authorization-h
     BrowserModule,
     AppRoutingModule,
     SharedModule,
+    HttpClientModule,
     NgxSonnerToaster
   ],
   providers: [

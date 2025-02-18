@@ -1,5 +1,6 @@
 // const colors = require('tailwindcss/colors');
 
+const {cyan, yellow, red, green, emerald, gray, slate} = require("tailwindcss/colors");
 module.exports = {
   prefix: '',
   mode: 'jit',
@@ -84,6 +85,35 @@ module.exports = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        error: {
+          100: '#fee2e2',
+          200: '#fca5a5',
+          300: '#ef4444',
+          400: '#7f1d1d',
+          DEFAULT: '#dc2626', // 600 shade as default
+        },
+        success: {
+          100: '#86efac',
+          200: '#16a34a',
+          300: '#14532d',
+          DEFAULT: '#16a34a', // 600 shade as default
+        },
+        warning: {
+          100: '#fbbf24',
+          200: '#d97706',
+          300: '#92400e',
+          DEFAULT: '#d97706', // 600 shade as default
+        },
+        info: {
+          100: '#a5f3fc',
+          200: '#22d3ee',
+          300: '#0891b2',
+          400: '#155e75',
+          DEFAULT: '#0891b2', // 600 shade as default
+        },
+        danger: red,
+        light: gray,
+        dark: slate,
       },
     },
     fontFamily: {
