@@ -98,19 +98,5 @@ export const dummyData: User[] = [
     selected: false,
     status: 1,
     created_at: '2024-10-26T12:34:56Z',
-  },
-  {
-    id: 8,
-    name: 'Emma Wilson',
-    age: 27,
-    username: 'emmawilson',
-    email: 'emma.wilson@example.com',
-    phone: '+1-202-555-0175',
-    website: 'emmawilson.tech',
-    occupation: 'DevOps Engineer',
-    hobbies: ['automation', 'gaming', 'blogging'],
-    selected: true,
-    status: 3,
-    created_at: '2024-10-28T12:34:56Z',
-  },
+  }
 ];

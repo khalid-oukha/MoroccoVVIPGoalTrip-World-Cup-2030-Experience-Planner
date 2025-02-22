@@ -11,8 +11,7 @@ export class Menu {
           label: 'Dashboard',
           route: '/dashboard',
           children: [
-            { label: 'Nfts', route: '/dashboard/nfts' },
-            // { label: 'Podcast', route: '/dashboard/podcast' },
+            { label: 'users', route: '/dashboard/users' },
           ],
         },
         {
@@ -22,9 +21,6 @@ export class Menu {
           children: [
             { label: 'Sign up', route: '/auth/sign-up' },
             { label: 'Sign in', route: '/auth/sign-in' },
-            { label: 'Forgot Password', route: '/auth/forgot-password' },
-            { label: 'New Password', route: '/auth/new-password' },
-            { label: 'Two Steps', route: '/auth/two-steps' },
           ],
         },
         {
@@ -36,28 +32,12 @@ export class Menu {
             { label: '500', route: '/errors/500' },
           ],
         },
-        {
-          icon: 'assets/icons/heroicons/outline/cube.svg',
-          label: 'Components',
-          route: '/components',
-          children: [{ label: 'Table', route: '/components/table' }],
-        },
       ],
     },
     {
-      group: 'Collaboration',
+      group: 'Management',
       separator: true,
       items: [
-        {
-          icon: 'assets/icons/heroicons/outline/download.svg',
-          label: 'Download',
-          route: '/download',
-        },
-        {
-          icon: 'assets/icons/heroicons/outline/gift.svg',
-          label: 'Gift Card',
-          route: '/gift',
-        },
         {
           icon: 'assets/icons/heroicons/outline/users.svg',
           label: 'Users',
@@ -65,6 +45,7 @@ export class Menu {
         },
       ],
     },
+
     {
       group: 'Config',
       separator: false,
