@@ -8,10 +8,11 @@ describe('ResponsiveHelperComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ResponsiveHelperComponent]
-    })
-    .compileComponents();
+    imports: [ResponsiveHelperComponent],
+}).compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(ResponsiveHelperComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -8,10 +8,11 @@ describe('AuthComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AuthComponent]
-    })
-    .compileComponents();
+    imports: [AuthComponent],
+}).compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(AuthComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -1,6 +1,6 @@
-import {booleanAttribute, Component, EventEmitter, input, Input, OnInit, Output} from '@angular/core';
-import {cx} from '../../utils/ckassnames';
-
+import { Component, EventEmitter, OnInit, Output, input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { cx } from '../../utils/ckassnames';
 
 type ButtonProps = {
   impact: 'bold' | 'light' | 'none';
@@ -8,14 +8,14 @@ type ButtonProps = {
   shape: 'square' | 'rounded' | 'pill';
   tone: 'primary' | 'danger' | 'success' | 'warning' | 'info' | 'light';
   shadow: 'none' | 'small' | 'medium' | 'large';
-}
+};
 
 @Component({
   selector: 'app-button',
-  standalone: false,
-
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './button.component.html',
-  styleUrl: './button.component.scss'
+  styleUrl: './button.component.scss',
 })
 export class ButtonComponent implements OnInit {
   impact = input<ButtonProps['impact']>('none');
