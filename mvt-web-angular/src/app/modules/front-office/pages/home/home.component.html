@@ -1,0 +1,156 @@
+<section class="container mx-auto px-4 py-16">
+  <!-- Hero Section -->
+  <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+    <div class="space-y-8 relative z-10">
+      <div class="absolute -top-6 -left-6 w-24 h-24 bg-primary/10 rounded-full blur-xl"></div>
+      <h1 class="text-4xl md:text-5xl font-poppins font-bold leading-tight text-white">
+        Craft Your Ultimate
+        <span class="text-primary">Morocco 2030</span>
+        Experience
+      </h1>
+      <p class="text-gray-300 text-lg md:text-xl">
+        Seamlessly plan your World Cup journey with intelligent city routing, real-time budget tracking,
+        and culturally-rich activity suggestions.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <button class="bg-primary text-white px-8 py-4 rounded-xl hover:bg-primary/90 transition-all
+                    hover:shadow-lg hover:-translate-y-1 shadow-lg shadow-primary/30">
+          Start Planning Now →
+        </button>
+        <button class="border-2 border-gray-600 text-gray-300 px-8 py-4 rounded-xl hover:border-primary
+                    transition-colors hover:text-primary">
+          Explore Features
+        </button>
+      </div>
+    </div>
+
+    <!-- Modern Image Grid -->
+    <div class="grid grid-cols-3 grid-rows-5 gap-3 h-[500px] relative">
+      <!-- Main Image -->
+      <div class="col-span-2 row-span-3 relative group cursor-pointer
+              rounded-2xl overflow-hidden transform-gpu">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+        <img ngSrc="assets/home/taghazout.jpg" alt="Marrakech"
+             class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+             height="853" width="1280">
+        <div class="absolute bottom-4 left-4 text-white z-10">
+          <span class="text-sm bg-gray-800/80 px-3 py-1 rounded-full backdrop-blur-sm">Featured Destination</span>
+          <h3 class="text-xl font-semibold mt-2 drop-shadow-lg">Marrakech Stadium</h3>
+        </div>
+      </div>
+
+      <!-- Secondary Image 1 -->
+      <div class="col-span-1 row-span-2 relative group cursor-pointer
+              clip-path-polygon-secondary transform-gpu">
+        <div class="absolute inset-0 bg-gradient-to-br from-black/50 to-transparent"></div>
+        <img ngSrc="assets/home/fes.jpg" alt="Fes"
+             class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+             height="853" width="1280">
+        <div class="absolute bottom-4 left-4 text-white z-10">
+          <span class="text-sm bg-gray-800/80 px-3 py-1 rounded-full backdrop-blur-sm">Cultural Hub</span>
+        </div>
+      </div>
+
+      <!-- Secondary Image 2 -->
+      <div class="col-span-2 row-span-2 relative group cursor-pointer
+              clip-path-polygon-main transform-gpu">
+        <div class="absolute inset-0 bg-gradient-to-tr from-black/50 to-transparent"></div>
+        <img ngSrc="assets/home/zazate.jpg" alt="Zazate"
+             class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+             height="853" width="1280">
+        <div class="absolute bottom-4 right-4 text-white z-10 text-right">
+          <h3 class="text-xl font-semibold drop-shadow-lg">Atlas Mountains</h3>
+          <p class="text-sm text-gray-300">Traditional Berber villages</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Features Grid -->
+  <div class="grid md:grid-cols-3 gap-6 mt-24">
+    <div class="bg-card p-8 rounded-2xl border border-border hover:border-primary/30 transition-all">
+      <div class="w-14 h-14 rounded-lg bg-primary/10 mb-6 flex items-center justify-center">
+        <i class="fas fa-route text-primary text-2xl"></i>
+      </div>
+      <h3 class="text-xl font-semibold mb-3">AI-Powered Itinerary</h3>
+      <p class="text-muted-foreground">Machine learning optimized routes with stadium access and local transit integration</p>
+    </div>
+    <div class="bg-card p-8 rounded-2xl border border-border hover:border-primary/30 transition-all">
+      <div class="w-14 h-14 rounded-lg bg-primary/10 mb-6 flex items-center justify-center">
+        <i class="fas fa-coins text-primary text-2xl"></i>
+      </div>
+      <h3 class="text-xl font-semibold mb-3">Dynamic Budgeting</h3>
+      <p class="text-muted-foreground">Real-time expense tracking with multi-currency support and price alerts</p>
+    </div>
+    <div class="bg-card p-8 rounded-2xl border border-border hover:border-primary/30 transition-all">
+      <div class="w-14 h-14 rounded-lg bg-primary/10 mb-6 flex items-center justify-center">
+        <i class="fas fa-tag text-primary text-2xl"></i>
+      </div>
+      <h3 class="text-xl font-semibold mb-3">Exclusive Deals</h3>
+      <p class="text-muted-foreground">Curated local experiences and verified accommodation partnerships</p>
+    </div>
+  </div>
+
+  <!-- Itinerary Preview -->
+  <div class="bg-card rounded-2xl p-8 mt-24 border border-border">
+    <h2 class="text-3xl font-bold mb-12">Sample Cultural Itinerary</h2>
+    <div class="space-y-8 relative">
+      <!-- Timeline -->
+      <div class="absolute left-6 top-0 bottom-0 w-1 bg-border/20 rounded-full hidden md:block"></div>
+
+      <div class="flex gap-8 items-start group">
+        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center
+                    shrink-0 mt-1 group-hover:bg-primary/20 transition-colors">
+          <i class="fas fa-plane-arrival text-primary"></i>
+        </div>
+        <div class="flex-1 pb-8">
+          <h4 class="font-semibold text-lg mb-2">Casablanca Arrival</h4>
+          <p class="text-muted-foreground">Private transfer to Medina-inspired riad accommodation</p>
+          <div class="mt-4 aspect-video rounded-xl bg-muted/20 overflow-hidden"></div>
+        </div>
+      </div>
+
+      <div class="flex gap-8 items-start group">
+        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center
+                    shrink-0 mt-1 group-hover:bg-primary/20 transition-colors">
+          <i class="fas fa-futbol text-primary"></i>
+        </div>
+        <div class="flex-1 pb-8">
+          <h4 class="font-semibold text-lg mb-2">Stadium Tour</h4>
+          <p class="text-muted-foreground">Guided exploration of Mohammed V Stadium</p>
+          <div class="mt-4 aspect-video rounded-xl bg-muted/20 overflow-hidden"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Features Grid -->
+<section class="bg-card border-y border-border">
+  <div class="container mx-auto px-4 py-16">
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="p-6 rounded-xl bg-background">
+        <div class="w-12 h-12 bg-primary/10 rounded-lg mb-4"></div>
+        <h3 class="text-xl font-poppins font-semibold mb-2">Smart Itinerary Builder</h3>
+        <p class="text-muted-foreground">Drag-and-drop interface with automatic travel time calculations</p>
+      </div>
+      <!-- Add more feature cards -->
+    </div>
+  </div>
+</section>
+
+<!-- Itinerary Preview -->
+<section class="container mx-auto px-4 py-16">
+  <div class="max-w-4xl mx-auto">
+    <div class="bg-card rounded-xl p-6 shadow-custom">
+      <h2 class="text-3xl font-poppins font-bold mb-8">Sample Journey</h2>
+      <div class="space-y-6">
+        <div class="border-l-4 border-primary pl-4">
+          <div class="flex items-center gap-4">
+            <div class="w-8 h-8 bg-primary rounded-full"></div>
+            <h4 class="font-semibold">Marrakech Arrival</h4>
+          </div>
+        </div>
+        <!-- Add more timeline items -->
+      </div>
+    </div>
+  </div>
+</section>

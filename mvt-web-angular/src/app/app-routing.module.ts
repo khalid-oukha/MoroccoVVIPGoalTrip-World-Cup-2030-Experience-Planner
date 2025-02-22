@@ -10,6 +10,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules/layout/layout.module').then((m) => m.LayoutModule),
   },
   {
+    path:'planner',
+    loadChildren: () => import('./modules/front-office/front-office.module').then((m) => m.FrontOfficeModule),
+  },
+  {
     path: 'auth',
     canActivate:[isNotAuthenticatedGuard],
     loadChildren: () => import('./modules/auth/auth.module').then((m) => m.AuthModule),

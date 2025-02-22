@@ -1,0 +1,28 @@
+<div class="relative">
+  <button (click)="toggleMenu()" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+    <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+      <span class="text-sm">JD</span>
+    </div>
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+    </svg>
+  </button>
+
+  <div *ngIf="isMenuOpen" class="absolute right-0 top-12 w-48 bg-card border border-border rounded-lg shadow-lg py-2 z-50">
+    <div class="px-4 py-3 border-b border-border">
+      <p class="text-sm font-medium">John Doe</p>
+      <p class="text-xs text-muted-foreground">johnemail.com</p>
+    </div>
+    <ul class="space-y-1">
+      <li>
+        <a class="block px-4 py-2 text-sm hover:bg-card-hover transition-colors">Profile</a>
+      </li>
+      <li>
+        <a class="block px-4 py-2 text-sm hover:bg-card-hover transition-colors">Settings</a>
+      </li>
+      <li class="border-t border-border">
+        <a class="block px-4 py-2 text-sm hover:bg-card-hover transition-colors">Logout</a>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+/* home.component.scss */
+:host {
+  @apply bg-gray-900 text-white;
+}
+
+.clip-path-polygon-main {
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 90% 100%, 0 100%);
+
+  @media (max-width: 768px) {
+    clip-path: none;
+  }
+}
+
+.clip-path-polygon-secondary {
+  clip-path: polygon(0 0, 100% 0, 100% 75%, 60% 100%, 0 100%);
+
+  @media (max-width: 768px) {
+    clip-path: none;
+  }
+}
+
+.text-primary {
+  @apply text-blue-400;
+}
+
+.border-border {
+  @apply border-gray-700;
+}
+
+.bg-card {
+  @apply bg-gray-800;
+}
+
+.text-muted-foreground {
+  @apply text-gray-400;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .grid-image-layout {
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-image-layout {
+    height: auto;
+    grid-template-rows: 300px 200px 250px;
+    gap: 1rem;
+  }
+}
