@@ -7,6 +7,7 @@ import com.moroccanvviptrip.api.mvtapi.repository.ActivityRepository;
 import com.moroccanvviptrip.api.mvtapi.services.ActivityService;
 import com.moroccanvviptrip.api.mvtapi.services.CategoryService;
 import com.moroccanvviptrip.api.mvtapi.services.CityService;
+import com.moroccanvviptrip.api.mvtapi.utils.FileStorageService;
 import com.moroccanvviptrip.api.mvtapi.utils.specifications.ActivitySpecifications;
 import com.moroccanvviptrip.api.mvtapi.web.dto.Activity.ActivityRequestDto;
 import com.moroccanvviptrip.api.mvtapi.web.dto.Activity.ActivityUpdateDto;
@@ -17,6 +18,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
@@ -29,6 +32,7 @@ public class ActivityServiceImpl implements ActivityService {
     private final CityService cityService;
     private final ActivityMapper activityMapper;
     private final ActivitySpecifications activitySpecifications;
+    private final FileStorageService fileStorageService;
 
     @Override
     public Activity findById(UUID id) {
@@ -48,19 +52,31 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
+    @Transactional
     public Activity create(ActivityRequestDto activityRequestDto) {
+        MultipartFile imageFile = activityRequestDto.getImageUri();
+        if (imageFile == null || imageFile.isEmpty()) {
+            throw new IllegalArgumentException("Image file is required.");
+        }
+
         Category category = categoryService.findById(activityRequestDto.getCategoryId());
         City city = cityService.findById(activityRequestDto.getCityId());
 
         Activity activity = activityMapper.toEntity(activityRequestDto);
 
+        String fileName = fileStorageService.store(imageFile);
+        String imageUrl = "http://localhost:8080/api/v1/files/" + fileName;
+        activity.setImageUri(imageUrl);
+
         activity.setCategory(category);
         activity.setCity(city);
         activity.setAvailable(true);
+
         return activityRepository.save(activity);
     }
 
     @Override
+    @Transactional
     public Activity update(UUID id, ActivityUpdateDto activityUpdateDto) {
         Activity existingActivity = activityRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Activity not found with ID: " + id));
@@ -77,13 +93,33 @@ public class ActivityServiceImpl implements ActivityService {
             existingActivity.setCity(city);
         }
 
+        MultipartFile newImageFile = activityUpdateDto.getImageUri();
+        if (newImageFile != null && !newImageFile.isEmpty()) {
+            if (existingActivity.getImageUri() != null && !existingActivity.getImageUri().isEmpty()) {
+                String oldFileName = existingActivity.getImageUri()
+                        .substring(existingActivity.getImageUri().lastIndexOf("/") + 1);
+                fileStorageService.delete(oldFileName);
+            }
+
+            String newFileName = fileStorageService.store(newImageFile);
+            String newImageUrl = "http://localhost:8080/api/v1/files/" + newFileName;
+            existingActivity.setImageUri(newImageUrl);
+        }
+
         return activityRepository.save(existingActivity);
     }
 
     @Override
+    @Transactional
     public void delete(UUID id) {
         Activity existingActivity = activityRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Activity not found with ID: " + id));
+
+        if (existingActivity.getImageUri() != null && !existingActivity.getImageUri().isEmpty()) {
+            String fileName = existingActivity.getImageUri()
+                    .substring(existingActivity.getImageUri().lastIndexOf("/") + 1);
+            fileStorageService.delete(fileName);
+        }
 
         activityRepository.delete(existingActivity);
     }

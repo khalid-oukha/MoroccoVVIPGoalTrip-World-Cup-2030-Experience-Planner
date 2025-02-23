@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1740329655852-1
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: activity_images
+            constraintName: fk_activity_images_on_activity
+  - changeSet:
+      id: 1740329655852-2
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropTable:
+            cascadeConstraints: true
+            tableName: activity_images
+
