@@ -33,8 +33,7 @@ public class Activity {
     @Column(name = "location", nullable = false)
     private String location;
 
-    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ActivityImage> images;
+    private String imageUri;
 
     @OneToOne(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
     private Article article;

@@ -32,4 +32,8 @@ export class ActivitesService {
 
     return this.http.get<Page<Activity>>(this.apiUrl, { params });
   }
+
+  findById(id: string): Observable<Activity> {
+    return this.http.get<Activity>(`${this.apiUrl}/${id}`);
+  }
 }

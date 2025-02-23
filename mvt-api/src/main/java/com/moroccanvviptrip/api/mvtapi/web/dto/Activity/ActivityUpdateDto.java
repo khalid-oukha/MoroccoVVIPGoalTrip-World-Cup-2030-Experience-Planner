@@ -1,13 +1,12 @@
 package com.moroccanvviptrip.api.mvtapi.web.dto.Activity;
 
 import com.moroccanvviptrip.api.mvtapi.utils.annotation.Trimmed;
-import com.moroccanvviptrip.api.mvtapi.web.dto.ActivItyImage.ActivityImageDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 
 @Getter
 @Setter
@@ -23,5 +22,5 @@ public class ActivityUpdateDto {
     private Boolean available;
     private Long categoryId;
     private Long cityId;
-    private List<ActivityImageDto> images;
+    private MultipartFile imageUri;
 }
