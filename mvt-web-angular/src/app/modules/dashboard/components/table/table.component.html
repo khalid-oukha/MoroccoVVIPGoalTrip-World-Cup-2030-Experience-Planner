@@ -1,0 +1,81 @@
+<!-- generic-table.component.html -->
+<div class="rounded-lg border border-border bg-card shadow-sm overflow-hidden">
+  <!-- Table Header -->
+  <div class="p-4 border-b border-border flex items-center justify-between">
+    <div class="flex gap-2">
+      <ng-content select="[table-header]"></ng-content>
+    </div>
+    <div class="relative" *ngIf="config.searchable">
+      <input type="text" placeholder="Search..."
+             [(ngModel)]="searchTerm"
+             class="pl-8 pr-4 py-2 rounded-md border border-border text-sm w-64
+                    focus:outline-none focus:ring-2 focus:ring-primary/50">
+      <svg class="w-4 h-4 absolute left-2 top-3 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Table Content -->
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-border">
+      <thead class="bg-muted/20">
+      <tr>
+        <th *ngFor="let column of columns"
+            class="px-6 py-4 text-left text-sm font-semibold text-foreground relative
+                     hover:bg-muted/10 transition-colors cursor-col-resize"
+            [style.minWidth]="column.minWidth || '100px'"
+            [style.maxWidth]="column.maxWidth || 'none'"
+            [style.width]="column.width || 'auto'"
+            (mousedown)="startResize($event, column)">
+          <div class="flex items-center justify-between">
+            {{ column.header }}
+            <span *ngIf="column.sortable" class="ml-2 opacity-50 hover:opacity-100">
+                ↕
+              </span>
+          </div>
+        </th>
+      </tr>
+      </thead>
+      <tbody class="divide-y divide-border bg-card">
+      <tr *ngFor="let item of filteredData" class="hover:bg-muted/5 transition-colors">
+        <td *ngFor="let column of columns" class="px-6 py-4 text-sm">
+          <ng-container *ngIf="column.cellTemplate; else defaultCell">
+            <ng-template
+              [ngTemplateOutlet]="column.cellTemplate"
+              [ngTemplateOutletContext]="{ $implicit: item }">
+            </ng-template>
+          </ng-container>
+
+          <ng-template #defaultCell>
+              <span [class.text-muted-foreground]="!column.primary">
+                {{ getProperty(item, column.key) }}
+              </span>
+          </ng-template>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="border-t border-border px-6 py-4 bg-muted/10" *ngIf="config.paginated">
+    <nav class="flex items-center justify-between">
+      <div class="text-sm text-muted-foreground">
+        Showing {{ (currentPage - 1) * pageSize + 1 }} to {{ currentPage * pageSize }} of {{ totalItems }} results
+      </div>
+      <div class="flex gap-2">
+        <button (click)="previousPage()" [disabled]="currentPage === 1"
+                class="px-3 py-1.5 rounded-md text-sm font-medium transition-colors"
+                [ngClass]="currentPage === 1 ? 'text-muted-foreground cursor-not-allowed' : 'text-foreground hover:bg-muted/20'">
+          Previous
+        </button>
+        <button (click)="nextPage()" [disabled]="currentPage * pageSize >= totalItems"
+                class="px-3 py-1.5 rounded-md text-sm font-medium transition-colors"
+                [ngClass]="currentPage * pageSize >= totalItems ? 'text-muted-foreground cursor-not-allowed' : 'text-foreground hover:bg-muted/20'">
+          Next
+        </button>
+      </div>
+    </nav>
+  </div>
+</div>

@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { TableComponent } from '../../components/table/table.component';
 
 @Component({
-  selector: 'app-user',
+  selector: 'app-activites',
   standalone: true,
   imports: [TableComponent],
-  templateUrl: './user.component.html',
-  styleUrl: './user.component.scss',
+  templateUrl: './activites.component.html',
+  styleUrl: './activites.component.scss',
 })
-export class UserComponent {}
+export class ActivitesComponent {}

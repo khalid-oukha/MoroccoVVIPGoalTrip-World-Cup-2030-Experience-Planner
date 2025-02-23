@@ -1,4 +1,4 @@
-<div class="relative">
+<div *ngIf="authService.isLoggedIn()" class="relative">
   <button (click)="toggleMenu()" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
     <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
       <span class="text-sm">JD</span>

@@ -1,0 +1,33 @@
+<!-- Updated Card Component -->
+<div class="bg-background rounded-lg border border-primary/20 hover:border-primary/40
+            transition-all duration-300 h-full flex flex-col shadow-sm hover:shadow-md
+            hover:-translate-y-0.5">
+  <!-- Image Container with Modified Aspect Ratio -->
+  <div class="relative pt-[60%] rounded-t-lg overflow-hidden">
+    <img [src]="imageUrl" [alt]="title"
+         class="absolute top-0 left-0 w-full h-full object-cover
+                transition-transform duration-300 hover:scale-105">
+  </div>
+
+  <!-- Content Area -->
+  <div class="p-3 flex-1 flex flex-col gap-1.5">
+    <h3 class="text-base font-medium text-foreground line-clamp-1">{{ title }}</h3>
+    <p class="text-muted-foreground text-xs line-clamp-2 mb-1.5 leading-snug">
+      {{ description }}
+    </p>
+
+    <!-- Compact Button -->
+    <button class="mt-auto bg-primary/5 hover:bg-primary/10 text-primary
+                  px-2 py-1.5 rounded-md flex items-center gap-1.5 w-full
+                  justify-center transition-colors text-xs">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24"
+           stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+           stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M12 5l0 14" />
+        <path d="M5 12l14 0" />
+      </svg>
+      Add to Plan
+    </button>
+  </div>
+</div>

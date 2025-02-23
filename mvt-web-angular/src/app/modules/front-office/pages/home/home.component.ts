@@ -4,13 +4,17 @@ import { NavbarComponent } from '../../../layout/components/navbar/navbar.compon
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from '../../../layout/components/sidebar/sidebar.component';
 import { HeaderComponent } from '../../components/header/header.component';
-import { NgOptimizedImage } from '@angular/common';
+import { NgIf, NgOptimizedImage } from '@angular/common';
+import { AuthService } from '../../../../core/services/auth.service';
+import { ActivityCardComponent } from '../../components/activity-card/activity-card.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FooterComponent, NavbarComponent, RouterOutlet, SidebarComponent, HeaderComponent, NgOptimizedImage],
+  imports: [NgOptimizedImage, NgIf, ActivityCardComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent {}
+export class HomeComponent {
+  constructor(public authService: AuthService) {}
+}

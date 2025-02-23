@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgIf } from '@angular/common';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-profile-menu',
@@ -10,8 +11,11 @@ import { NgIf } from '@angular/common';
 })
 export class ProfileMenuComponent {
   isMenuOpen = false;
-
+  constructor(protected authService: AuthService) {
+  }
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
+
+
 }
