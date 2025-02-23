@@ -6,22 +6,22 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
-    --card: 210 40% 96%;
-    --card-foreground: 240 0% 0%;
+    --background: 0 0% 95%;
+    --foreground: 222 47% 20%;  /* Darkened from 11% to 20% */
+    --card: 200 30% 93%;
+    --card-foreground: 222 47% 20%;  /* Darkened card text */
     --primary: 347 77% 50%;
     --primary-foreground: 0 0% 100%;
     --muted: 213 27% 84%;
-    --muted-foreground: 215 16% 47%;
+    --muted-foreground: 215 16% 30%;  /* Darkened from 47% to 40% */
     --destructive: 350 100% 40%;
     --destructive-foreground: 0 0% 98%;
-    --border: 214 32% 91%;
+    --border: 214 32% 85%;  /* Slightly darker borders */
   }
 
   .dark {
     --background: 0 0% 3.9%;
-    --foreground: 0 0% 95%;
+    --foreground: 210 40% 98%;
     --card: 0 0% 7%;
     --card-foreground: 0 0% 14.9%;
     --primary: 347 77% 50%;
@@ -153,6 +153,7 @@
     @apply pointer-events-auto block scale-100 animate-fade-in-up opacity-100 duration-200;
   }
 }
+
 
 /** Scroll bar **/
 @supports selector(::-webkit-scrollbar) {

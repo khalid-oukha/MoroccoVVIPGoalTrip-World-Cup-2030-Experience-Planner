@@ -31,7 +31,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) {
     this.initializeUser();
-    this.userDetails$.subscribe(user => {
+    this.userDetails$.subscribe((user) => {
       this.currentUser = user;
     });
   }
@@ -54,7 +54,7 @@ export class AuthService {
         }
       }),
       switchMap(() => this.fetchUserDetails()),
-      catchError((error) => this.handleError(error))
+      catchError((error) => this.handleError(error)),
     );
   }
 
@@ -70,14 +70,14 @@ export class AuthService {
       catchError((error) => {
         this.clearAuthData();
         return this.handleError(error);
-      })
+      }),
     );
   }
 
   fetchUserDetails(): Observable<IUser> {
     return this.http.get<IUser>('/auth/me').pipe(
       tap((user) => this.userDetails.next(user)),
-      catchError((error) => this.handleError(error))
+      catchError((error) => this.handleError(error)),
     );
   }
 
@@ -128,8 +128,8 @@ export class AuthService {
   // Add this method for async user validation
   isAuthenticated(): Observable<boolean> {
     return this.userDetails$.pipe(
-      map(user => !!user),
-      startWith(this.isLoggedIn()) // Initial sync check
+      map((user) => !!user),
+      startWith(this.isLoggedIn()), // Initial sync check
     );
   }
 
