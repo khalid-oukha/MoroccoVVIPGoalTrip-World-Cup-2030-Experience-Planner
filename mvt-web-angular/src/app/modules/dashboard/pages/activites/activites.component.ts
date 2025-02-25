@@ -9,11 +9,12 @@ import { Category } from '../../../../core/models/Category';
 import { CategoriesService } from '../../../../core/services/categories.service';
 import { City } from '../../../../core/models/City';
 import { CitiesService } from '../../../../core/services/cities.service';
+import { FormComponent } from '../../components/form/form.component';
 
 @Component({
   selector: 'app-activites',
   standalone: true,
-  imports: [TableComponent, NgClass, FormsModule, NgForOf, NgIf],
+  imports: [TableComponent, NgClass, FormsModule, NgForOf, NgIf, FormComponent],
   templateUrl: './activites.component.html',
   styleUrl: './activites.component.scss',
 })
@@ -26,24 +27,25 @@ export class ActivitesComponent implements OnInit {
   pageSize = 10;
   sort = 'id,asc';
 
-  // Filters
   cityId: number | null = null;
   categoryId: number | null = null;
   available: boolean | null = null;
   search: string = '';
+  showForm = false;
+  selectedActivityId?: string;
 
   columns = [
+    { key: 'imageUri', header: 'Image' },
     { key: 'name', header: 'Name' },
     { key: 'city.name', header: 'City' },
     { key: 'category.name', header: 'Category' },
     { key: 'available', header: 'Status' },
-    { key: 'category.imageUri', header: 'Image' },
   ];
 
   constructor(
     private activitiesService: ActivitesService,
     private categoriesService: CategoriesService,
-    private citiesService: CitiesService
+    private citiesService: CitiesService,
   ) {}
 
   ngOnInit() {
@@ -71,21 +73,43 @@ export class ActivitesComponent implements OnInit {
   }
 
   loadActivities() {
-    this.activitiesService.findAll(
-      this.cityId ?? undefined,
-      this.categoryId ?? undefined,
-      this.available ?? undefined,
-      this.search.trim() || undefined, // Use undefined instead of null
-      this.currentPage,
-      this.pageSize,
-      this.sort
-    ).subscribe({
-      next: (page) => {
-        this.page = page;
-        this.activities = page.content;
-      },
-      error: (error) => console.error('Error fetching activities:', error),
-    });
+    this.activitiesService
+      .findAll(
+        this.cityId ?? undefined,
+        this.categoryId ?? undefined,
+        this.available ?? undefined,
+        this.search.trim() || undefined,
+        this.currentPage,
+        this.pageSize,
+        this.sort,
+      )
+      .subscribe({
+        next: (page) => {
+          this.page = page;
+          this.activities = page.content;
+          console.log('Activities:', this.activities);
+        },
+        error: (error) => console.error('Error fetching activities:', error),
+      });
+  }
+
+  onAddNew() {
+    this.showForm = true;
+    this.selectedActivityId = undefined;
+  }
+
+  onFormSaved() {
+    this.showForm = false;
+    this.loadActivities();
+  }
+
+  onFormCancelled() {
+    this.showForm = false;
+  }
+
+  onEdit(activity: Activity) {
+    this.selectedActivityId = activity.id;
+    this.showForm = true;
   }
 
   onPageChange(page: number) {
@@ -105,12 +129,22 @@ export class ActivitesComponent implements OnInit {
     this.loadActivities();
   }
 
-  onEdit(activity: Activity) {
-    // Handle edit logic
-  }
-
   onDelete(activity: Activity) {
-    // Handle delete logic
+    if (confirm(`Are you sure you want to delete "${activity.name}"?`)) {
+      this.activitiesService.delete(activity.id).subscribe({
+        next: () => {
+          if (this.page) {
+            this.page.totalElements--;
+            this.page.content = this.page.content.filter(a => a.id !== activity.id);
+          }
+          this.activities = this.activities.filter(a => a.id !== activity.id);
+        },
+        error: (err) => {
+          console.error('Delete failed:', err);
+          alert('Error deleting activity');
+        }
+      });
+    }
   }
 
   onViewDetails(activity: Activity) {

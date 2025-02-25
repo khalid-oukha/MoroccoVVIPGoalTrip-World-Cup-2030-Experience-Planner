@@ -1,0 +1,110 @@
+<!-- activity-form.component.html -->
+<div class="p-6 max-w-4xl mx-auto">
+  <h2 class="text-2xl font-semibold mb-6 text-foreground dark:text-gray-100">
+    {{ activityId ? 'Edit Activity' : 'Create New Activity' }}
+  </h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Left Column -->
+      <div class="space-y-4">
+        <!-- Name -->
+        <div>
+          <label class="block text-sm font-medium text-foreground mb-2">Name *</label>
+          <input type="text" formControlName="name"
+                 class="w-full px-4 py-2 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent">
+          <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched"
+               class="text-red-500 text-sm mt-1">
+            Name is required
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label class="block text-sm font-medium text-foreground mb-2">Description *</label>
+          <textarea formControlName="description"
+                    class="w-full px-4 py-2 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent h-32"></textarea>
+          <div *ngIf="form.get('description')?.invalid && form.get('description')?.touched"
+               class="text-red-500 text-sm mt-1">
+            Description is required
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div>
+          <label class="block text-sm font-medium text-foreground mb-2">Location *</label>
+          <input type="text" formControlName="location"
+                 class="w-full px-4 py-2 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent">
+          <div *ngIf="form.get('location')?.invalid && form.get('location')?.touched"
+               class="text-red-500 text-sm mt-1">
+            Location is required
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="space-y-4">
+        <!-- Image Upload -->
+        <div>
+          <label class="block text-sm font-medium text-foreground mb-2">Image</label>
+          <div class="flex items-center gap-4">
+            <input type="file" (change)="onFileSelected($event)" accept="image/*"
+                   class="block w-full text-sm text-foreground file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90">
+          </div>
+          <img *ngIf="imagePreview" ngSrc="imagePreview"
+               class="mt-4 h-32 w-32 object-cover rounded-md border border-border">
+        </div>
+
+        <!-- Category and City -->
+        <div>
+          <label class="block text-sm font-medium text-foreground mb-2">Category *</label>
+          <select formControlName="categoryId"
+                  class="w-full px-4 py-2 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent">
+            <option [value]="null" disabled>Select Category</option>
+            <option *ngFor="let category of categories" [value]="category.id">
+              {{ category.name }}
+            </option>
+          </select>
+          <div *ngIf="form.get('categoryId')?.invalid && form.get('categoryId')?.touched"
+               class="text-red-500 text-sm mt-1">
+            Category is required
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-foreground mb-2">City *</label>
+          <select formControlName="cityId"
+                  class="w-full px-4 py-2 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent">
+            <option [value]="null" disabled>Select City</option>
+            <option *ngFor="let city of cities" [value]="city.id">
+              {{ city.name }}
+            </option>
+          </select>
+          <div *ngIf="form.get('cityId')?.invalid && form.get('cityId')?.touched"
+               class="text-red-500 text-sm mt-1">
+            City is required
+          </div>
+        </div>
+
+        <!-- Availability -->
+        <div class="flex items-center gap-2">
+          <input type="checkbox" formControlName="available" id="available"
+                 class="w-4 h-4 text-primary rounded border-border focus:ring-primary">
+          <label for="available" class="text-sm font-medium text-foreground">Available</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="flex justify-end gap-4 pt-6 border-t border-border">
+      <button type="button" (click)="onCancel()"
+              class="px-4 py-2 text-sm font-medium text-foreground bg-transparent hover:bg-muted/20 rounded-md transition-colors">
+        Cancel
+      </button>
+      <button type="submit" [disabled]="form.invalid"
+              class="px-4 py-2 text-sm font-medium text-primary-foreground bg-primary hover:bg-primary/90 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+        {{ activityId ? 'Update Activity' : 'Create Activity' }}
+      </button>
+    </div>
+  </form>
+</div>

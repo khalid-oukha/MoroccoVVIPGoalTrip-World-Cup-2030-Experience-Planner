@@ -36,4 +36,17 @@ export class ActivitesService {
   findById(id: string): Observable<Activity> {
     return this.http.get<Activity>(`${this.apiUrl}/${id}`);
   }
+
+  create(formData: FormData): Observable<Activity> {
+    return this.http.post<Activity>(this.apiUrl, formData);
+  }
+
+  update(id: string, formData: FormData): Observable<Activity> {
+    return this.http.put<Activity>(`${this.apiUrl}/${id}`, formData);
+  }
+
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
 }
