@@ -49,7 +49,7 @@
         <label class="block text-sm font-medium text-muted-foreground">Image</label>
         <img *ngIf="activity.imageUri"
              [src]="activity.imageUri"
-             class="mt-1 h-48 w-full object-cover rounded-md border border-border">
+             class="mt-1 h-48 w-full object-cover rounded-md border border-border" alt="">
       </div>
 
       <div class="grid grid-cols-2 gap-4">
@@ -73,7 +73,7 @@
         <div class="space-y-1">
           <label class="block text-sm font-medium text-muted-foreground">Category</label>
           <p class="w-full px-3 py-2 text-foreground bg-muted/5 rounded-md border border-border">
-            {{ activity.category?.name || 'N/A' }}
+            {{ activity.category?.name }}
           </p>
         </div>
 

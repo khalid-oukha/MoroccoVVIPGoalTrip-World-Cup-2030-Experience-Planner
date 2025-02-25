@@ -13,6 +13,7 @@ export class Menu {
           children: [
             { label: 'users', route: '/dashboard/users' },
             { label: 'activities', route: '/dashboard/activities' },
+            { label: 'categories', route: '/dashboard/categories' },
           ],
         },
         {
