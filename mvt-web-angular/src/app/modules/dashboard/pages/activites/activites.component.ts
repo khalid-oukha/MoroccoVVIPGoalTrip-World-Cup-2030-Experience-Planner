@@ -10,6 +10,7 @@ import { CategoriesService } from '../../../../core/services/categories.service'
 import { City } from '../../../../core/models/City';
 import { CitiesService } from '../../../../core/services/cities.service';
 import { FormComponent } from '../../components/form/form.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-activites',
@@ -33,6 +34,9 @@ export class ActivitesComponent implements OnInit {
   search: string = '';
   showForm = false;
   selectedActivityId?: string;
+  showDetails = false;
+  selectedActivityDetails?: Activity;
+
 
   columns = [
     { key: 'imageUri', header: 'Image' },
@@ -46,6 +50,7 @@ export class ActivitesComponent implements OnInit {
     private activitiesService: ActivitesService,
     private categoriesService: CategoriesService,
     private citiesService: CitiesService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -120,8 +125,16 @@ export class ActivitesComponent implements OnInit {
   }
 
   onFilterChange() {
-    this.currentPage = 0; // Reset to first page on filter change
+    this.currentPage = 0;
     this.loadActivities();
+  }
+
+  onViewDetails(activity: Activity) {
+    this.router.navigate(['/dashboard/activities', activity.id]);
+  }
+  onCloseDetails() {
+    this.showDetails = false;
+    this.selectedActivityDetails = undefined;
   }
 
   onSortChange(sort: string) {
@@ -147,7 +160,4 @@ export class ActivitesComponent implements OnInit {
     }
   }
 
-  onViewDetails(activity: Activity) {
-    // Handle view details logic
-  }
 }

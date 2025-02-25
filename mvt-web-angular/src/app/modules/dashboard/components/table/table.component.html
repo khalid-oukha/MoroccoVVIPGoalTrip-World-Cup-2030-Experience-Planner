@@ -1,67 +1,56 @@
-<!-- table.component.html -->
-<div class="rounded-lg border border-border shadow-sm overflow-hidden bg-background">
-  <div class="overflow-x-auto">
-    <table class="min-w-full divide-y  ">
-      <thead class="bg-primary ">
-      <tr>
-        <th *ngFor="let column of columns"
-            class="px-6 py-4 text-left text-sm font-semibold text-primary-foreground ">
-          {{ column.header }}
-        </th>
-        <th class="px-6 py-4 text-left text-sm font-semibold text-primary-foreground  ">Actions</th>
-      </tr>
-      </thead>
-      <tbody class="divide-y divide-border   ">
-      <tr *ngFor="let item of data" class="hover:bg-muted/5 dark:hover:bg-gray-800 transition-colors">
-        <td *ngFor="let column of columns" class="px-6 py-4 text-sm text-foreground dark:text-gray-300">
-          <ng-container *ngIf="isImage(getProperty(item, column.key)); else textCell">
-            <img [src]="getProperty(item, column.key)"
-                 class="h-12 w-12 rounded-full object-cover border-2 border-border dark:border-gray-600">
-          </ng-container>
-          <ng-template #textCell>
-              <span *ngIf="column.key === 'available'; else regularText">
-                <span class="px-2 py-1 rounded-full text-xs font-medium"
-                      [ngClass]="{
-                        'bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-400': getProperty(item, column.key),
-                        'bg-red-100 text-red-800 dark:bg-red-800/30 dark:text-red-400': !getProperty(item, column.key)
-                      }">
-                  {{ getProperty(item, column.key) ? 'Active' : 'Inactive' }}
-                </span>
-              </span>
-            <ng-template #regularText>
+<div class="overflow-x-auto">
+  <table class="min-w-full divide-y divide-border">
+    <thead class="bg-muted/10">
+    <tr>
+      <th *ngFor="let column of columns"
+          class="px-6 py-3 text-left text-sm font-medium text-foreground uppercase tracking-wider"
+          [ngClass]="{'min-w-[200px]': column.minWidth}">
+        {{ column.header }}
+      </th>
+      <th class="px-6 py-3 text-left text-sm font-medium text-foreground uppercase tracking-wider">
+        Actions
+      </th>
+    </tr>
+    </thead>
+    <tbody class="bg-background divide-y divide-border">
+    <tr *ngFor="let item of data" class="hover:bg-muted/10 transition-colors">
+      <td *ngFor="let column of columns" class="px-6 py-4 text-sm text-foreground">
+        <ng-container *ngIf="!column.cellTemplate; else customCell">
+          <img *ngIf="isImage(getProperty(item, column.key))"
+               [src]="getProperty(item, column.key)"
+               class="h-10 w-10 object-cover rounded-md">
+          <span *ngIf="!isImage(getProperty(item, column.key))">
               {{ getProperty(item, column.key) }}
-            </ng-template>
-          </ng-template>
-        </td>
-        <td class="px-6 py-4">
-          <div class="flex items-center gap-3">
-            <!-- View Details -->
-            <button class="text-primary hover:text-primary/80 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
-                    (click)="viewDetails.emit(item)">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-            </button>
+            </span>
+        </ng-container>
+        <ng-template #customCell>
+          <ng-container *ngTemplateOutlet="column.cellTemplate || null; context: {$implicit: item}"></ng-container>
+        </ng-template>
+      </td>
+      <td class="px-6 py-4 text-sm text-foreground flex items-center gap-2">
+        <!-- Edit Button -->
+        <button (click)="edit.emit(item)" class="text-primary hover:text-primary/90">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+          </svg>
+        </button>
 
-            <!-- Edit -->
-            <button class="text-emerald-600 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300 transition-colors"
-                    (click)="edit.emit(item)">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
-              </svg>
-            </button>
+        <!-- Delete Button -->
+        <button (click)="delete.emit(item)" class="text-red-500 hover:text-red-700">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+          </svg>
+        </button>
 
-            <!-- Delete -->
-            <button class="text-destructive hover:text-destructive/80 dark:text-red-400 dark:hover:text-red-300 transition-colors"
-                    (click)="delete.emit(item)">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-              </svg>
-            </button>
-          </div>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+        <!-- Details Button -->
+        <button (click)="viewDetails.emit(item)" class="text-primary hover:text-primary/90">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/>
+          </svg>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </div>
