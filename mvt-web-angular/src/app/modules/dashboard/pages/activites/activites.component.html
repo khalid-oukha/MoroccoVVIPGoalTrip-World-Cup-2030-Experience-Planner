@@ -1,5 +1,39 @@
-<!-- activites.component.html -->
-<div class="p-6">
+<div class="p-2">
+  <div class=" bottom-8 right-8">
+    <button
+      (click)="onAddNew()"
+      class="p-2 my-2 bg-primary text-primary-foreground  shadow-lg hover:bg-primary/90 transition-colors"
+    >+ New
+    </button>
+  </div>
+
+  <!-- Modal Backdrop -->
+  <div *ngIf="showForm" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+       [class.hidden]="!showForm">
+    <!-- Modal Content -->
+    <div class="bg-background rounded-lg shadow-xl w-full max-w-2xl relative"
+         (click)="$event.stopPropagation()">
+      <!-- Close Button -->
+      <button
+        (click)="onFormCancelled()"
+        class="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <!-- Form Component -->
+      <app-form
+        [activityId]="selectedActivityId"
+        [categories]="categories"
+        [cities]="cities"
+        (saved)="onFormSaved()"
+        (cancelled)="onFormCancelled()"
+      ></app-form>
+
+    </div>
+  </div>
   <!-- Filters -->
   <div class="flex gap-4 mb-6">
     <input

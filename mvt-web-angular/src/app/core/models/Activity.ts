@@ -12,5 +12,5 @@ export interface Activity {
   category: Category;
   city: City;
   article: Article;
-  images: string[];
+  imageUri: string;
 }

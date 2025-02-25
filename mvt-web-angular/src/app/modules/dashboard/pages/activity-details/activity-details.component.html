@@ -1,0 +1,96 @@
+<div *ngIf="activity" class="p-6 max-w-4xl mx-auto bg-background rounded-lg shadow-sm border border-border">
+  <div class="flex justify-between items-center mb-6 pb-4 border-b border-border">
+    <h2 class="text-2xl font-semibold text-foreground">{{ activity.name }}</h2>
+    <div class="flex gap-2">
+      <!-- Edit Button -->
+      <button class="text-primary hover:text-primary/90 p-1 rounded-md hover:bg-muted/20 transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+        </svg>
+      </button>
+
+      <!-- Close Button -->
+      <button class="text-muted-foreground hover:text-foreground p-1 rounded-md hover:bg-muted/20 transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Left Column -->
+    <div class="space-y-4">
+      <div class="space-y-1">
+        <label class="block text-sm font-medium text-muted-foreground">Name</label>
+        <p class="w-full px-3 py-2 text-foreground bg-muted/5 rounded-md border border-border">
+          {{ activity.name }}
+        </p>
+      </div>
+
+      <div class="space-y-1">
+        <label class="block text-sm font-medium text-muted-foreground">Description</label>
+        <p class="w-full px-3 py-2 text-foreground bg-muted/5 rounded-md border border-border h-32 overflow-y-auto">
+          {{ activity.description }}
+        </p>
+      </div>
+
+      <div class="space-y-1">
+        <label class="block text-sm font-medium text-muted-foreground">Location</label>
+        <p class="w-full px-3 py-2 text-foreground bg-muted/5 rounded-md border border-border">
+          {{ activity.location }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="space-y-4">
+      <div class="space-y-1">
+        <label class="block text-sm font-medium text-muted-foreground">Image</label>
+        <img *ngIf="activity.imageUri"
+             [src]="activity.imageUri"
+             class="mt-1 h-48 w-full object-cover rounded-md border border-border">
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div class="space-y-1">
+          <label class="block text-sm font-medium text-muted-foreground">Status</label>
+          <span [class]="'px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ' +
+            (activity.available ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800')">
+            {{ activity.available ? 'Active' : 'Inactive' }}
+          </span>
+        </div>
+
+        <div class="space-y-1">
+          <label class="block text-sm font-medium text-muted-foreground">Created At</label>
+          <p class="text-foreground">
+            {{ activity.createdAt | date:'medium' }}
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div class="space-y-1">
+          <label class="block text-sm font-medium text-muted-foreground">Category</label>
+          <p class="w-full px-3 py-2 text-foreground bg-muted/5 rounded-md border border-border">
+            {{ activity.category?.name || 'N/A' }}
+          </p>
+        </div>
+
+        <div class="space-y-1">
+          <label class="block text-sm font-medium text-muted-foreground">City</label>
+          <p class="w-full px-3 py-2 text-foreground bg-muted/5 rounded-md border border-border">
+            {{ activity.city?.name || 'N/A' }}
+          </p>
+        </div>
+      </div>
+
+      <div *ngIf="activity.article" class="space-y-1">
+        <label class="block text-sm font-medium text-muted-foreground">Linked Article</label>
+        <p class="w-full px-3 py-2 text-foreground bg-muted/5 rounded-md border border-border">
+          {{ activity.article.content }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

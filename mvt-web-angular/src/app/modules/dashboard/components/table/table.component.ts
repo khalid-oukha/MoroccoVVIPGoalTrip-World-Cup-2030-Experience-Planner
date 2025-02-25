@@ -6,13 +6,13 @@ interface TableColumn {
   key: string;
   header: string;
   minWidth?: string;
-  cellTemplate?: TemplateRef<any>;
+  cellTemplate?: TemplateRef<any>| null;
 }
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [NgFor, NgIf, NgClass],
+  imports: [NgFor, NgIf, NgClass, NgTemplateOutlet],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
