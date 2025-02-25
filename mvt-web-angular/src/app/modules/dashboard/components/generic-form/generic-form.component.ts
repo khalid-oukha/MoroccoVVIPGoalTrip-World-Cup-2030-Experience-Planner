@@ -27,14 +27,14 @@ export class GenericFormComponent implements OnInit {
   @Output() saved = new EventEmitter<any>();
   @Output() cancelled = new EventEmitter<void>();
 
-  form: FormGroup;
+  form: FormGroup = new FormGroup({});
   imagePreview?: string;
 
-  constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({});
-  }
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
+    this.form = this.fb.group({});
+
     this.formFields.forEach((field) => {
       const validators = field.required ? [Validators.required] : [];
       this.form.addControl(field.key, this.fb.control(field.defaultValue || '', validators));
@@ -48,14 +48,17 @@ export class GenericFormComponent implements OnInit {
     }
   }
 
-  onFileSelected(event: any, key: string) {
-    const file = event.target.files[0];
-    if (file) {
-      this.form.patchValue({ [key]: file });
-      this.form.get(key)?.updateValueAndValidity();
+  onFileSelected(event: Event, fieldKey: string) {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
 
       const reader = new FileReader();
-      reader.onload = () => (this.imagePreview = reader.result as string);
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+        this.form.get(fieldKey)?.setValue(file);
+      };
       reader.readAsDataURL(file);
     }
   }
