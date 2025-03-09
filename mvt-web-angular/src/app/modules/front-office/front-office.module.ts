@@ -8,7 +8,7 @@ import { FrontOfficeRoutingModule } from './front-office-routing.module';
   declarations: [],
   imports: [
     CommonModule,
-    FrontOfficeRoutingModule
+    FrontOfficeRoutingModule,
   ]
 })
 export class FrontOfficeModule { }

@@ -28,7 +28,11 @@ export class ActivitesService {
     if (cityId) params = params.set('cityId', cityId.toString());
     if (categoryId) params = params.set('categoryId', categoryId.toString());
     if (available !== undefined) params = params.set('available', available.toString());
-    if (search) params = params.set('search', search);
+
+    const trimmedSearch = search?.trim();
+    if (trimmedSearch) {
+      params = params.set('search', encodeURIComponent(trimmedSearch));
+    }
 
     return this.http.get<Page<Activity>>(this.apiUrl, { params });
   }
@@ -47,6 +51,11 @@ export class ActivitesService {
 
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  getTopActivities(limit: number = 6): Observable<Activity[]> {
+    const params = new HttpParams().set('limit', limit.toString());
+    return this.http.get<Activity[]>(`${this.apiUrl}/top`, { params });
   }
 
 }

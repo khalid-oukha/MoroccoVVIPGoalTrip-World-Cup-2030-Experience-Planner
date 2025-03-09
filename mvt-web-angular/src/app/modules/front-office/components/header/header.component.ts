@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { ProfileMenuComponent } from '../profile-menu/profile-menu.component';
+import {RouterLink, RouterLinkActive} from "@angular/router";
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [NgIf, ProfileMenuComponent],
+  imports: [NgIf, ProfileMenuComponent, RouterLink, RouterLinkActive],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })

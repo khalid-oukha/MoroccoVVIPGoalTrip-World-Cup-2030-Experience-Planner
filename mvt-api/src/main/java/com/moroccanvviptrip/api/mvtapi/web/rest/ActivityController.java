@@ -17,7 +17,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -58,6 +60,16 @@ public class ActivityController {
         Activity activity = activityService.create(activityRequestDto);
         ActivityResponseVm response = activityMapper.toResponseVm(activity);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/top")
+    public ResponseEntity<List<ActivityResponseVm>> findTopActivities(
+            @RequestParam(defaultValue = "4") int limit) {
+        List<Activity> topActivities = activityService.findTopActivities(limit);
+        List<ActivityResponseVm> response = topActivities.stream()
+                .map(activityMapper::toResponseVm)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

@@ -6,6 +6,7 @@ import com.moroccanvviptrip.api.mvtapi.web.dto.Activity.ActivityUpdateDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface ActivityService {
@@ -19,5 +20,7 @@ public interface ActivityService {
     Activity update(UUID id, ActivityUpdateDto activityUpdateDto);
 
     void delete(UUID id);
+
+    List<Activity> findTopActivities(int limit);
 
 }

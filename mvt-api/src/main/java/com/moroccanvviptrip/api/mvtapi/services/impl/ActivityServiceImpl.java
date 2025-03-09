@@ -15,12 +15,15 @@ import com.moroccanvviptrip.api.mvtapi.web.mapper.ActivityMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -34,6 +37,16 @@ public class ActivityServiceImpl implements ActivityService {
     private final ActivitySpecifications activitySpecifications;
     private final FileStorageService fileStorageService;
 
+
+    @Override
+    public List<Activity> findTopActivities(int limit) {
+        Pageable pageable = PageRequest.of(0, limit, Sort.by(Sort.Direction.DESC, "createdAt"));
+
+        Specification<Activity> spec = Specification
+                .where(activitySpecifications.isAvailable(true));
+
+        return activityRepository.findAll(spec, pageable).getContent();
+    }
     @Override
     public Activity findById(UUID id) {
         return activityRepository.findById(id)

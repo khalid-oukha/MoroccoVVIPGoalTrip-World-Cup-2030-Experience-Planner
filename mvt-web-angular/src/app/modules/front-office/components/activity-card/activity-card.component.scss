@@ -1,0 +1,42 @@
+// activity-card.component.scss
+:host {
+  display: block;
+  height: 100%;
+}
+
+// Enhanced hover effect
+@media (hover: hover) {
+  .hover\:scale-105:hover {
+    transform: scale(1.05);
+  }
+
+  .hover\:-translate-y-0\.5:hover {
+    transform: translateY(-2px);
+  }
+}
+
+// Better handling of aspect ratio for Safari
+.pt-\[60\%\] {
+  padding-top: 60%;
+}
+
+// Ensure border-radius consistency
+.rounded-t-lg {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+// Line clamp fallback for browsers that don't support it
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
