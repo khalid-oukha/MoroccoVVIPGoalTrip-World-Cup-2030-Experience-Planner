@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit {
   }
 
   onViewActivityDetails(activityId: string) {
-    this.router.navigate(['/dashboard/activities', activityId]);
+    this.router.navigate(['/planner/activities', activityId]);
   }
 
   navigateToActivities() {

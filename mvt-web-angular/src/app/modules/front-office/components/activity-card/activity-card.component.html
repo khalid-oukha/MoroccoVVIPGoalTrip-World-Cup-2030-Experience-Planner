@@ -1,7 +1,9 @@
 <!-- activity-card.component.html -->
 <div class="bg-background rounded-lg border border-primary/20 hover:border-primary/40
             transition-all duration-300 h-full flex flex-col shadow-sm hover:shadow-md
-            hover:-translate-y-0.5 dark:bg-gray-900 dark:border-gray-800">
+            hover:-translate-y-0.5 dark:bg-gray-900 dark:border-gray-800"
+
+     (click)="viewDetails()">
   <!-- Image Container with Modified Aspect Ratio -->
   <div class="relative pt-[60%] rounded-t-lg overflow-hidden">
     <img [src]="imageUrl" [alt]="title"
@@ -45,7 +47,7 @@
     <!-- Compact Button -->
     <button
       [disabled]="!available"
-      (click)="addToPlan()"
+      (click)="addToPlan(); $event.stopPropagation()"
       class="mt-auto bg-primary/5 hover:bg-primary/10 text-primary
             dark:bg-primary/20 dark:text-white dark:hover:bg-primary/30
             px-2 py-1.5 rounded flex items-center gap-1.5 w-full

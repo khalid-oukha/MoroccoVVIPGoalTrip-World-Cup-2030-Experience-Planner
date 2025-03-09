@@ -183,6 +183,6 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
   }
 
   onViewDetails(activity: Activity) {
-    this.router.navigate(['/activities', activity.id]);
+    this.router.navigate(['/planner/activities', activity.id]);
   }
 }
