@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,17 +65,18 @@ public class PlanController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping
-    public ResponseEntity<PlanResponseVm> createPlan(@Valid @RequestBody PlanRequestDto planRequestDto) {
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<PlanResponseVm> createPlan(
+            @Valid @ModelAttribute PlanRequestDto planRequestDto) {
         Plan createdPlan = planService.create(planRequestDto);
         PlanResponseVm response = planMapper.toResponseVm(createdPlan);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<PlanResponseVm> updatePlan(
             @PathVariable UUID id,
-            @Valid @RequestBody PlanUpdateDto planUpdateDto) {
+            @Valid @ModelAttribute PlanUpdateDto planUpdateDto) {
 
         Plan updatedPlan = planService.update(id, planUpdateDto);
         PlanResponseVm response = planMapper.toResponseVm(updatedPlan);

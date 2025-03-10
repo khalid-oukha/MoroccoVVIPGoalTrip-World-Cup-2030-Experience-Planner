@@ -1,0 +1,123 @@
+<!-- src/app/components/activities/add-to-plan-modal/add-to-plan-modal.component.html -->
+<div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+  <div class="bg-background dark:bg-gray-900 rounded-2xl shadow-xl max-w-md w-full mx-4 overflow-hidden border border-border/50 dark:border-gray-800">
+    <!-- Header -->
+    <div class="bg-primary/5 p-4 border-b border-border/50 dark:border-gray-800">
+      <h3 class="text-lg font-semibold text-foreground dark:text-white">Add to Plan</h3>
+      <p class="text-sm text-muted-foreground dark:text-gray-400">
+        Adding <span class="font-medium text-primary">{{ activityName }}</span> to <span class="font-medium text-primary">{{ planName }}</span>
+      </p>
+    </div>
+
+    <!-- Success Message -->
+    <div *ngIf="isSuccess" class="p-4 bg-green-500/10 border-b border-green-500/30">
+      <div class="flex items-center space-x-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+        </svg>
+        <p class="text-sm font-medium text-green-600">{{ successMessage }}</p>
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="hasError" class="p-4 bg-red-500/10 border-b border-red-500/30">
+      <div class="flex items-center space-x-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+        </svg>
+        <p class="text-sm font-medium text-red-600">Failed to add to plan. Please try again.</p>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="p-5 space-y-4">
+      <!-- Priority -->
+      <div>
+        <label for="priority" class="block text-sm font-medium text-foreground dark:text-white mb-1">
+          Priority
+        </label>
+        <select
+          id="priority"
+          formControlName="priority"
+          class="w-full px-3 py-2 rounded-lg border border-border dark:border-gray-700 bg-background dark:bg-gray-900 focus:ring-1 focus:ring-primary focus:border-primary focus:outline-none text-foreground dark:text-white"
+        >
+          <option *ngFor="let priority of priorities" [value]="priority.value">
+            {{ priority.label }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Start Date -->
+      <div>
+        <label for="startDate" class="block text-sm font-medium text-foreground dark:text-white mb-1">
+          Start Date & Time
+        </label>
+        <input
+          type="datetime-local"
+          id="startDate"
+          formControlName="startDate"
+          class="w-full px-3 py-2 rounded-lg border border-border dark:border-gray-700 bg-background dark:bg-gray-900 focus:ring-1 focus:ring-primary focus:border-primary focus:outline-none text-foreground dark:text-white"
+        >
+        <div *ngIf="form.get('startDate')?.invalid && form.get('startDate')?.touched" class="text-red-500 text-xs mt-1">
+          Start date is required
+        </div>
+      </div>
+
+      <!-- End Date -->
+      <div>
+        <label for="endDate" class="block text-sm font-medium text-foreground dark:text-white mb-1">
+          End Date & Time
+        </label>
+        <input
+          type="datetime-local"
+          id="endDate"
+          formControlName="endDate"
+          class="w-full px-3 py-2 rounded-lg border border-border dark:border-gray-700 bg-background dark:bg-gray-900 focus:ring-1 focus:ring-primary focus:border-primary focus:outline-none text-foreground dark:text-white"
+        >
+        <div *ngIf="form.get('endDate')?.invalid && form.get('endDate')?.touched" class="text-red-500 text-xs mt-1">
+          End date is required
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <div>
+        <label for="notes" class="block text-sm font-medium text-foreground dark:text-white mb-1">
+          Notes (Optional)
+        </label>
+        <textarea
+          id="notes"
+          formControlName="notes"
+          rows="3"
+          placeholder="Add any notes about this activity..."
+          class="w-full px-3 py-2 rounded-lg border border-border dark:border-gray-700 bg-background dark:bg-gray-900 focus:ring-1 focus:ring-primary focus:border-primary focus:outline-none text-foreground dark:text-white resize-none"
+        ></textarea>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex justify-end gap-3 pt-2">
+        <button
+          type="button"
+          (click)="closeModal()"
+          class="px-4 py-2 rounded-lg text-sm font-medium text-foreground dark:text-white border border-border dark:border-gray-700 hover:bg-background/80 dark:hover:bg-gray-800 transition-colors"
+          [disabled]="isSubmitting"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          [disabled]="form.invalid || isSubmitting || isSuccess"
+          class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-primary hover:bg-primary/90 transition-colors disabled:opacity-50 relative"
+        >
+          <span *ngIf="!isSubmitting">Add to Plan</span>
+          <span *ngIf="isSubmitting" class="flex items-center">
+            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Adding...
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

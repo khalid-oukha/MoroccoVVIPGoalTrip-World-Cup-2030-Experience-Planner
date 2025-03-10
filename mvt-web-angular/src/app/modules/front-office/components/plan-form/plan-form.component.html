@@ -1,0 +1,8 @@
+<app-generic-form
+  [formTitle]="formTitle"
+  [formFields]="formFields"
+  [initialData]="plan"
+  [submitButtonText]="isEdit ? 'Update Plan' : 'Create Plan'"
+  (saved)="onSave($event)"
+  (cancelled)="onCancel()"
+></app-generic-form>

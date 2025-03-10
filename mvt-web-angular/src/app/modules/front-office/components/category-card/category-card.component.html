@@ -1,0 +1,49 @@
+<!-- category-card.component.html -->
+<div class="group relative border-2 border-primary/20 dark:border-primary/10 bg-background/80 dark:bg-gray-900/90 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:border-primary/40 hover:shadow-primary/10 h-32 w-32 rounded-full flex flex-col overflow-hidden backdrop-blur-sm">
+  <!-- Border glow effect - visible on hover -->
+  <div class="absolute -inset-0.5 bg-gradient-to-r from-primary/30 to-primary/10 rounded-full opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-300 -z-10"></div>
+
+  <!-- Circular Image Container -->
+  <div class="absolute inset-1.5 rounded-full overflow-hidden z-0">
+    <img
+      [src]="category.imageUri"
+      [alt]="category.name"
+      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+    />
+    <!-- Circular gradient overlay -->
+    <div class="absolute inset-0 bg-gradient-radial from-transparent via-black/30 to-black/60"></div>
+  </div>
+
+  <!-- Circular Content Overlay -->
+  <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-2 z-10">
+    <!-- Translucent backdrop for better text readability -->
+    <div class="absolute inset-0 bg-background/30 dark:bg-gray-900/40 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+    <h3 class="text-xs font-bold text-white mb-0.5 line-clamp-1 drop-shadow-md relative z-20">
+      {{ category.name }}
+    </h3>
+
+    <!-- Only show on hover -->
+    <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center relative z-20">
+      <span class="text-[9px] text-white/90 font-medium px-2 py-0.5 bg-primary/50 backdrop-blur-sm rounded-full border border-primary/30">
+        {{ category.activitiesCount || 0 }}
+      </span>
+
+      <button class="text-[9px] text-white hover:text-primary-400 font-medium transition-colors mt-1 flex items-center">
+        Explore <span class="ml-1 transform group-hover:translate-x-1 transition-transform">→</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Primary accent ring -->
+  <div class="absolute inset-0 border border-primary/40 rounded-full scale-90 opacity-0 group-hover:opacity-100 group-hover:scale-95 transition-all duration-500"></div>
+
+  <!-- Decorative dot -->
+  <div class="absolute top-2 right-2 w-1.5 h-1.5 bg-primary rounded-full opacity-70 z-20"></div>
+</div>
+
+<style>
+  .bg-gradient-radial {
+    background-image: radial-gradient(circle, var(--tw-gradient-stops));
+  }
+</style>

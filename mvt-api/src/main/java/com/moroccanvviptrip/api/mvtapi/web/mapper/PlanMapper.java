@@ -9,15 +9,23 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {PlannedActivityMapper.class})
 public interface PlanMapper {
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "plannedActivities", ignore = true)
+    @Mapping(target = "imageUrl", ignore = true) // Image is handled in service
+    @Mapping(target = "createdAt", ignore = true)
     Plan toEntity(PlanRequestDto planRequestDto);
 
     PlanRequestDto toDto(Plan plan);
 
     @Mapping(target = "plannedActivities", source = "plannedActivities")
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "createdAt", source = "createdAt")
     PlanResponseVm toResponseVm(Plan plan);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "plannedActivities", ignore = true)
+    @Mapping(target = "imageUrl", ignore = true) // Image is handled in service
+    @Mapping(target = "createdAt", ignore = true)
     Plan partialUpdate(PlanUpdateDto planUpdateDto, @MappingTarget Plan plan);
 }

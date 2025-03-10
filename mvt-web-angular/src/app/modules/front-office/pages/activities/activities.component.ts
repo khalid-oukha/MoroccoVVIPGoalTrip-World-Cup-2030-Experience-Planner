@@ -42,6 +42,10 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
   loading = false;
   error = false;
 
+  // Toast notification for success
+  showActivityAddedToast = false;
+  activityAddedMessage = '';
+
   constructor(
     private router: Router,
     private activitiesService: ActivitesService,
@@ -176,13 +180,26 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
     return activity.id;
   }
 
-  onAddToPlan(activity: Activity) {
-    if (activity.available) {
-      console.log('Adding to plan:', activity.name);
-    }
-  }
-
   onViewDetails(activity: Activity) {
     this.router.navigate(['/planner/activities', activity.id]);
+  }
+
+  /**
+   * Handle activity add to plan success
+   * This is triggered from the ActivityCardComponent when an activity is successfully added to a plan
+   */
+  onActivityAddedToPlan(event: {planId: string, activityId: string}) {
+    // Find the activity name for the toast message
+    const activity = this.activities.find(a => a.id === event.activityId);
+    const activityName = activity ? activity.name : 'Activity';
+
+    // Show success toast
+    this.showActivityAddedToast = true;
+    this.activityAddedMessage = `${activityName} added to plan successfully!`;
+
+    // Hide toast after 3 seconds
+    setTimeout(() => {
+      this.showActivityAddedToast = false;
+    }, 3000);
   }
 }

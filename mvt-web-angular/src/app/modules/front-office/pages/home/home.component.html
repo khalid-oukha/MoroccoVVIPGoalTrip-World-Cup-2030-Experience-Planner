@@ -1,27 +1,54 @@
-<section class="container mx-auto px-4 py-16 transition-colors">
-  <!-- Hero Section -->
-  <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-    <div class="space-y-8 relative z-10">
-      <div class="absolute -top-6 -left-6 w-24 h-24 bg-primary/10 rounded-full blur-xl"></div>
+<section class="container mx-auto px-4 py-8 transition-colors relative">
+  <!-- Background decorative elements -->
+  <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+    <div class="absolute top-36 -left-24 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/4 right-0 w-48 h-48 bg-primary/3 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-1/3 left-1/4 w-56 h-56 bg-primary/4 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-24 right-12 w-72 h-72 bg-primary/3 rounded-full blur-3xl"></div>
+  </div>
+
+  <!-- Success Toast Notification -->
+  <div *ngIf="showActivityAddedToast"
+       class="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 flex items-center space-x-2 animate-fade-in-up">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+    </svg>
+    <span>{{ activityAddedMessage }}</span>
+  </div>
+
+  <!-- Hero Section - Enhanced with primary color accents -->
+  <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center mb-16 relative z-10">
+    <div class="space-y-6 relative z-10">
+      <!-- Enhanced decorative element -->
+      <div class="absolute -top-6 -left-6 w-32 h-32 bg-primary/10 rounded-full blur-xl"></div>
+      <div class="absolute top-20 -right-12 w-24 h-24 bg-primary/5 rounded-full blur-xl"></div>
+
+      <!-- Primary color accent line -->
+      <div class="h-1 w-16 bg-primary rounded-full mb-4"></div>
+
       <h1 class="text-4xl md:text-5xl font-poppins font-bold leading-tight text-foreground">
         Craft Your Ultimate
-        <span class="text-primary dark:text-primary-400">Morocco 2030</span>
+        <span class="text-primary dark:text-primary-400 relative inline-block">
+          Morocco 2030
+          <span class="absolute bottom-0 left-0 w-full h-1 bg-primary/30 rounded-full"></span>
+        </span>
         Experience
       </h1>
-      <p class="text-lg md:text-xl text-muted-foreground">
+      <p class="text-lg text-muted-foreground">
         Seamlessly plan your World Cup journey with intelligent city routing, real-time budget tracking,
         and culturally-rich activity suggestions.
       </p>
-      <div class="flex flex-col sm:flex-row gap-4">
+      <div class="flex flex-col sm:flex-row gap-3">
         <!-- Show when NOT logged in -->
-        <div *ngIf="!authService.isLoggedIn()" class="flex flex-col sm:flex-row gap-4 w-full">
-          <button class="bg-primary text-primary-foreground px-4 py-2 md:px-8 md:py-4 rounded-xl
+        <div *ngIf="!authService.isLoggedIn()" class="flex flex-col sm:flex-row gap-3 w-full">
+          <button class="bg-primary text-primary-foreground px-5 py-3 rounded-xl
                 hover:bg-primary/90 hover:shadow-lg hover:-translate-y-1 shadow-lg shadow-primary/30
-                transition-all duration-200 text-sm md:text-base">
-            Start Planning Now →
+                transition-all duration-200 text-sm font-medium relative overflow-hidden group">
+            <span class="relative z-10">Start Planning Now →</span>
+            <span class="absolute inset-0 bg-gradient-to-r from-primary to-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
           </button>
-          <button class="border-2 border-border text-muted-foreground px-4 py-2 md:px-8 md:py-4 rounded-xl
-                hover:border-primary hover:text-primary text-sm md:text-base
+          <button class="border border-border text-muted-foreground px-5 py-3 rounded-xl
+                hover:border-primary hover:text-primary hover:bg-primary/5 text-sm font-medium
                 transition-all duration-200">
             Explore Features
           </button>
@@ -29,165 +56,214 @@
 
         <!-- Show when logged in -->
         <button *ngIf="authService.isLoggedIn()"
-                class="bg-primary text-primary-foreground px-6 py-3 md:px-8 md:py-4 rounded-xl
+                class="bg-primary text-primary-foreground px-5 py-3 rounded-xl
                  hover:bg-primary/90 hover:shadow-lg hover:-translate-y-1 shadow-lg shadow-primary/30
-                 transition-all duration-200 text-sm md:text-base w-full sm:w-auto">
-          Discover Activities →
+                 transition-all duration-200 text-sm font-medium w-full sm:w-auto relative overflow-hidden group">
+          <span class="relative z-10">Discover Activities →</span>
+          <span class="absolute inset-0 bg-gradient-to-r from-primary to-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
         </button>
       </div>
     </div>
 
-    <!-- Modern Image Grid -->
-    <div class="grid grid-cols-3 grid-rows-5 gap-3 h-[500px] relative">
+    <!-- Modern Image Grid - Enhanced with better proportions and styling -->
+    <div class="grid grid-cols-3 grid-rows-5 gap-2 h-[450px] relative">
+      <!-- Primary accent glow -->
+      <div class="absolute -right-4 -top-4 w-32 h-32 bg-primary/10 rounded-full blur-xl z-0"></div>
+
       <!-- Main Image -->
-      <div class="col-span-2 row-span-3 relative group cursor-pointer rounded-2xl overflow-hidden transform-gpu">
+      <div class="col-span-2 row-span-3 relative group cursor-pointer rounded-2xl overflow-hidden transform-gpu border border-primary/10 shadow-md">
         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
         <img ngSrc="assets/home/taghazout.jpg" alt="Marrakech"
              class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
              height="853" width="1280">
+        <!-- Primary color accented label -->
         <div class="absolute bottom-4 left-4 text-foreground z-10">
-          <span class="text-sm bg-muted/80 dark:bg-muted/90 px-3 py-1 rounded-full backdrop-blur-sm">
+          <span class="text-xs bg-primary/20 text-primary-foreground dark:text-white px-3 py-1 rounded-full backdrop-blur-sm border border-primary/20">
             Featured Destination
           </span>
-          <h3 class="text-xl font-semibold mt-2 drop-shadow-lg">Marrakech Stadium</h3>
+          <h3 class="text-lg font-semibold mt-2 drop-shadow-lg">Marrakech Stadium</h3>
         </div>
       </div>
 
       <!-- Secondary Image 1 -->
-      <div class="col-span-1 row-span-2 relative group cursor-pointer clip-path-polygon-secondary transform-gpu">
+      <div class="col-span-1 row-span-2 relative group cursor-pointer overflow-hidden rounded-2xl transform-gpu border border-primary/10 shadow-md">
         <div class="absolute inset-0 bg-gradient-to-br from-black/50 to-transparent"></div>
         <img ngSrc="assets/home/fes.jpg" alt="Fes"
              class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
              height="853" width="1280">
-        <div class="absolute bottom-4 left-4 text-foreground z-10">
-          <span class="text-sm bg-muted/80 dark:bg-muted/90 px-3 py-1 rounded-full backdrop-blur-sm">
+        <div class="absolute bottom-3 left-3 text-foreground z-10">
+          <span class="text-xs bg-primary/20 text-primary-foreground dark:text-white px-2 py-0.5 rounded-full backdrop-blur-sm border border-primary/20">
             Cultural Hub
           </span>
         </div>
       </div>
 
       <!-- Secondary Image 2 -->
-      <div class="col-span-2 row-span-2 relative group cursor-pointer clip-path-polygon-main transform-gpu">
+      <div class="col-span-2 row-span-2 relative group cursor-pointer overflow-hidden rounded-2xl transform-gpu border border-primary/10 shadow-md">
         <div class="absolute inset-0 bg-gradient-to-tr from-black/50 to-transparent"></div>
         <img ngSrc="assets/home/zazate.jpg" alt="Zazate"
              class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
              height="853" width="1280">
-        <div class="absolute bottom-4 right-4 text-foreground z-10 text-right">
-          <h3 class="text-xl font-semibold drop-shadow-lg">Atlas Mountains</h3>
-          <p class="text-sm text-muted-foreground">Traditional Berber villages</p>
+        <div class="absolute bottom-3 right-3 text-foreground z-10 text-right">
+          <h3 class="text-base font-semibold drop-shadow-lg">Atlas Mountains</h3>
+          <p class="text-xs text-muted-foreground">Traditional Berber villages</p>
         </div>
       </div>
     </div>
   </div>
-  <div class="mt-24 mb-8 text-center">
-    <h2 class="text-3xl md:text-4xl font-poppins font-bold text-foreground">
-      Latest
-      <span class="text-primary dark:text-primary-400">Must-Do </span>
-      Experiences
-    </h2>
-    <p class="text-muted-foreground mt-4 md:text-lg">
-      Discover our newest additions and most popular activities across Morocco
-    </p>
-  </div>
 
-  <!-- Loading State -->
-  <div *ngIf="loading" class="flex justify-center items-center py-12">
-    <div class="animate-spin h-12 w-12 border-4 border-primary border-t-transparent rounded-full"></div>
-  </div>
-
-  <!-- Error State -->
-  <div *ngIf="error && !loading" class="flex flex-col items-center justify-center py-8">
-    <div class="text-primary mb-4">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-      </svg>
+  <!-- Categories Section - Enhanced with primary color styling -->
+  <div class="mb-16 relative z-10">
+    <div class="mb-6 text-center">
+      <div class="inline-flex items-center justify-center mb-2">
+        <span class="h-0.5 w-6 bg-primary rounded-full"></span>
+        <span class="mx-2 text-sm text-primary font-medium">DISCOVER</span>
+        <span class="h-0.5 w-6 bg-primary rounded-full"></span>
+      </div>
+      <h2 class="text-2xl md:text-3xl font-bold text-foreground dark:text-white">
+        Explore Categories
+      </h2>
+      <p class="text-muted-foreground dark:text-gray-400 mt-1">
+        Discover experiences by category
+      </p>
     </div>
-    <p class="text-foreground mb-2">Unable to load activities</p>
-    <button
-      (click)="loadTopActivities()"
-      class="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
-    >
-      Try Again
-    </button>
-  </div>
 
-  <!-- Top Activities Grid -->
-  <div *ngIf="!loading && !error" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-    <div *ngFor="let activity of topActivities.slice(0, 4)" class="h-full">
-      <app-activity-card
-        [imageUrl]="activity.imageUri"
-        [title]="activity.name"
-        [description]="activity.description"
-        [category]="activity.category?.name"
-        [location]="activity.location"
-        [available]="activity.available"
-        [activityId]="activity.id"
-        (addToPlanEvent)="onAddActivityToPlan($event)"
-        (viewDetailsEvent)="onViewActivityDetails($event)"
-        showLocation="true">
-      </app-activity-card>
+    <!-- Fixed spacing with overflow-x-auto to keep categories in one line on mobile -->
+    <div class="overflow-x-auto pb-4 -mx-4 px-4">
+      <div class="flex gap-2 min-w-max lg:grid lg:grid-cols-4 lg:gap-4 lg:min-w-0 justify-center">
+        <app-category-card
+          *ngFor="let category of categories"
+          [category]="category"
+          class="w-32 h-32 shrink-0 lg:w-auto lg:mx-auto">
+        </app-category-card>
+      </div>
     </div>
   </div>
 
-  <!-- View More Button -->
-  <div class="flex justify-center mt-8">
-    <button
-      (click)="navigateToActivities()"
-      class="bg-primary text-primary-foreground px-6 py-3 rounded-xl
-             hover:bg-primary/90 hover:shadow-lg hover:-translate-y-1
-             shadow-lg shadow-primary/30 transition-all duration-200
-             text-sm md:text-base"
-    >
-      View More Activities →
-    </button>
+  <!-- Top Experiences Section - Improved with primary color accents -->
+  <div class="mb-16 relative z-10">
+    <div class="mb-6 text-center">
+      <div class="inline-flex items-center justify-center mb-2">
+        <span class="h-0.5 w-6 bg-primary rounded-full"></span>
+        <span class="mx-2 text-sm text-primary font-medium">FEATURED</span>
+        <span class="h-0.5 w-6 bg-primary rounded-full"></span>
+      </div>
+      <h2 class="text-2xl md:text-3xl font-poppins font-bold text-foreground">
+        Latest
+        <span class="text-primary dark:text-primary-400">Must-Do </span>
+        Experiences
+      </h2>
+      <p class="text-muted-foreground mt-2 text-base">
+        Discover our newest additions and most popular activities across Morocco
+      </p>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="flex justify-center items-center py-8">
+      <div class="animate-spin h-10 w-10 border-3 border-primary border-t-transparent rounded-full"></div>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !loading" class="flex flex-col items-center justify-center py-6 bg-background/50 rounded-xl border border-border/30">
+      <div class="text-primary mb-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+      </div>
+      <p class="text-foreground mb-2">Unable to load activities</p>
+      <button
+        (click)="loadTopActivities()"
+        class="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm"
+      >
+        Try Again
+      </button>
+    </div>
+
+    <!-- Top Activities Grid -->
+    <div *ngIf="!loading && !error" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div *ngFor="let activity of topActivities" class="h-full">
+        <app-activity-card
+          [imageUrl]="activity.imageUri"
+          [title]="activity.name"
+          [description]="activity.description"
+          [category]="activity.category.name"
+          [location]="activity.location"
+          [available]="activity.available"
+          [activityId]="activity.id"
+          (addToPlanSuccessEvent)="onActivityAddedToPlan($event)"
+          (viewDetailsEvent)="onViewActivityDetails($event)"
+          showLocation="true">
+        </app-activity-card>
+      </div>
+    </div>
+
+    <!-- View More Button - Enhanced with gradient hover effect -->
+    <div class="flex justify-center mt-6">
+      <button
+        (click)="navigateToActivities()"
+        class="bg-primary text-primary-foreground px-5 py-2.5 rounded-xl
+               hover:bg-primary/90 hover:shadow-lg hover:-translate-y-1
+               shadow-md shadow-primary/20 transition-all duration-200
+               text-sm font-medium relative overflow-hidden group"
+      >
+        <span class="relative z-10">View More Activities →</span>
+        <span class="absolute inset-0 bg-gradient-to-r from-primary to-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+      </button>
+    </div>
   </div>
 
-  <div class=" rounded-2xl p-8 lg:p-12 mt-24 border border-border relative overflow-hidden">
-    <!-- Decorative blur effect -->
-    <div class="absolute -top-20 -right-20 w-48 h-48 bg-primary/10 rounded-full blur-xl z-0"></div>
+  <!-- Cultural Journey Section - Enhanced with primary color styling -->
+  <div class="rounded-2xl p-6 lg:p-8 border border-border/50 relative overflow-hidden bg-background/50 backdrop-blur-sm">
+    <!-- Enhanced decorative elements -->
+    <div class="absolute -top-20 -right-20 w-48 h-48 bg-primary/5 rounded-full blur-xl z-0"></div>
+    <div class="absolute -bottom-16 -left-16 w-32 h-32 bg-primary/5 rounded-full blur-xl z-0"></div>
 
     <div class="relative z-10">
-      <h2 class="text-4xl md:text-5xl font-poppins font-bold leading-tight text-foreground mb-8">
+      <div class="inline-flex items-center mb-4">
+        <span class="h-0.5 w-6 bg-primary rounded-full"></span>
+        <span class="ml-2 text-sm text-primary font-medium">JOURNEY</span>
+      </div>
+      <h2 class="text-3xl md:text-4xl font-poppins font-bold leading-tight text-foreground mb-6">
         Cultural Journey
         <span class="text-primary dark:text-primary-400">Blueprint</span>
       </h2>
 
-      <div class="space-y-12 relative">
-        <!-- Timeline line -->
-        <div class="absolute left-6 top-0 bottom-0 w-1 bg-gradient-to-b from-border/20 to-transparent hidden md:block"></div>
+      <div class="space-y-8 relative">
+        <!-- Timeline line - enhanced with primary color gradient -->
+        <div class="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/30 via-primary/10 to-transparent hidden md:block"></div>
 
         <!-- Timeline Item 1 -->
-        <div class="flex gap-6 items-start group hover:-translate-y-1 transition-all duration-300">
-          <div class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0
-                  mt-1 group-hover:bg-primary/20 transition-colors shadow-lg shadow-primary/10">
-            <i class="fas fa-plane-arrival text-2xl text-primary dark:text-primary-400"></i>
+        <div class="flex gap-4 items-start group hover:-translate-y-1 transition-all duration-300">
+          <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0
+                  mt-1 group-hover:bg-primary/20 transition-colors shadow-md shadow-primary/10 border border-primary/20">
+            <i class="fas fa-plane-arrival text-lg text-primary dark:text-primary-400"></i>
           </div>
-          <div class="flex-1 pb-12 border-b border-border/30">
-            <h4 class="font-poppins text-2xl font-semibold mb-4 text-foreground">Casablanca Arrival</h4>
-            <p class="text-lg text-muted-foreground leading-relaxed">
+          <div class="flex-1 pb-8 border-b border-border/20">
+            <h4 class="font-poppins text-xl font-semibold mb-2 text-foreground">Casablanca Arrival</h4>
+            <p class="text-base text-muted-foreground leading-relaxed">
               Private transfer to Medina-inspired riad accommodation with traditional Moroccan welcome
             </p>
-            <div class="mt-6 aspect-video rounded-2xl bg-muted/20 overflow-hidden shadow-lg transform-gpu
-                    transition-transform duration-500 hover:scale-[1.02]">
+            <div class="mt-4 aspect-video rounded-xl bg-muted/20 overflow-hidden shadow-md transform-gpu
+                    transition-transform duration-500 hover:scale-[1.02] border border-primary/10">
               <!-- Add image here -->
             </div>
           </div>
         </div>
 
         <!-- Timeline Item 2 -->
-        <div class="flex gap-6 items-start group hover:-translate-y-1 transition-all duration-300">
-          <div class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0
-                  mt-1 group-hover:bg-primary/20 transition-colors shadow-lg shadow-primary/10">
-            <i class="fas fa-futbol text-2xl text-primary dark:text-primary-400"></i>
+        <div class="flex gap-4 items-start group hover:-translate-y-1 transition-all duration-300">
+          <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0
+                  mt-1 group-hover:bg-primary/20 transition-colors shadow-md shadow-primary/10 border border-primary/20">
+            <i class="fas fa-futbol text-lg text-primary dark:text-primary-400"></i>
           </div>
-          <div class="flex-1 pb-12 border-b border-border/30">
-            <h4 class="font-poppins text-2xl font-semibold mb-4 text-foreground">Stadium Experience</h4>
-            <p class="text-lg text-muted-foreground leading-relaxed">
+          <div class="flex-1 pb-8 border-b border-border/20">
+            <h4 class="font-poppins text-xl font-semibold mb-2 text-foreground">Stadium Experience</h4>
+            <p class="text-base text-muted-foreground leading-relaxed">
               Guided exploration of Mohammed V Stadium with VIP access to player facilities
             </p>
-            <div class="mt-6 aspect-video rounded-2xl bg-muted/20 overflow-hidden shadow-lg transform-gpu
-                    transition-transform duration-500 hover:scale-[1.02]">
-
+            <div class="mt-4 aspect-video rounded-xl bg-muted/20 overflow-hidden shadow-md transform-gpu
+                    transition-transform duration-500 hover:scale-[1.02] border border-primary/10">
+              <!-- Add image here -->
             </div>
           </div>
         </div>

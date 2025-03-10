@@ -4,6 +4,7 @@ import { FrontOfficeComponent } from './front-office.component';
 import { HomeComponent } from './pages/home/home.component';
 import {ActivityDetailsComponent} from "./pages/activity-details/activity-details.component";
 import {ActivitiesComponent} from "./pages/activities/activities.component";
+import {MyPlansComponent} from "./pages/my-plans/my-plans.component";
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
       { path: 'home', component: HomeComponent },
       {path: 'activities', component: ActivitiesComponent },
       { path: 'activities/:id', component: ActivityDetailsComponent },
+      {path:'my-plans', component: MyPlansComponent },
       { path: '**', redirectTo: 'errors/404' },
     ],
   },

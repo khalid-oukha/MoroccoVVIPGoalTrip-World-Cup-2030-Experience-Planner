@@ -1,0 +1,43 @@
+<!-- src/app/components/my-plans/my-plans.component.html -->
+<div class="container mx-auto px-4 py-8">
+  <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+    <!-- Sidebar -->
+    <div class="lg:col-span-1" *ngIf="!showForm">
+      <app-plan-sidebar
+        [user]="user"
+        [plans]="plans"
+        [selectedPlanId]="selectedPlan?.id"
+        [loading]="loading"
+        [error]="error"
+        [currentPage]="currentPage"
+        [totalPages]="totalPages"
+        (planSelect)="onSelectPlan($event)"
+        (planDelete)="onDeletePlan($event)"
+        (planEdit)="onEditPlan($event)"
+        (planCreate)="onCreatePlan()"
+        (pageChange)="onPageChange($event)"
+        (retry)="loadUserPlans()"
+      ></app-plan-sidebar>
+    </div>
+
+    <!-- Form (Create/Edit) -->
+    <div [ngClass]="showForm ? 'lg:col-span-4' : 'lg:col-span-3'" *ngIf="showForm">
+      <app-plan-form
+        [plan]="editingPlan"
+        [isEdit]="isEditMode"
+        (saveEvent)="onSavePlan($event)"
+        (cancelEvent)="closeForm()"
+      ></app-plan-form>
+    </div>
+
+    <!-- Main Content - Plan Details -->
+    <div class="lg:col-span-3" *ngIf="!showForm">
+      <app-plan-detail
+        [plan]="selectedPlan"
+        [loading]="loadingPlanDetails"
+        (activityRemove)="onRemoveActivity($event)"
+        (createPlan)="onCreatePlan()"
+      ></app-plan-detail>
+    </div>
+  </div>
+</div>

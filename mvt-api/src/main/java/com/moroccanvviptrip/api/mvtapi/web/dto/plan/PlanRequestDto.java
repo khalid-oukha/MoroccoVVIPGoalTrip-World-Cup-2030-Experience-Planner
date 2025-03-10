@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,5 +21,7 @@ public class PlanRequestDto {
 
     @Trimmed
     private String description;
+
+    private MultipartFile imageUri;
 
 }

@@ -1,0 +1,140 @@
+<!-- src/app/components/my-plans/plan-detail/plan-detail.component.html -->
+
+<!-- No Plan Selected State -->
+<div *ngIf="!plan && !loading" class="h-full flex items-center justify-center rounded-2xl border border-border/50 bg-background/80 dark:bg-gray-900/90 backdrop-blur-sm p-8">
+  <div class="text-center">
+    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+      <i class="fas fa-map-marked-alt text-primary text-xl"></i>
+    </div>
+    <h3 class="text-xl font-bold text-foreground mb-2">No Plan Selected</h3>
+    <p class="text-muted-foreground mb-6 max-w-md">
+      Select a plan from the sidebar or create a new one to start planning your Morocco 2030 experience.
+    </p>
+    <button
+      (click)="createNewPlan()"
+      class="bg-primary text-primary-foreground px-4 py-2 rounded-xl
+             hover:bg-primary/90 hover:shadow-lg hover:-translate-y-1
+             shadow-md shadow-primary/20 transition-all duration-200
+             text-sm font-medium"
+    >
+      Create New Plan
+    </button>
+  </div>
+</div>
+
+<!-- Loading Plan Details -->
+<div *ngIf="loading" class="h-full rounded-2xl border border-border/50 bg-background/80 dark:bg-gray-900/90 backdrop-blur-sm p-8">
+  <div class="animate-pulse space-y-4">
+    <div class="h-8 bg-primary/10 rounded-lg w-1/2"></div>
+    <div class="h-4 bg-primary/5 rounded w-full"></div>
+    <div class="h-4 bg-primary/5 rounded w-3/4"></div>
+    <div class="h-64 bg-primary/10 rounded-xl w-full mt-6"></div>
+  </div>
+</div>
+
+<!-- Plan Details -->
+<div *ngIf="plan && !loading" class="rounded-2xl border border-border/50 bg-background/80 dark:bg-gray-900/90 backdrop-blur-sm p-6 lg:p-8 h-full">
+  <div class="flex flex-col h-full">
+    <!-- Plan Header -->
+    <div class="mb-6">
+      <div class="inline-flex items-center mb-2">
+        <span class="h-0.5 w-6 bg-primary rounded-full"></span>
+        <span class="ml-2 text-xs text-primary font-medium">TRIP PLAN</span>
+      </div>
+      <h1 class="text-2xl md:text-3xl font-bold text-foreground mb-2">{{ plan.name }}</h1>
+      <p class="text-muted-foreground">{{ plan.description }}</p>
+    </div>
+
+    <!-- Plan Content -->
+    <div class="flex-grow">
+      <!-- No Activities State -->
+      <div *ngIf="!plan.plannedActivities || plan.plannedActivities.length === 0" class="h-full flex items-center justify-center">
+        <div class="text-center max-w-md py-8">
+          <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-calendar-plus text-primary text-xl"></i>
+          </div>
+          <h3 class="text-lg font-bold text-foreground mb-2">No Activities Yet</h3>
+          <p class="text-muted-foreground mb-6">
+            Start adding activities to create your perfect Morocco 2030 experience.
+          </p>
+          <button
+            routerLink="/activities"
+            class="bg-primary text-primary-foreground px-4 py-2 rounded-xl
+                   hover:bg-primary/90 hover:shadow-lg hover:-translate-y-1
+                   shadow-md shadow-primary/20 transition-all duration-200
+                   text-sm font-medium"
+          >
+            Browse Activities
+          </button>
+        </div>
+      </div>
+
+      <!-- Activities Timeline -->
+      <div *ngIf="plan.plannedActivities && plan.plannedActivities.length > 0" class="relative">
+        <!-- Timeline line -->
+        <div class="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/30 via-primary/10 to-transparent hidden md:block"></div>
+
+        <div class="space-y-8">
+          <div *ngFor="let item of plan.plannedActivities" class="flex gap-4 items-start group hover:-translate-y-1 transition-all duration-300">
+            <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0
+                    mt-1 group-hover:bg-primary/20 transition-colors shadow-md shadow-primary/10 border border-primary/20">
+              <i class="fas fa-map-pin text-lg text-primary"></i>
+            </div>
+
+            <div class="flex-1 pb-8 border-b border-border/20">
+              <div class="flex justify-between">
+                <h4 class="font-medium text-lg mb-2 text-foreground">{{ item.activity.name }}</h4>
+                <button
+                  (click)="removeActivity(plan.id, item.activity.id)"
+                  class="text-xs text-muted-foreground hover:text-red-500 transition-colors"
+                >
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span *ngIf="item.activity.category" class="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">
+                  {{ item.activity.category.name }}
+                </span>
+                <span class="text-xs bg-muted/60 text-muted-foreground px-2 py-1 rounded-full flex items-center">
+                  <i class="fas fa-map-marker-alt mr-1 text-[10px]"></i> {{ item.activity.location }}
+                </span>
+                <span class="text-xs bg-muted/60 text-muted-foreground px-2 py-1 rounded-full flex items-center">
+                  <i class="fas fa-clock mr-1 text-[10px]"></i> {{ item.activity.duration }} hours
+                </span>
+              </div>
+
+              <p class="text-sm text-muted-foreground mb-4">{{ item.activity.description }}</p>
+
+              <!-- Date Information -->
+              <div *ngIf="item.startDate || item.endDate" class="flex flex-wrap gap-4 mb-4 text-xs text-muted-foreground">
+                <div *ngIf="item.startDate" class="flex items-center">
+                  <span class="font-medium mr-1">Start:</span> {{ item.startDate }}
+                </div>
+                <div *ngIf="item.endDate" class="flex items-center">
+                  <span class="font-medium mr-1">End:</span> {{ item.endDate }}
+                </div>
+              </div>
+
+              <!-- Notes -->
+              <div *ngIf="item.notes" class="bg-muted/20 rounded-lg p-3 my-3 border-l-2 border-primary/30">
+                <span class="text-xs font-medium text-foreground">Notes:</span>
+                <p class="text-xs text-muted-foreground mt-1">{{ item.notes }}</p>
+              </div>
+
+              <!-- Activity Image -->
+              <div class="mt-4 aspect-video rounded-xl bg-muted/20 overflow-hidden shadow-md transform-gpu
+                      transition-transform duration-500 hover:scale-[1.01] border border-primary/10">
+                <img
+                  [src]="item.activity.imageUri || 'assets/placeholder-activity.jpg'"
+                  [alt]="item.activity.name"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

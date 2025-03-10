@@ -9,14 +9,14 @@
         <path d="M24 28C24 30.2 22.2 32 20 32C17.8 32 16 30.2 16 28C16 25.8 17.8 24 20 24C22.2 24 24 25.8 24 28Z" fill="var(--background)"/>
         <path d="M32 40C28.7 40 26 37.3 26 34H38C38 37.3 35.3 40 32 40Z" fill="var(--background)"/>
       </svg>
-      <span class="text-xl font-poppins font-semibold">MoroccoJourney</span>
+      <a routerLink="./" class="text-xl font-poppins font-semibold">MoroccoJourney</a>
     </div>
 
     <div class="flex items-center gap-4">
       <!-- Desktop Navigation -->
       <div class="hidden md:flex items-center gap-6">
         <a routerLink="./activities" routerLinkActive="text-primary" class="hover:text-primary transition-colors">Activities</a>
-        <a class="hover:text-primary transition-colors">Destinations</a>
+        <a routerLink="./my-plans" class="hover:text-primary transition-colors">MyPlanner</a>
         <a class="hover:text-primary transition-colors">Itinerary</a>
         <a class="hover:text-primary transition-colors">Budget</a>
         <app-profile-menu class="ml-4" />
