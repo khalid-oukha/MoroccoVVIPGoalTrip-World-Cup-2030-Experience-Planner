@@ -1,13 +1,13 @@
 <form class="my-10 space-y-6" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-<div class="text-center">
-    <h2 class="mb-1 text-3xl font-semibold text-foreground">Sign Up <span class="text-primary">!</span></h2>
-    <p class="text-sm text-muted-foreground">Let's get started with your 30 day free trial</p>
+  <div class="text-center">
+    <h2 class="mb-1 text-3xl font-semibold text-foreground">Start Your Adventure <span class="text-primary">!</span></h2>
+    <p class="text-sm text-muted-foreground">Join us and plan your dream Morocco trip today</p>
   </div>
 
   <div routerLink="/dashboard">
     <app-button full impact="bold" tone="light" shape="rounded" size="medium">
       <svg-icon src="assets/icons/google-logo.svg" [svgClass]="'h-6 w-6 mr-2'"> </svg-icon>
-      Sign Up with Google
+      Continue with Google
     </app-button>
   </div>
 
@@ -47,7 +47,7 @@
       </label>
       <div *ngIf="f['email'].touched && f['email'].errors" class="text-sm text-red-500 mt-1">
         <div *ngIf="f['email'].errors?.['required']">Email is required</div>
-        <div *ngIf="f['email'].errors?.['email']">Invalid email format</div>
+        <div *ngIf="f['email'].errors?.['email']">Please enter a valid email</div>
       </div>
     </div>
 
@@ -86,7 +86,7 @@
       <input type="checkbox" id="acceptTerms" formControlName="acceptTerms" />
       <label for="acceptTerms" class="ml-2 block text-sm text-muted-foreground">
         I Accept the
-        <app-button impact="none" tone="primary" shape="rounded" size="small">Terms</app-button>
+        <app-button impact="none" tone="primary" shape="rounded" size="small">Terms & Privacy Policy</app-button>
       </label>
       <div *ngIf="f['acceptTerms'].touched && f['acceptTerms'].errors" class="text-sm text-red-500 mt-1">
         <div *ngIf="f['acceptTerms'].errors?.['required']">You must accept the terms</div>
@@ -110,7 +110,7 @@
       type="submit"
       [disabled]="signUpForm.invalid || isLoading"
     >
-      {{ isLoading ? 'Processing...' : 'Sign up' }}
+      {{ isLoading ? 'Processing...' : 'Begin Your Journey' }}
     </app-button>
   </div>
 
@@ -118,9 +118,9 @@
 
   <!-- Sign-up -->
   <div class="flex items-center text-sm text-muted-foreground">
-    Already have an Account?
+    Already an Explorer?
     <app-button routerLink="/auth/sign-in" impact="none" tone="primary" shape="rounded" size="small">
-      Sign in
+      Log In
     </app-button>
   </div>
 </form>

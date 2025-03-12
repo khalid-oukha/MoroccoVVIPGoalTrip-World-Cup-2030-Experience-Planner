@@ -41,7 +41,6 @@ export class MyPlansComponent implements OnInit {
   totalPlans = 0;
   totalPages = 0;
 
-  // Form display control
   showForm = false;
   editingPlan: any = null;
   isEditMode = false;
@@ -59,7 +58,6 @@ export class MyPlansComponent implements OnInit {
       this.user = user;
     });
 
-    // Check if plan ID is in the route
     this.route.paramMap.subscribe(params => {
       const planId = params.get('planId');
       if (planId) {
@@ -82,7 +80,6 @@ export class MyPlansComponent implements OnInit {
           this.totalPlans = response.totalElements;
           this.totalPages = response.totalPages;
 
-          // If no plan is selected and we have at least one plan, select the first one
           if (!this.selectedPlan && this.plans.length > 0 && !this.route.snapshot.paramMap.get('planId')) {
             this.loadPlanDetails(this.plans[0].id);
           }
@@ -140,16 +137,13 @@ export class MyPlansComponent implements OnInit {
 
   onSavePlan(data: any): void {
     if (this.isEditMode && this.editingPlan) {
-      // Update existing plan
       this.planService.updatePlan(this.editingPlan.id, data).subscribe({
         next: (updatedPlan) => {
-          // Update plan in the list
           const index = this.plans.findIndex(p => p.id === updatedPlan.id);
           if (index !== -1) {
             this.plans[index] = updatedPlan;
           }
 
-          // Update selected plan if it's the same
           if (this.selectedPlan?.id === updatedPlan.id) {
             this.selectedPlan = updatedPlan;
           }
@@ -161,7 +155,6 @@ export class MyPlansComponent implements OnInit {
         }
       });
     } else {
-      // Create new plan
       this.planService.createPlan(data).subscribe({
         next: (newPlan) => {
           this.plans.unshift(newPlan);
@@ -197,7 +190,6 @@ export class MyPlansComponent implements OnInit {
   onRemoveActivity(data: {planId: string, activityId: string}): void {
     this.planService.removeActivityFromPlan(data.planId, data.activityId).subscribe({
       next: () => {
-        // Refresh the current plan details
         this.loadPlanDetails(data.planId);
       },
       error: (err) => {

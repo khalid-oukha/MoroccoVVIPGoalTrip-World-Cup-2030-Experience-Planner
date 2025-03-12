@@ -85,6 +85,13 @@ export class AuthService {
     this.clearAuthData();
   }
 
+  private clearAuthData(): void {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    this.userDetails.next(null);
+    this.currentUser = null;
+  }
+
   saveToken(token: string): void {
     if (token) {
       localStorage.setItem('accessToken', token);
@@ -105,31 +112,30 @@ export class AuthService {
     return localStorage.getItem('refreshToken');
   }
 
-  clearAuthData(): void {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    this.userDetails.next(null);
-    this.currentUser = null;
-  }
-
   getCurrentUser(): IUser | null {
     return this.currentUser;
   }
 
   isAdmin(): boolean {
-    return !!this.currentUser && this.currentUser.roles.includes('ROLE_ADMIN');
+    if (!this.currentUser) {
+      return false;
+    }
+
+    if (this.currentUser.authorities && Array.isArray(this.currentUser.authorities)) {
+      return this.currentUser.authorities.includes('ROLE_ADMIN');
+    }
+
+    return false;
   }
 
   isLoggedIn(): boolean {
-    // Check only token presence (synchronous check)
     return !!this.getToken() && !!this.getRefreshToken();
   }
 
-  // Add this method for async user validation
   isAuthenticated(): Observable<boolean> {
     return this.userDetails$.pipe(
       map((user) => !!user),
-      startWith(this.isLoggedIn()), // Initial sync check
+      startWith(this.isLoggedIn()),
     );
   }
 

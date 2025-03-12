@@ -3,6 +3,7 @@ export interface IUser {
   email: string;
   firstName: string;
   lastName: string;
-  created_at: string;
-  roles: string[];
+  createdAt?: string;
+  created_at?: string;
+  authorities?: string[];
 }

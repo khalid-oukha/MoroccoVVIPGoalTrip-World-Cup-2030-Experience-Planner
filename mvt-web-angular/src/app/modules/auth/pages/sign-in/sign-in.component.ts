@@ -44,28 +44,33 @@ export class SignInComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    this.errorMessage = null; // Reset error message
-    this.successMessage = null; // Reset success message
+    this.errorMessage = null;
+    this.successMessage = null;
 
-    // Stop here if the form is invalid
     if (this.form.invalid) {
       return;
     }
 
-    this.isLoading = true; // Set loading state to true
+    this.isLoading = true;
 
     const { email, password } = this.form.value;
 
-    // Call the AuthService login method
     this._authService.login({ email, password }).subscribe({
       next: (user) => {
-        this.isLoading = false; // Reset loading state
-        this.successMessage = 'Login successful!'; // Set success message
-        this._router.navigate(['/dashboard']); // Navigate to the dashboard
+        this.isLoading = false;
+        this.successMessage = 'Login successful!';
+
+        const hasAdminRole = user.authorities?.includes('ROLE_ADMIN');
+
+        if (hasAdminRole) {
+          this._router.navigate(['/']);
+        } else {
+          this._router.navigate(['/planner']);
+        }
       },
       error: (error) => {
-        this.isLoading = false; // Reset loading state
-        this.errorMessage = 'Login failed. Please check your credentials.'; // Set error message
+        this.isLoading = false;
+        this.errorMessage = 'Login failed. Please check your credentials.';
         console.error('Login error:', error);
       },
     });

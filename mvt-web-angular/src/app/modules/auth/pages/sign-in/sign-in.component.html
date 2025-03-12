@@ -1,14 +1,14 @@
 <!-- login form -->
 <form class="my-10 space-y-6" [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="text-center">
-    <h2 class="mb-1 text-3xl font-semibold text-foreground">Hello Again <span class="text-primary">!</span></h2>
-    <p class="text-sm text-muted-foreground">Enter your credential to access your account.</p>
+    <h2 class="mb-1 text-3xl font-semibold text-foreground">Welcome Back <span class="text-primary">Explorer!</span></h2>
+    <p class="text-sm text-muted-foreground">Enter your credentials to access your Morocco adventure.</p>
   </div>
 
   <div routerLink="/dashboard">
     <app-button full impact="bold" tone="light" shape="rounded" size="medium">
       <svg-icon src="assets/icons/google-logo.svg" [svgClass]="'h-6 w-6 mr-2'"> </svg-icon>
-      Log in with Google
+      Continue with Google
     </app-button>
   </div>
 
@@ -35,7 +35,7 @@
       </div>
       <div *ngIf="submitted && f['email'].errors" class="is__invalid-error">
         <div *ngIf="f['email'].errors?.['required']">Required field</div>
-        <div *ngIf="f['email'].errors?.['email']">Email must be an email address valid</div>
+        <div *ngIf="f['email'].errors?.['email']">Please enter a valid email address</div>
       </div>
     </div>
 
@@ -77,20 +77,20 @@
     </div>
 
     <app-button routerLink="/auth/forgot-password" impact="none" tone="primary" shape="rounded" size="small">
-      Forgot your password?
+      Forgot password?
     </app-button>
   </div>
 
   <!-- Submit Button -->
   <div>
-    <app-button full impact="bold" tone="primary" shape="rounded" size="medium">Sign in</app-button>
+    <app-button full impact="bold" tone="primary" shape="rounded" size="medium">Begin Your Journey</app-button>
   </div>
 
   <!-- Sign-up -->
   <div class="flex items-center text-sm text-muted-foreground">
-    Not a Member yet?
+    New to Morocco Goal Trip?
     <app-button routerLink="/auth/sign-up" impact="none" tone="primary" shape="rounded" size="small">
-      Sign up
+      Join Now
     </app-button>
   </div>
 </form>

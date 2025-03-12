@@ -72,12 +72,21 @@ export class SignUpComponent {
     };
 
     this.authService.register(formData).subscribe({
-      next: () => this.router.navigate(['/dashboard']),
+      next: (user) => {
+        this.isLoading = false;
+
+        const hasAdminRole = user.authorities?.includes('ROLE_ADMIN');
+
+        if (hasAdminRole) {
+          this.router.navigate(['/']);
+        } else {
+          this.router.navigate(['/planner']);
+        }
+      },
       error: (error) => {
         this.errorMessage = error.message || 'Registration failed. Please try again.';
         this.isLoading = false;
-      },
-      complete: () => this.isLoading = false
+      }
     });
   }
 }
