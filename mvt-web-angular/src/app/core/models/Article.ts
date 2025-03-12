@@ -3,4 +3,6 @@ export interface Article {
   content: string;
   imageUrl: string;
   createdAt: string;
+  contentPreview?: string;
+
 }

@@ -3,18 +3,44 @@ import { MenuItem } from '../models/menu.model';
 export class Menu {
   public static pages: MenuItem[] = [
     {
+      group: 'Management',
+      separator: true,
+      items: [
+        {
+          icon: 'assets/icons/heroicons/outline/users.svg',
+          label: 'Users',
+          route: '/users',
+        },
+        {
+          icon: 'assets/icons/heroicons/outline/eye.svg',
+          label: 'Activities',
+          route: '/dashboard/activities'
+        },
+        {
+          icon: 'assets/icons/heroicons/outline/folder.svg',
+          label: 'Categories',
+          route: '/dashboard/categories'
+        },
+        {
+          icon: 'assets/icons/heroicons/outline/bookmark.svg',
+          label: 'Articles',
+          route: '/dashboard/articles'
+        },
+        {
+          icon: 'assets/icons/heroicons/outline/sun.svg',
+          label: 'Cities',
+          route: '/dashboard/cities'
+        }
+      ],
+    },
+    {
       group: 'Base',
       separator: false,
       items: [
         {
           icon: 'assets/icons/heroicons/outline/chart-pie.svg',
           label: 'Dashboard',
-          route: '/dashboard',
-          children: [
-            { label: 'users', route: '/dashboard/users' },
-            { label: 'activities', route: '/dashboard/activities' },
-            { label: 'categories', route: '/dashboard/categories' },
-          ],
+          route: '/dashboard'
         },
         {
           icon: 'assets/icons/heroicons/outline/lock-closed.svg',
@@ -35,44 +61,6 @@ export class Menu {
           ],
         },
       ],
-    },
-    {
-      group: 'Management',
-      separator: true,
-      items: [
-        {
-          icon: 'assets/icons/heroicons/outline/users.svg',
-          label: 'Users',
-          route: '/users',
-        },
-      ],
-    },
-
-    {
-      group: 'Config',
-      separator: false,
-      items: [
-        {
-          icon: 'assets/icons/heroicons/outline/cog.svg',
-          label: 'Settings',
-          route: '/settings',
-        },
-        {
-          icon: 'assets/icons/heroicons/outline/bell.svg',
-          label: 'Notifications',
-          route: '/gift',
-        },
-        {
-          icon: 'assets/icons/heroicons/outline/folder.svg',
-          label: 'Folders',
-          route: '/folders',
-          children: [
-            { label: 'Current Files', route: '/folders/current-files' },
-            { label: 'Downloads', route: '/folders/download' },
-            { label: 'Trash', route: '/folders/trash' },
-          ],
-        },
-      ],
-    },
+    }
   ];
 }

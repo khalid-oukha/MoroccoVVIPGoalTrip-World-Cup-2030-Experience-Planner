@@ -1,0 +1,38 @@
+<div class="p-2">
+  <div class="bottom-8 right-8">
+    <button
+      (click)="showForm = true"
+      class="p-2 my-2 bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-colors"
+    >
+      + New Article
+    </button>
+  </div>
+
+  <!-- Form Modal -->
+  <div *ngIf="showForm" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+    <div class="bg-background rounded-lg shadow-xl w-full max-w-2xl relative">
+      <app-generic-form
+        [formTitle]="selectedArticle ? 'Edit Article' : 'Create Article'"
+        [formFields]="formFields"
+        [initialData]="selectedArticle || {}"
+        [submitButtonText]="selectedArticle ? 'Update' : 'Create'"
+        (saved)="handleFormSubmit($event)"
+        (cancelled)="handleFormCancel()"
+      ></app-generic-form>
+    </div>
+  </div>
+
+  <!-- Loading Indicator -->
+  <div *ngIf="isLoading" class="flex justify-center py-8">
+    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+  </div>
+
+  <!-- Table -->
+  <app-table
+    *ngIf="!isLoading"
+    [data]="articles"
+    [columns]="columns"
+    (edit)="handleEdit($event)"
+    (delete)="handleDelete($event)"
+  ></app-table>
+</div>
