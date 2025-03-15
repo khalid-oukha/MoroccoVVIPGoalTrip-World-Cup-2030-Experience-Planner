@@ -278,7 +278,7 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
 
 ## Support
 
-For support, please email support@vvipgoaltrip.com or join our Slack channel.
+For support, please email oukhakhalid@gmail.com or join our linkedin khalid-oukha.
 
 
 I've created a comprehensive README.md covering all aspects of the backend project, including setup instructions, architecture details, security measures, and development guidelines. The format is ready to be copied directly into a README.md file. Would you like me to explain or elaborate on any specific section?
