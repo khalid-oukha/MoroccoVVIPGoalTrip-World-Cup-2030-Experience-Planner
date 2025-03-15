@@ -10,6 +10,7 @@ import com.moroccanvviptrip.api.mvtapi.web.mapper.CityMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -39,6 +40,7 @@ public class CityController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<CityResponseVm> create(@Valid @RequestBody CityRequestDto cityRequestDto) {
         City createdCity = cityService.create(cityRequestDto);
         CityResponseVm responseVm = cityMapper.toResponse(createdCity);
@@ -46,6 +48,7 @@ public class CityController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<CityResponseVm> update(@PathVariable Long id, @Valid @RequestBody CityUpdateDto cityUpdateDto) {
         City updatedCity = cityService.update(id, cityUpdateDto);
         CityResponseVm responseVm = cityMapper.toResponse(updatedCity);
@@ -53,6 +56,7 @@ public class CityController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         cityService.delete(id);
         return ResponseEntity.noContent().build();

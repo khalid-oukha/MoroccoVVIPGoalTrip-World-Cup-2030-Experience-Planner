@@ -4,16 +4,14 @@ import com.moroccanvviptrip.api.mvtapi.domain.Category;
 import com.moroccanvviptrip.api.mvtapi.utils.annotation.Trimmed;
 import com.moroccanvviptrip.api.mvtapi.utils.annotation.Unique;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class CategoryRequestDto {
 
     @NotBlank

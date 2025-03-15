@@ -10,6 +10,7 @@ import com.moroccanvviptrip.api.mvtapi.web.exception.PropertyExistsException;
 import com.moroccanvviptrip.api.mvtapi.web.mapper.CategoryMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

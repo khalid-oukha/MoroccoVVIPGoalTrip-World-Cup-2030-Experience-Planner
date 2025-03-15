@@ -1,15 +1,13 @@
 package com.moroccanvviptrip.api.mvtapi.web.dto.plan;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class PlanUpdateDto {
 
     private String name;

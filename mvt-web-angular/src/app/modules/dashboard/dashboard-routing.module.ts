@@ -8,6 +8,7 @@ import { CategoriesComponent } from './pages/categories/categories.component';
 import {ArticlesComponent} from "./pages/articles/articles.component";
 import {ArticleDetailsComponent} from "./pages/article-details/article-details.component";
 import {CitiesComponent} from "./pages/cities/cities.component";
+import {RolesComponent} from "./pages/roles/roles.component";
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
       { path: 'activities', component: ActivitesComponent },
       { path: 'articles', component: ArticlesComponent },
       { path: 'cities', component: CitiesComponent },
+      { path: 'roles', component: RolesComponent },
       { path: 'users', component: UserComponent },
       {path:'categories', component: CategoriesComponent},
       { path: '**', redirectTo: 'errors/404' },

@@ -1,8 +1,7 @@
-// src/app/components/my-plans/plan-form/plan-form.component.ts
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {FormField, GenericFormComponent} from "../../../dashboard/components/generic-form/generic-form.component";
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormField, GenericFormComponent } from "../../../dashboard/components/generic-form/generic-form.component";
 
 @Component({
   selector: 'app-plan-form',
@@ -20,8 +19,6 @@ export class PlanFormComponent implements OnInit {
 
   formFields: FormField[] = [];
   formTitle = 'Create New Plan';
-
-  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.formFields = [
@@ -49,7 +46,6 @@ export class PlanFormComponent implements OnInit {
 
   onSave(formData: any): void {
     const data = new FormData();
-
     data.append('name', formData.name);
     data.append('description', formData.description);
 

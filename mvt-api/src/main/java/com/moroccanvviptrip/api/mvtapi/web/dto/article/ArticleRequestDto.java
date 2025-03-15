@@ -3,10 +3,7 @@ package com.moroccanvviptrip.api.mvtapi.web.dto.article;
 import com.moroccanvviptrip.api.mvtapi.utils.annotation.Trimmed;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
@@ -16,6 +13,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ArticleRequestDto {
     @NotBlank
     @Trimmed

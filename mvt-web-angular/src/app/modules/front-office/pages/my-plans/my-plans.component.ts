@@ -3,14 +3,12 @@ import { CommonModule, NgClass, NgForOf, NgIf, NgOptimizedImage } from '@angular
 import { RouterModule } from '@angular/router';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs';
-import {IUser} from "../../../../core/models/IUser";
-import {PlanService} from "../../../../core/services/plan.service";
-import {AuthService} from "../../../../core/services/auth.service";
-import {PlanFormComponent} from "../../components/plan-form/plan-form.component";
-import {PlanDetailComponent} from "../../components/plan-detail/plan-detail.component";
-import {PlanSidebarComponent} from "../../components/plan-sidebar/plan-sidebar.component";
-
-
+import { IUser } from "../../../../core/models/IUser";
+import { PlanService } from "../../../../core/services/plan.service";
+import { AuthService } from "../../../../core/services/auth.service";
+import { PlanFormComponent } from "../../components/plan-form/plan-form.component";
+import { PlanDetailComponent } from "../../components/plan-detail/plan-detail.component";
+import { PlanSidebarComponent } from "../../components/plan-sidebar/plan-sidebar.component";
 
 @Component({
   selector: 'app-my-plans',
@@ -22,7 +20,6 @@ import {PlanSidebarComponent} from "../../components/plan-sidebar/plan-sidebar.c
     PlanDetailComponent,
     PlanFormComponent,
     NgIf,
-    NgForOf,
     NgClass,
     NgOptimizedImage
   ],
@@ -137,7 +134,10 @@ export class MyPlansComponent implements OnInit {
 
   onSavePlan(data: any): void {
     if (this.isEditMode && this.editingPlan) {
-      this.planService.updatePlan(this.editingPlan.id, data).subscribe({
+      const formData = data instanceof FormData ? data : data.data;
+      const planId = data instanceof FormData ? this.editingPlan.id : data.id;
+
+      this.planService.updatePlan(planId, formData).subscribe({
         next: (updatedPlan) => {
           const index = this.plans.findIndex(p => p.id === updatedPlan.id);
           if (index !== -1) {
@@ -150,9 +150,7 @@ export class MyPlansComponent implements OnInit {
 
           this.closeForm();
         },
-        error: (err) => {
-          console.error('Error updating plan', err);
-        }
+        error: () => {}
       });
     } else {
       this.planService.createPlan(data).subscribe({
@@ -161,9 +159,7 @@ export class MyPlansComponent implements OnInit {
           this.loadPlanDetails(newPlan.id);
           this.closeForm();
         },
-        error: (err) => {
-          console.error('Error creating plan', err);
-        }
+        error: () => {}
       });
     }
   }
@@ -192,8 +188,8 @@ export class MyPlansComponent implements OnInit {
       next: () => {
         this.loadPlanDetails(data.planId);
       },
-      error: (err) => {
-        console.error('Error removing activity', err);
+      error: () => {
+        // Silent error handling or display a message if needed
       }
     });
   }

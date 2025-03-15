@@ -1,0 +1,43 @@
+<div class="p-2">
+  <div class="bottom-8 right-8">
+    <button
+      (click)="showForm = true"
+      class="p-2 my-2 bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-colors rounded-md"
+    >
+      + New Role
+    </button>
+  </div>
+
+  <!-- Form Modal -->
+  <div *ngIf="showForm" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+    <div class="bg-background rounded-lg shadow-xl w-full max-w-2xl relative">
+      <app-generic-form
+        [formTitle]="selectedRole ? 'Edit Role' : 'Create Role'"
+        [formFields]="formFields"
+        [initialData]="selectedRole || {}"
+        [submitButtonText]="selectedRole ? 'Update' : 'Create'"
+        (saved)="handleFormSubmit($event)"
+        (cancelled)="handleFormCancel()"
+      ></app-generic-form>
+    </div>
+  </div>
+
+  <!-- Loading Indicator -->
+  <div *ngIf="isLoading" class="flex justify-center py-8">
+    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+  </div>
+
+  <app-table
+    [data]="roles"
+    [columns]="columns"
+    (edit)="handleEdit($event)"
+    (delete)="handleDelete($event)"
+  >
+    <!-- Custom built-in role badge template -->
+    <ng-template #builtInBadge let-data>
+      <span *ngIf="isBuiltInRole(data)" class="px-2 py-1 text-xs bg-primary/10 text-primary rounded-full">
+        Built-in
+      </span>
+    </ng-template>
+  </app-table>
+</div>

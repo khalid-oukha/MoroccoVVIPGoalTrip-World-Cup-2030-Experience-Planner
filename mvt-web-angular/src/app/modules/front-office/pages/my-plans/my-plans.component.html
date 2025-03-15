@@ -1,4 +1,3 @@
-<!-- src/app/components/my-plans/my-plans.component.html -->
 <div class="container mx-auto px-4 py-8">
   <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
     <!-- Sidebar -->
@@ -37,6 +36,8 @@
         [loading]="loadingPlanDetails"
         (activityRemove)="onRemoveActivity($event)"
         (createPlan)="onCreatePlan()"
+        (editPlanEvent)="onEditPlan($event)"
+        (deletePlanEvent)="onDeletePlan($event)"
       ></app-plan-detail>
     </div>
   </div>

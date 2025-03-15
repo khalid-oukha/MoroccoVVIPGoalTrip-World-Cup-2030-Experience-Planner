@@ -9,6 +9,7 @@ import com.moroccanvviptrip.api.mvtapi.web.mapper.CategoryMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -38,6 +39,7 @@ public class CategoryController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<CategoryResponseVm> create(@Valid @ModelAttribute CategoryRequestDto categoryRequestDto) {
         Category createdCategory = categoryService.create(categoryRequestDto);
         CategoryResponseVm responseVm = categoryMapper.toResponse(createdCategory);
@@ -46,12 +48,14 @@ public class CategoryController {
 
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         categoryService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<CategoryResponseVm> updateCategory(
             @PathVariable Long id,
             @Valid @ModelAttribute CategoryUpdateDto categoryUpdateDto) {

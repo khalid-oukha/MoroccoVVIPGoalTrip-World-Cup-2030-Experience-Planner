@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -44,18 +45,21 @@ public class ArticleController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         articleService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ArticleResponseVm> create(@Valid @ModelAttribute ArticleRequestDto articleRequestDto) {
         Article article = articleService.create(articleRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(articleMapper.toResponseVm(article));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ArticleResponseVm> update(@PathVariable UUID id, @ModelAttribute ArticleUpdateDto articleUpdateDto) {
         Article article = articleService.update(id, articleUpdateDto);
         return ResponseEntity.ok(articleMapper.toResponseVm(article));

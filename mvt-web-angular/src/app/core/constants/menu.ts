@@ -30,6 +30,11 @@ export class Menu {
           icon: 'assets/icons/heroicons/outline/sun.svg',
           label: 'Cities',
           route: '/dashboard/cities'
+        },
+        {
+          icon: 'assets/icons/heroicons/outline/x.svg',
+          label: 'Roles',
+          route: '/dashboard/roles'
         }
       ],
     },
