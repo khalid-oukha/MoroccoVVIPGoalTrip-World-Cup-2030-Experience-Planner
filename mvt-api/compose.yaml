@@ -12,13 +12,15 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/MoroccoVvipTripGoal_db
       - SPRING_DATASOURCE_USERNAME=admin
       - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_PROFILES_ACTIVE=docker
+    volumes:
+      - app_uploads:/usr/local/tomcat/uploads
     depends_on:
       postgres:
         condition: service_healthy
     networks:
       - app_network
     restart: unless-stopped
-
 
   postgres:
     image: postgres:latest
@@ -84,3 +86,4 @@ volumes:
   sonarqube_extensions:
   sonarqube_logs:
   jenkins_home:
+  app_uploads:
