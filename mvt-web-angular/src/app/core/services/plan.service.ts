@@ -57,9 +57,20 @@ export class PlanService {
     );
   }
 
-  removeActivityFromPlan(planId: string, activityId: string): Observable<void> {
+  deletePlannedActivity(planId: string, plannedActivityId: string): Observable<void> {
     return this.http.delete<void>(
-      `${this.apiUrl}/${planId}/activities/${activityId}`
-    )
+      `${this.apiUrl}/${planId}/planned-activities/${plannedActivityId}`
+    );
+  }
+
+  updatePlannedActivity(planId: string, plannedActivityId: string, updateData: {
+    priority?: string,
+    startDate?: string,
+    endDate?: string
+  }): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/${planId}/planned-activities/${plannedActivityId}`,
+      updateData
+    );
   }
 }

@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgForOf, NgIf, NgClass, NgTemplateOutlet, DatePipe, CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import {PlannedActivityFormComponent} from "../planned-activity-form/planned-activity-form.component";
 
 @Component({
   selector: 'app-plan-detail',
   standalone: true,
-  imports: [NgIf, NgForOf, RouterLink, NgClass, NgTemplateOutlet, DatePipe, CommonModule],
+  imports: [NgIf, NgForOf, RouterLink, NgClass, NgTemplateOutlet, DatePipe, CommonModule, PlannedActivityFormComponent],
   templateUrl: './plan-detail.component.html',
   styleUrls: ['./plan-detail.component.scss']
 })
@@ -13,16 +14,45 @@ export class PlanDetailComponent {
   @Input() plan: any | null = null;
   @Input() loading = false;
 
-  @Output() activityRemove = new EventEmitter<{planId: string, activityId: string}>();
+  @Output() activityRemove = new EventEmitter<{planId: string, plannedActivityId: string}>();
+  @Output() activityUpdate = new EventEmitter<{planId: string, plannedActivityId: string, updateData: any}>();
   @Output() createPlan = new EventEmitter<void>();
   @Output() editPlanEvent = new EventEmitter<any>();
   @Output() deletePlanEvent = new EventEmitter<string>();
 
-  removeActivity(planId: string, activityId: string): void {
+
+  showEditForm = false;
+  selectedActivity: any = null;
+  // Update the updateActivity method
+  openEditForm(activity: any) {
+    this.selectedActivity = activity;
+    this.showEditForm = true;
+  }
+
+  handleActivityUpdate(updateData: any) {
+    this.activityUpdate.emit({
+      planId: this.plan.id,
+      plannedActivityId: this.selectedActivity.id,
+      updateData: {
+        ...updateData,
+        startDate: new Date(updateData.startDate).toISOString(),
+        endDate: updateData.endDate ? new Date(updateData.endDate).toISOString() : null
+      }
+    });
+    this.showEditForm = false;
+  }
+
+  removeActivity(planId: string, plannedActivityId: string): void {
     if (confirm('Are you sure you want to remove this activity from the plan?')) {
-      this.activityRemove.emit({planId, activityId});
+      this.activityRemove.emit({planId, plannedActivityId});
     }
   }
+
+  // New method to handle updating a planned activity
+  updateActivity(planId: string, plannedActivityId: string, updateData: any): void {
+    this.activityUpdate.emit({planId, plannedActivityId, updateData});
+  }
+
 
   createNewPlan(): void {
     this.createPlan.emit();

@@ -6,6 +6,7 @@ import com.moroccanvviptrip.api.mvtapi.domain.PlannedActivity;
 import com.moroccanvviptrip.api.mvtapi.domain.User;
 import com.moroccanvviptrip.api.mvtapi.repository.PlanRepository;
 import com.moroccanvviptrip.api.mvtapi.services.ActivityService;
+import com.moroccanvviptrip.api.mvtapi.services.PlannedActivityService;
 import com.moroccanvviptrip.api.mvtapi.services.UserService;
 import com.moroccanvviptrip.api.mvtapi.services.impl.PlanServiceImpl;
 import com.moroccanvviptrip.api.mvtapi.utils.FileStorageService;
@@ -38,11 +39,9 @@ import static org.mockito.Mockito.*;
 public class PlanServiceTests {
     private PlanRepository planRepository;
     private UserService userService;
-    private ActivityService activityService;
     private PlanMapper planMapper;
     private FileStorageService fileStorageService;
     private PlanServiceImpl planService;
-
     private final UUID planId = UUID.randomUUID();
     private final UUID userId = UUID.randomUUID();
     private final UUID activityId = UUID.randomUUID();
@@ -51,16 +50,17 @@ public class PlanServiceTests {
     public void beforeEach() {
         planRepository = mock(PlanRepository.class);
         userService = mock(UserService.class);
-        activityService = mock(ActivityService.class);
+        ActivityService activityService = mock(ActivityService.class);
         planMapper = mock(PlanMapper.class);
         fileStorageService = mock(FileStorageService.class);
-
+        PlannedActivityService plannedActivityService = mock(PlannedActivityService.class);
         planService = new PlanServiceImpl(
                 planRepository,
                 userService,
                 activityService,
                 planMapper,
-                fileStorageService
+                fileStorageService,
+                plannedActivityService
         );
     }
 
@@ -428,73 +428,6 @@ public class PlanServiceTests {
         assertEquals("You don't have permission to modify this plan", exception.getMessage());
     }
 
-    @Test
-    public void removeActivityFromPlan_shouldRemoveActivity_whenPlanExists() {
-        // Arrange
-        User currentUser = User.builder()
-                .id(userId)
-                .build();
-
-        Activity activity = Activity.builder()
-                .id(activityId)
-                .name("Desert Safari")
-                .build();
-
-        PlannedActivity plannedActivity = PlannedActivity.builder()
-                .activity(activity)
-                .build();
-
-        List<PlannedActivity> activities = new ArrayList<>();
-        activities.add(plannedActivity);
-
-        Plan existingPlan = Plan.builder()
-                .id(planId)
-                .name("Adventure Plan")
-                .user(currentUser)
-                .plannedActivities(activities)
-                .build();
-
-        when(planRepository.findById(planId)).thenReturn(Optional.of(existingPlan));
-        when(userService.getCurrentUser()).thenReturn(currentUser);
-        when(planRepository.save(any(Plan.class))).thenReturn(existingPlan);
-
-        // Act
-        planService.removeActivityFromPlan(planId, activityId);
-
-        // Assert
-        ArgumentCaptor<Plan> planCaptor = ArgumentCaptor.forClass(Plan.class);
-        verify(planRepository).save(planCaptor.capture());
-
-        Plan capturedPlan = planCaptor.getValue();
-        assertTrue(capturedPlan.getPlannedActivities().isEmpty());
-    }
-
-    @Test
-    public void removeActivityFromPlan_shouldThrowSecurityException_whenUserDoesNotOwnPlan() {
-        // Arrange
-        User planOwner = User.builder()
-                .id(UUID.randomUUID())
-                .build();
-
-        User currentUser = User.builder()
-                .id(userId)
-                .build();
-
-        Plan existingPlan = Plan.builder()
-                .id(planId)
-                .name("Adventure Plan")
-                .user(planOwner)
-                .build();
-
-        when(planRepository.findById(planId)).thenReturn(Optional.of(existingPlan));
-        when(userService.getCurrentUser()).thenReturn(currentUser);
-
-        // Act & Assert
-        SecurityException exception = assertThrows(SecurityException.class,
-                () -> planService.removeActivityFromPlan(planId, activityId)
-        );
-        assertEquals("You don't have permission to modify this plan", exception.getMessage());
-    }
 
     // Helper methods to create test data
     private Plan createPlan() {

@@ -7,9 +7,11 @@ import com.moroccanvviptrip.api.mvtapi.domain.User;
 import com.moroccanvviptrip.api.mvtapi.repository.PlanRepository;
 import com.moroccanvviptrip.api.mvtapi.services.ActivityService;
 import com.moroccanvviptrip.api.mvtapi.services.PlanService;
+import com.moroccanvviptrip.api.mvtapi.services.PlannedActivityService;
 import com.moroccanvviptrip.api.mvtapi.services.UserService;
 import com.moroccanvviptrip.api.mvtapi.utils.FileStorageService;
 import com.moroccanvviptrip.api.mvtapi.web.dto.PlannedActivities.PlannedActivityRequestDto;
+import com.moroccanvviptrip.api.mvtapi.web.dto.PlannedActivities.PlannedActivityUpdateDto;
 import com.moroccanvviptrip.api.mvtapi.web.dto.plan.PlanRequestDto;
 import com.moroccanvviptrip.api.mvtapi.web.dto.plan.PlanUpdateDto;
 import com.moroccanvviptrip.api.mvtapi.web.mapper.PlanMapper;
@@ -37,6 +39,7 @@ public class PlanServiceImpl implements PlanService {
     private final ActivityService activityService;
     private final PlanMapper planMapper;
     private final FileStorageService fileStorageService;
+    private final PlannedActivityService plannedActivityService;
 
     @Override
     public Plan findById(UUID id) {
@@ -199,18 +202,50 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     @Transactional
-    public void removeActivityFromPlan(UUID planId, UUID activityId) {
+    public PlannedActivity updatePlannedActivity(UUID planId, UUID plannedActivityId, PlannedActivityUpdateDto updateDto) {
+        // Verify the plan exists and belongs to the current user
         Plan plan = findById(planId);
-
         User currentUser = userService.getCurrentUser();
+
         if (!plan.getUser().getId().equals(currentUser.getId())) {
             throw new SecurityException("You don't have permission to modify this plan");
         }
 
-        plan.getPlannedActivities().removeIf(plannedActivity ->
-                plannedActivity.getActivity().getId().equals(activityId));
+        // Verify the planned activity belongs to this plan
+        PlannedActivity plannedActivity = plannedActivityService.findById(plannedActivityId);
+        if (!plannedActivity.getPlan().getId().equals(planId)) {
+            throw new EntityNotFoundException(
+                    "Planned activity with ID: " + plannedActivityId + " not found in plan with ID: " + planId);
+        }
 
-        planRepository.save(plan);
-        log.info("Activity removed from plan. Plan ID: {}, Activity ID: {}", planId, activityId);
+        // Use the planned activity service to update it
+        PlannedActivity updatedActivity = plannedActivityService.update(plannedActivityId, updateDto);
+        log.info("Planned activity updated. Plan ID: {}, Planned Activity ID: {}", planId, plannedActivityId);
+        return updatedActivity;
     }
+
+    @Override
+    @Transactional
+    public void deletePlannedActivity(UUID planId, UUID plannedActivityId) {
+        // Verify the plan exists and belongs to the current user
+        Plan plan = findById(planId);
+        User currentUser = userService.getCurrentUser();
+
+        if (!plan.getUser().getId().equals(currentUser.getId())) {
+            throw new SecurityException("You don't have permission to modify this plan");
+        }
+
+        // Verify the planned activity belongs to this plan
+        PlannedActivity plannedActivity = plannedActivityService.findById(plannedActivityId);
+        if (!plannedActivity.getPlan().getId().equals(planId)) {
+            throw new EntityNotFoundException(
+                    "Planned activity with ID: " + plannedActivityId + " not found in plan with ID: " + planId);
+        }
+
+        // Use the planned activity service to delete it
+        plannedActivityService.delete(plannedActivityId);
+        log.info("Planned activity deleted. Plan ID: {}, Planned Activity ID: {}", planId, plannedActivityId);
+    }
+
+
 }

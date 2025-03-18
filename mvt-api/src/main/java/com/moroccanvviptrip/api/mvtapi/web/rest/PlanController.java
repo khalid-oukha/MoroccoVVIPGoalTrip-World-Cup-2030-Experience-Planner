@@ -1,9 +1,12 @@
 package com.moroccanvviptrip.api.mvtapi.web.rest;
 
 import com.moroccanvviptrip.api.mvtapi.domain.Plan;
+import com.moroccanvviptrip.api.mvtapi.domain.PlannedActivity;
 import com.moroccanvviptrip.api.mvtapi.services.PlanService;
 import com.moroccanvviptrip.api.mvtapi.web.VM.PlanResponseVm.PlanResponseVm;
+import com.moroccanvviptrip.api.mvtapi.web.VM.PlannedActivityVm;
 import com.moroccanvviptrip.api.mvtapi.web.dto.PlannedActivities.PlannedActivityRequestDto;
+import com.moroccanvviptrip.api.mvtapi.web.dto.PlannedActivities.PlannedActivityUpdateDto;
 import com.moroccanvviptrip.api.mvtapi.web.dto.plan.PlanRequestDto;
 import com.moroccanvviptrip.api.mvtapi.web.dto.plan.PlanUpdateDto;
 import com.moroccanvviptrip.api.mvtapi.web.mapper.PlanMapper;
@@ -99,12 +102,26 @@ public class PlanController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @DeleteMapping("/{planId}/activities/{activityId}")
-    public ResponseEntity<Void> removeActivityFromPlan(
+    @DeleteMapping("/{planId}/planned-activities/{plannedActivityId}")
+    public ResponseEntity<Void> deletePlannedActivity(
             @PathVariable UUID planId,
-            @PathVariable UUID activityId) {
+            @PathVariable UUID plannedActivityId) {
 
-        planService.removeActivityFromPlan(planId, activityId);
+        planService.deletePlannedActivity(planId, plannedActivityId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{planId}/planned-activities/{plannedActivityId}")
+    public ResponseEntity<Void> updatePlannedActivity(
+            @PathVariable UUID planId,
+            @PathVariable UUID plannedActivityId,
+            @Valid @RequestBody PlannedActivityUpdateDto updateDto) {
+
+        PlannedActivity updatedActivity = planService.updatePlannedActivity(planId, plannedActivityId, updateDto);
+
+        if (updatedActivity != null) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }

@@ -6,9 +6,9 @@ import { finalize } from 'rxjs';
 import { IUser } from "../../../../core/models/IUser";
 import { PlanService } from "../../../../core/services/plan.service";
 import { AuthService } from "../../../../core/services/auth.service";
-import { PlanFormComponent } from "../../components/plan-form/plan-form.component";
 import { PlanDetailComponent } from "../../components/plan-detail/plan-detail.component";
 import { PlanSidebarComponent } from "../../components/plan-sidebar/plan-sidebar.component";
+import {PlanFormComponent} from "../../components/plan-form/plan-form.component";
 
 @Component({
   selector: 'app-my-plans',
@@ -18,10 +18,9 @@ import { PlanSidebarComponent } from "../../components/plan-sidebar/plan-sidebar
     RouterModule,
     PlanSidebarComponent,
     PlanDetailComponent,
-    PlanFormComponent,
     NgIf,
     NgClass,
-    NgOptimizedImage
+    PlanFormComponent
   ],
   templateUrl: './my-plans.component.html',
   styleUrls: ['./my-plans.component.scss']
@@ -183,14 +182,27 @@ export class MyPlansComponent implements OnInit {
     });
   }
 
-  onRemoveActivity(data: {planId: string, activityId: string}): void {
-    this.planService.removeActivityFromPlan(data.planId, data.activityId).subscribe({
+  onRemoveActivity(data: {planId: string, plannedActivityId: string}): void {
+    this.planService.deletePlannedActivity(data.planId, data.plannedActivityId).subscribe({
       next: () => {
         this.loadPlanDetails(data.planId);
       },
-      error: () => {
-        // Silent error handling or display a message if needed
+      error: (err) => {
+        console.error('Error removing activity', err);
       }
     });
   }
+
+  onUpdateActivity(data: { planId: string, plannedActivityId: string, updateData: any }) {
+    this.planService.updatePlannedActivity(data.planId, data.plannedActivityId, data.updateData)
+      .subscribe({
+        next: () => {
+          this.loadPlanDetails(data.planId);
+        },
+        error: (err) => {
+          console.error('Error updating activity', err);
+        }
+      });
+  }
+
 }

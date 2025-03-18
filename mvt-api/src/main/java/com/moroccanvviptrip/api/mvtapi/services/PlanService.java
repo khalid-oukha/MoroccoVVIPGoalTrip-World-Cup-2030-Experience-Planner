@@ -1,7 +1,9 @@
 package com.moroccanvviptrip.api.mvtapi.services;
 
 import com.moroccanvviptrip.api.mvtapi.domain.Plan;
+import com.moroccanvviptrip.api.mvtapi.domain.PlannedActivity;
 import com.moroccanvviptrip.api.mvtapi.web.dto.PlannedActivities.PlannedActivityRequestDto;
+import com.moroccanvviptrip.api.mvtapi.web.dto.PlannedActivities.PlannedActivityUpdateDto;
 import com.moroccanvviptrip.api.mvtapi.web.dto.plan.PlanRequestDto;
 import com.moroccanvviptrip.api.mvtapi.web.dto.plan.PlanUpdateDto;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,5 +37,8 @@ public interface PlanService {
     void addActivityToPlan(UUID planId, UUID activityId, PlannedActivityRequestDto plannedActivityRequestDto);
 
     @Transactional
-    void removeActivityFromPlan(UUID planId, UUID activityId);
+    PlannedActivity updatePlannedActivity(UUID planId, UUID plannedActivityId, PlannedActivityUpdateDto updateDto);
+
+    @Transactional
+    void deletePlannedActivity(UUID planId, UUID plannedActivityId);
 }
