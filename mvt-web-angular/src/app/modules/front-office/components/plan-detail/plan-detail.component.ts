@@ -30,14 +30,17 @@ export class PlanDetailComponent {
   }
 
   handleActivityUpdate(updateData: any) {
+    const formattedData = {
+      priority: updateData.priority.toUpperCase(),
+      startDate: new Date(updateData.startDate).toISOString(),
+      endDate: updateData.endDate ? new Date(updateData.endDate).toISOString() : null,
+      notes: updateData.notes || ''
+    };
+
     this.activityUpdate.emit({
       planId: this.plan.id,
       plannedActivityId: this.selectedActivity.id,
-      updateData: {
-        ...updateData,
-        startDate: new Date(updateData.startDate).toISOString(),
-        endDate: updateData.endDate ? new Date(updateData.endDate).toISOString() : null
-      }
+      updateData: formattedData
     });
     this.showEditForm = false;
   }
@@ -47,12 +50,6 @@ export class PlanDetailComponent {
       this.activityRemove.emit({planId, plannedActivityId});
     }
   }
-
-  // New method to handle updating a planned activity
-  updateActivity(planId: string, plannedActivityId: string, updateData: any): void {
-    this.activityUpdate.emit({planId, plannedActivityId, updateData});
-  }
-
 
   createNewPlan(): void {
     this.createPlan.emit();

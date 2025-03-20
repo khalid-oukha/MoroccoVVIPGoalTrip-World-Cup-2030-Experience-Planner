@@ -1,4 +1,9 @@
-<div class="p-2">
+<div class="p-2 relative">
+  <!-- Loading overlay -->
+  <div *ngIf="isLoading" class="absolute inset-0 bg-black/20 z-40 flex items-center justify-center">
+    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+  </div>
+
   <div class="bottom-8 right-8">
     <button
       (click)="showForm = true"
@@ -16,6 +21,7 @@
         [formFields]="formFields"
         [initialData]="selectedCategory || {}"
         [submitButtonText]="selectedCategory ? 'Update' : 'Create'"
+        [serverErrors]="serverErrors"
         (saved)="handleFormSubmit($event)"
         (cancelled)="handleFormCancel()"
       ></app-generic-form>

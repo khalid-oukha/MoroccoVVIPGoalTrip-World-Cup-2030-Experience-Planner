@@ -196,7 +196,7 @@ export class MyPlansComponent implements OnInit {
   onUpdateActivity(data: { planId: string, plannedActivityId: string, updateData: any }) {
     this.planService.updatePlannedActivity(data.planId, data.plannedActivityId, data.updateData)
       .subscribe({
-        next: () => {
+        next: (response) => {
           this.loadPlanDetails(data.planId);
         },
         error: (err) => {

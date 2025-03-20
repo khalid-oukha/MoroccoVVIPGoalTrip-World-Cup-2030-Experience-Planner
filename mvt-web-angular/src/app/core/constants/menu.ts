@@ -7,11 +7,6 @@ export class Menu {
       separator: true,
       items: [
         {
-          icon: 'assets/icons/heroicons/outline/users.svg',
-          label: 'Users',
-          route: '/users',
-        },
-        {
           icon: 'assets/icons/heroicons/outline/eye.svg',
           label: 'Activities',
           route: '/dashboard/activities'

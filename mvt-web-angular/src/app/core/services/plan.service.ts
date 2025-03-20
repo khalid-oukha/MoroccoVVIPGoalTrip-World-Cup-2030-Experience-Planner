@@ -63,10 +63,12 @@ export class PlanService {
     );
   }
 
+
   updatePlannedActivity(planId: string, plannedActivityId: string, updateData: {
     priority?: string,
     startDate?: string,
-    endDate?: string
+    endDate?: string,
+    notes?: string
   }): Observable<any> {
     return this.http.put(
       `${this.apiUrl}/${planId}/planned-activities/${plannedActivityId}`,

@@ -10,7 +10,6 @@ import com.moroccanvviptrip.api.mvtapi.web.exception.PropertyExistsException;
 import com.moroccanvviptrip.api.mvtapi.web.mapper.CategoryMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,13 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
             throw new IllegalArgumentException("Image file is required.");
         }
 
-        String fileName = fileStorageService.store(categoryRequestDto.getImageUri());
-
-        String imageUrl = "http://localhost:8080/api/v1/files/" + fileName;
-
         Category category = categoryMapper.toEntity(categoryRequestDto);
-        category.setImageUri(imageUrl);
-
         return categoryRepository.save(category);
     }
 
@@ -72,28 +65,28 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.delete(category);
     }
 
-
     @Transactional
     @Override
     public Category update(Long id, CategoryUpdateDto categoryUpdateDto) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Category not found!"));
 
-        if (categoryUpdateDto.getDescription() != null && !categoryUpdateDto.getDescription().isEmpty()) {
-            category.setDescription(categoryUpdateDto.getDescription());
+        if (categoryUpdateDto.getName() != null && !categoryUpdateDto.getName().isEmpty() &&
+                !categoryUpdateDto.getName().equals(category.getName()) &&
+                categoryRepository.existsByName(categoryUpdateDto.getName())) {
+            throw new PropertyExistsException("Category with this name already exists.");
         }
 
-        if (categoryUpdateDto.getImageUri() != null && !categoryUpdateDto.getImageUri().isEmpty()) {
-            if (category.getImageUri() != null && !category.getImageUri().isEmpty()) {
-                String oldFileName = category.getImageUri()
-                        .substring(category.getImageUri().lastIndexOf("/") + 1);
-                fileStorageService.delete(oldFileName);
-            }
-
-            String fileName = fileStorageService.store(categoryUpdateDto.getImageUri());
-            String imageUrl = "http://localhost:8080/api/v1/files/" + fileName;
-            category.setImageUri(imageUrl);
+        // Handle image deletion if needed
+        if (categoryUpdateDto.getImageUri() != null && !categoryUpdateDto.getImageUri().isEmpty() &&
+                category.getImageUri() != null && !category.getImageUri().isEmpty()) {
+            String oldFileName = category.getImageUri()
+                    .substring(category.getImageUri().lastIndexOf("/") + 1);
+            fileStorageService.delete(oldFileName);
         }
+
+        // Apply the partial update - all fields including image URL will be updated
+        categoryMapper.partialUpdate(categoryUpdateDto, category);
 
         return categoryRepository.save(category);
     }

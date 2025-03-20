@@ -1,8 +1,10 @@
 package com.moroccanvviptrip.api.mvtapi.services.impl;
 
+
 import com.moroccanvviptrip.api.mvtapi.domain.PlannedActivity;
 import com.moroccanvviptrip.api.mvtapi.domain.User;
 import com.moroccanvviptrip.api.mvtapi.repository.PlannedActivityRepository;
+
 import com.moroccanvviptrip.api.mvtapi.services.PlannedActivityService;
 import com.moroccanvviptrip.api.mvtapi.services.UserService;
 import com.moroccanvviptrip.api.mvtapi.web.dto.PlannedActivities.PlannedActivityUpdateDto;
@@ -12,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,6 +25,7 @@ public class PlannedActivityServiceImpl implements PlannedActivityService {
 
     private final PlannedActivityRepository plannedActivityRepository;
     private final UserService userService;
+
 
     @Override
     public PlannedActivity findById(UUID id) {
@@ -44,16 +48,21 @@ public class PlannedActivityServiceImpl implements PlannedActivityService {
             throw new SecurityException("You don't have permission to update this planned activity");
         }
 
+        LocalDateTime startDate = updateDto.getStartDate() != null ? updateDto.getStartDate() : existingActivity.getStartDate();
+        LocalDateTime endDate = updateDto.getEndDate() != null ? updateDto.getEndDate() : existingActivity.getEndDate();
+
+        validateDates(startDate, endDate);
+
         if (updateDto.getPriority() != null) {
             existingActivity.setPriority(updateDto.getPriority());
         }
 
         if (updateDto.getStartDate() != null) {
-            existingActivity.setStartDate(updateDto.getStartDate());
+            existingActivity.setStartDate(startDate);
         }
 
         if (updateDto.getEndDate() != null) {
-            existingActivity.setEndDate(updateDto.getEndDate());
+            existingActivity.setEndDate(endDate);
         }
 
         PlannedActivity updatedActivity = plannedActivityRepository.save(existingActivity);
@@ -73,5 +82,25 @@ public class PlannedActivityServiceImpl implements PlannedActivityService {
 
         plannedActivityRepository.delete(plannedActivity);
         log.info("Planned activity deleted successfully with ID: {}", id);
+    }
+
+    private void validateDates(LocalDateTime startDate, LocalDateTime endDate) {
+        if (startDate == null) {
+            throw new IllegalArgumentException("Start date is required");
+        }
+
+        if (endDate == null) {
+            throw new IllegalArgumentException("End date is required");
+        }
+
+        LocalDateTime now = LocalDateTime.now();
+
+        if (startDate.isBefore(now.minusMinutes(1))) {
+            throw new IllegalArgumentException("Start date must be in the present or future");
+        }
+
+        if (!endDate.isAfter(startDate)) {
+            throw new IllegalArgumentException("End date must be after start date");
+        }
     }
 }

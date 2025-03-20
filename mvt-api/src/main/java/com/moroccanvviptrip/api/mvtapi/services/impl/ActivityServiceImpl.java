@@ -1,8 +1,6 @@
 package com.moroccanvviptrip.api.mvtapi.services.impl;
 
 import com.moroccanvviptrip.api.mvtapi.domain.Activity;
-import com.moroccanvviptrip.api.mvtapi.domain.Category;
-import com.moroccanvviptrip.api.mvtapi.domain.City;
 import com.moroccanvviptrip.api.mvtapi.repository.ActivityRepository;
 import com.moroccanvviptrip.api.mvtapi.services.ActivityService;
 import com.moroccanvviptrip.api.mvtapi.services.CategoryService;
@@ -19,7 +17,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,17 +34,15 @@ public class ActivityServiceImpl implements ActivityService {
     private final ActivityMapper activityMapper;
     private final ActivitySpecifications activitySpecifications;
     private final FileStorageService fileStorageService;
-
+    private final String BASE_FILE_URL = "http://localhost:8080/api/v1/files/";
 
     @Override
     public List<Activity> findTopActivities(int limit) {
         Pageable pageable = PageRequest.of(0, limit, Sort.by(Sort.Direction.DESC, "createdAt"));
-
-        Specification<Activity> spec = Specification
-                .where(activitySpecifications.isAvailable(true));
-
+        Specification<Activity> spec = Specification.where(activitySpecifications.isAvailable(true));
         return activityRepository.findAll(spec, pageable).getContent();
     }
+
     @Override
     public Activity findById(UUID id) {
         return activityRepository.findById(id)
@@ -68,22 +63,18 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     @Transactional
     public Activity create(ActivityRequestDto activityRequestDto) {
-        MultipartFile imageFile = activityRequestDto.getImageUri();
-        if (imageFile == null || imageFile.isEmpty()) {
+        if (activityRequestDto.getImageUri() == null || activityRequestDto.getImageUri().isEmpty()) {
             throw new IllegalArgumentException("Image file is required.");
         }
 
-        Category category = categoryService.findById(activityRequestDto.getCategoryId());
-        City city = cityService.findById(activityRequestDto.getCityId());
-
         Activity activity = activityMapper.toEntity(activityRequestDto);
 
-        String fileName = fileStorageService.store(imageFile);
-        String imageUrl = "http://localhost:8080/api/v1/files/" + fileName;
+        activity.setCategory(categoryService.findById(activityRequestDto.getCategoryId()));
+        activity.setCity(cityService.findById(activityRequestDto.getCityId()));
+
+        String imageUrl = BASE_FILE_URL + activity.getImageUri();
         activity.setImageUri(imageUrl);
 
-        activity.setCategory(category);
-        activity.setCity(city);
         activity.setAvailable(true);
 
         return activityRepository.save(activity);
@@ -92,49 +83,46 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     @Transactional
     public Activity update(UUID id, ActivityUpdateDto activityUpdateDto) {
-        Activity existingActivity = activityRepository.findById(id)
+        Activity activity = activityRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Activity not found with ID: " + id));
 
-        activityMapper.partialUpdate(activityUpdateDto, existingActivity);
+        handleImageUpdate(activity, activityUpdateDto.getImageUri());
 
-        if (activityUpdateDto.getCategoryId() != null) {
-            Category category = categoryService.findById(activityUpdateDto.getCategoryId());
-            existingActivity.setCategory(category);
+        activityMapper.partialUpdate(activityUpdateDto, activity);
+
+        if (activityUpdateDto.getImageUri() != null && !activityUpdateDto.getImageUri().isEmpty()) {
+            String imageUrl = BASE_FILE_URL + activity.getImageUri();
+            activity.setImageUri(imageUrl);
         }
 
-        if (activityUpdateDto.getCityId() != null) {
-            City city = cityService.findById(activityUpdateDto.getCityId());
-            existingActivity.setCity(city);
-        }
-
-        MultipartFile newImageFile = activityUpdateDto.getImageUri();
-        if (newImageFile != null && !newImageFile.isEmpty()) {
-            if (existingActivity.getImageUri() != null && !existingActivity.getImageUri().isEmpty()) {
-                String oldFileName = existingActivity.getImageUri()
-                        .substring(existingActivity.getImageUri().lastIndexOf("/") + 1);
-                fileStorageService.delete(oldFileName);
-            }
-
-            String newFileName = fileStorageService.store(newImageFile);
-            String newImageUrl = "http://localhost:8080/api/v1/files/" + newFileName;
-            existingActivity.setImageUri(newImageUrl);
-        }
-
-        return activityRepository.save(existingActivity);
+        return activityRepository.save(activity);
     }
 
     @Override
     @Transactional
     public void delete(UUID id) {
-        Activity existingActivity = activityRepository.findById(id)
+        Activity activity = activityRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Activity not found with ID: " + id));
 
-        if (existingActivity.getImageUri() != null && !existingActivity.getImageUri().isEmpty()) {
-            String fileName = existingActivity.getImageUri()
-                    .substring(existingActivity.getImageUri().lastIndexOf("/") + 1);
+        if (activity.getImageUri() != null && !activity.getImageUri().isEmpty()) {
+            String fileName = activity.getImageUri().substring(activity.getImageUri().lastIndexOf("/") + 1);
             fileStorageService.delete(fileName);
         }
 
-        activityRepository.delete(existingActivity);
+        activityRepository.delete(activity);
+    }
+
+    /**
+     * Helper method to handle image updates
+     */
+    private void handleImageUpdate(Activity activity, MultipartFile newImage) {
+        if (newImage == null || newImage.isEmpty()) {
+            return;
+        }
+
+        if (activity.getImageUri() != null && !activity.getImageUri().isEmpty()) {
+            String oldFileName = activity.getImageUri().substring(activity.getImageUri().lastIndexOf("/") + 1);
+            fileStorageService.delete(oldFileName);
+        }
     }
 }

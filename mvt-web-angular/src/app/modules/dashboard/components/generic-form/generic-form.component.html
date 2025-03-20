@@ -16,15 +16,18 @@
             <ng-container [ngSwitch]="field.type">
               <!-- Text Input -->
               <input *ngSwitchCase="'text'" type="text" [formControlName]="field.key"
-                     class="w-full px-4 py-2 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent">
+                     class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+                     [ngClass]="{'border-red-500': isFieldInvalid(field.key), 'border-border': !isFieldInvalid(field.key)}">
 
               <!-- Textarea -->
               <textarea *ngSwitchCase="'textarea'" [formControlName]="field.key"
-                        class="w-full px-4 py-2 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent h-32"></textarea>
+                        class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent h-32"
+                        [ngClass]="{'border-red-500': isFieldInvalid(field.key), 'border-border': !isFieldInvalid(field.key)}"></textarea>
 
               <!-- Select Dropdown -->
               <select *ngSwitchCase="'select'" [formControlName]="field.key"
-                      class="w-full px-4 py-2 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent">
+                      class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+                      [ngClass]="{'border-red-500': isFieldInvalid(field.key), 'border-border': !isFieldInvalid(field.key)}">
                 <option [value]="null" disabled>Select {{ field.label }}</option>
                 <option *ngFor="let option of field.options" [value]="option.value">
                   {{ option.label }}
@@ -33,9 +36,9 @@
             </ng-container>
 
             <!-- Validation Error -->
-            <div *ngIf="form.get(field.key)?.invalid && form.get(field.key)?.touched"
-                 class="text-red-500 text-sm mt-1">
-              {{ field.label }} is required
+            <div *ngIf="isFieldInvalid(field.key)"
+                 class="text-red-500 text-sm mt-1 transition-all duration-200 ease-in-out">
+              {{ getErrorMessage(field.key) }}
             </div>
           </div>
         </ng-container>
@@ -54,6 +57,12 @@
             </div>
             <img *ngIf="imagePreview" [src]="imagePreview"
                  class="mt-4 h-32 w-32 object-cover rounded-md border border-border" alt="">
+
+            <!-- File validation error -->
+            <div *ngIf="isFieldInvalid(field.key)"
+                 class="text-red-500 text-sm mt-1 transition-all duration-200 ease-in-out">
+              {{ getErrorMessage(field.key) }}
+            </div>
           </div>
         </ng-container>
 
@@ -65,6 +74,12 @@
             <label [for]="field.key" class="text-sm font-medium text-foreground">
               {{ field.label }}
             </label>
+
+            <!-- Checkbox validation error -->
+            <div *ngIf="isFieldInvalid(field.key)"
+                 class="text-red-500 text-sm ml-2 transition-all duration-200 ease-in-out">
+              {{ getErrorMessage(field.key) }}
+            </div>
           </div>
         </ng-container>
       </div>
@@ -75,7 +90,7 @@
               class="px-4 py-2 text-sm font-medium text-foreground bg-transparent hover:bg-muted/20 rounded-md transition-colors">
         Cancel
       </button>
-      <button type="submit" [disabled]="form.invalid"
+      <button type="submit"
               class="px-4 py-2 text-sm font-medium text-primary-foreground bg-primary hover:bg-primary/90 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
         {{ submitButtonText }}
       </button>

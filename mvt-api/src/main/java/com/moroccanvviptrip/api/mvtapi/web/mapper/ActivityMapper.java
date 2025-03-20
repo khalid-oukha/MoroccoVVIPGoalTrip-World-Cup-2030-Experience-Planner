@@ -29,7 +29,7 @@ public abstract class ActivityMapper {
     @Mapping(source = "activityUpdateDto.categoryId", target = "category.id")
     @Mapping(source = "activityUpdateDto.cityId", target = "city.id")
     @Mapping(source = "activityUpdateDto.imageUri", target = "imageUri", qualifiedByName = "mapImageUri")
-    public abstract Activity partialUpdate(ActivityUpdateDto activityUpdateDto, Activity activity);
+    public abstract void partialUpdate(ActivityUpdateDto activityUpdateDto, @MappingTarget Activity activity);
 
     public abstract ActivityResponseVm toResponseVm(Activity activity);
 
