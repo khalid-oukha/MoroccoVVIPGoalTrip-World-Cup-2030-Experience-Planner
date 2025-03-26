@@ -6,21 +6,6 @@ World Cup 2030 travel planning platform backend - Built with Spring Boot.
 
 Backend system for MoroccoVVIPGoalTrip platform that helps football fans plan their travel and activities during the 2030 World Cup in Morocco. The system provides personalized activity recommendations, budget management, and real-time trip planning features.
 
-## Tech Stack
-
-- Java 17.
-- Spring Boot 3.2.0
-- Spring Security with JWT
-- Spring Data JPA
-- PostgreSQL 15
-- Maven
-- Docker
-- Swagger/OpenAPI
-- WebSocket (for real-time updates)
-- Redis (caching)
-- Apache Kafka (event streaming)
-- ELK Stack (logging)
-- Prometheus & Grafana (monitoring)
 
 ## Architecture
 
@@ -77,12 +62,6 @@ Budget (id, trip_id, allocated, spent, remaining)
     - Real-time availability
     - Budget optimization
     - Category filtering
-
-4. Notifications
-    - Email notifications
-    - Push notifications
-    - WebSocket real-time updates
-    - Trip reminders
 
 ## API Endpoints
 
@@ -185,26 +164,6 @@ docker build -t vvipgoaltrip-backend .
 docker-compose up -d
 ```
 
-## Testing
-
-```bash
-# Run unit tests
-mvn test
-
-# Run integration tests
-mvn verify
-
-# Generate test coverage report
-mvn jacoco:report
-```
-
-## Monitoring & Logging
-
-- Prometheus metrics: `/actuator/prometheus`
-- Health check: `/actuator/health`
-- Grafana dashboards available at port 3000
-- ELK Stack for centralized logging
-- Application logs in `/logs` directory
 
 ## Security Measures
 
@@ -213,36 +172,11 @@ mvn jacoco:report
     - Token refresh mechanism
     - Role-based access control
 
-2. Data Protection
-    - HTTPS/TLS encryption
-    - Password hashing with BCrypt
-    - Input validation
-    - XSS protection
-    - CORS configuration
-
-3. Rate Limiting
-    - API rate limiting
-    - Brute force protection
-    - DDoS protection
-
-## Performance Optimization
-
-1. Caching
-    - Redis for application caching
-    - Query result caching
-    - Static resource caching
-
-2. Database
-    - Connection pooling
-    - Query optimization
-    - Indexed searches
-    - Database partitioning
 
 3. API
     - Response compression
     - Pagination
-    - Async processing
-    - WebSocket for real-time updates
+
 
 ## Contributing
 
@@ -253,12 +187,6 @@ mvn jacoco:report
 5. Open pull request
 
 ## Development Guidelines
-
-1. Code Style
-    - Follow Google Java Style Guide
-    - Use meaningful variable/method names
-    - Add JavaDoc comments for public methods
-    - Maximum method length: 30 lines
 
 2. Testing
     - Write unit tests for all services
