@@ -28,7 +28,6 @@ export class HomeComponent implements OnInit {
   loading = true;
   error = false;
 
-  // Toast notification for success
   showActivityAddedToast = false;
   activityAddedMessage = '';
 

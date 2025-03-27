@@ -122,7 +122,6 @@ export class ActivityDetailsComponent implements OnInit {
     this.formLoading = true;
     this.formError = '';
 
-    // Format dates to ISO strings if they aren't already
     const startDate = formData.startDate instanceof Date ?
       formData.startDate.toISOString() : formData.startDate;
     const endDate = formData.endDate instanceof Date ?

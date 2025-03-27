@@ -48,9 +48,7 @@ export class GenericFormComponent implements OnInit {
         validatorsList.push(Validators.required);
       }
 
-      // Add additional validators if specified
       if (field.validators) {
-        // This might include min/max length, pattern validators, etc.
         Object.entries(field.validators).forEach(([key, value]) => {
           switch (key) {
             case 'minLength':
@@ -115,7 +113,6 @@ export class GenericFormComponent implements OnInit {
     this.cancelled.emit();
   }
 
-  // Helper methods for validation
   isFieldInvalid(fieldName: string): boolean {
     const control = this.form.get(fieldName);
     return !!(control && control.invalid && (control.touched || this.submitted));
@@ -127,7 +124,6 @@ export class GenericFormComponent implements OnInit {
 
     if (!control || !control.errors) return '';
 
-    // Check for server-side errors first
     if (this.serverErrors[fieldName]) {
       return this.serverErrors[fieldName];
     }
@@ -141,7 +137,6 @@ export class GenericFormComponent implements OnInit {
       return field.errorMessages[errors[0]];
     }
 
-    // Default error messages
     switch (errors[0]) {
       case 'required':
         return `${field?.label || fieldName} is required`;
